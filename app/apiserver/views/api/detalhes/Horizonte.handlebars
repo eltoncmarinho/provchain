@@ -1,0 +1,222 @@
+<script>
+        function goBack() {
+                window.history.back()
+        }
+</script>
+
+<center><h2>{{titulo_pagina}}</h2><hr>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/api/consulta/Horizonte/{{result.key_observacao}}"><button id="retornar" name="retornar" class="btn btn-success">Retornar a lista de Horizontes</button></a>
+</div>
+<table class="table table-striped">
+<tr>
+<td align="center" colspan="12"><legend>Horizonte</legend><label class="col-form-label-sm">Identificação única <b>{{ resultKey }}</b></label></td>
+</tr>
+
+{{#if result.nome}}
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Nome:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nome}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.transicao_topografia}}
+        <tr>
+                <td colspan="6"><label class="col-form-label-sm">Topografia:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.transicao_topografia}}</label></td>
+                <td colspan="6"><label class="col-form-label-sm">Nitidez:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.transicao_nitidez}}</label></td>
+        </tr>
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Método:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.limite_metodo}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.limite_superior}}
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Limite Superior:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.limite_superior}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.transicao_superior}}
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Limite Superior da transição:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.transicao_superior}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.transicao_inferior}}
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Limite Inferior da transição:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.transicao_inferior}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.limite_inferior}}
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Limite Inferior:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.limite_inferior}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.espessura}}
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Limite Inferior:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.espessura}}</label></td>
+        </tr>
+{{/if}} 
+
+
+{{#if result.cor_tipo}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Cor</th></tr>
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Método:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_tipo}}</label></td>
+        </tr>
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Cor Seco</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Matiz:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_matiz1}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Valor:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_valor1}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Croma:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_croma1}}</label></td>
+        </tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Cor:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor1}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Umidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_umidade1}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">&nbsp;</td>
+        </tr>
+
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Cor Úmido</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Matiz:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_matiz2}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Valor:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_valor2}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Croma:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_croma2}}</label></td>
+        </tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Cor:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor2}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Umidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cor_umidade2}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">&nbsp;</td>
+        </tr>
+{{/if}} 
+
+{{#if result.outros_textura}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Propriedade Morfológica</th></tr>
+        <tr>
+                <td colspan="6"><label class="col-form-label-sm">Textura:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_textura}}</label></td>
+                <td colspan="6"><label class="col-form-label-sm">Cascalho:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_cascalho}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.estrutura_tipo}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Estrutura</th></tr>
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Tipo:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.estrutura_tipo}}</label></td>
+        </tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Grau:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.estrutura_grau}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Tamanho:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.estrutura_tamanho}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Forma:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.estrutura_forma}}</label></td>
+        </tr>
+
+{{/if}} 
+
+{{#if result.consistencia_seco}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Consistência</th></tr>
+        <tr>
+                <td colspan="3"><label class="col-form-label-sm">Seca:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.consistencia_seco}}</label></td>
+                <td colspan="3"><label class="col-form-label-sm">Úmida:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.consistencia_umido}}</label></td>
+                <td colspan="3"><label class="col-form-label-sm">Plasticidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.consistencia_molhada_plasticidade}}</label></td>
+                <td colspan="3"><label class="col-form-label-sm">Pegajosidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.consistencia_molhada_pegajosidade}}</label></td>
+        </tr>
+
+{{/if}} 
+
+{{#if result.compressao_tipo}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Superfície de Compressão</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Tipo:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.compressao_tipo}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Quantidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.compressao_quantidade}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Grau:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.compressao_grau}}</label></td>
+        </tr>
+
+{{/if}} 
+
+{{#if result.friccao_quantidade}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Superfície de Fricção</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Quantidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.friccao_quantidade}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Tamanho:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.friccao_tamanho}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Grau:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.friccao_grau}}</label></td>
+        </tr>
+
+{{/if}} 
+
+{{#if result.cerosidade_quantidade}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Cerosidade</th></tr>
+        <tr>
+                <td colspan="6"><label class="col-form-label-sm">Quantidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cerosidade_quantidade}}</label></td>
+                <td colspan="6"><label class="col-form-label-sm">Grau:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.cerosidade_grau}}</label></td>
+        </tr>
+
+{{/if}} 
+
+{{#if result.poros_quantidade}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Poros</th></tr>
+        <tr>
+                <td colspan="6"><label class="col-form-label-sm">Quantidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.poros_quantidade}}</label></td>
+                <td colspan="6"><label class="col-form-label-sm">Diâmetro:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.poros_diametro}}</label></td>
+        </tr>
+
+{{/if}} 
+
+{{#if result.eflorescencia_quantidade}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Eflorescência</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Quantidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.eflorescencia_quantidade}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Local:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.eflorescencia_local}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Natureza:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.eflorescencia_natureza}}</label></td>
+        </tr>
+
+{{/if}} 
+
+{{#if result.nodulos_e_concrecoes_quantidade}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Nódulos e Concreções</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Quantidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nodulos_e_concrecoes_quantidade}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Tamanho:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nodulos_e_concrecoes_tamanho}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Dureza:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nodulos_e_concrecoes_dureza}}</label></td>
+        </tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Natureza:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nodulos_e_concrecoes_natureza}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Forma:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nodulos_e_concrecoes_forma}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Cor:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nodulos_e_concrecoes_cor}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.raiz_quantidade}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Raiz</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Quantidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.raiz_quantidade}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Diâmetro:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.raiz_diametro}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Tipo:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.raiz_tipo}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.outros_coesao}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Outros</th></tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Coesão:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_coesao}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Cimentação:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_cimentacao}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Sulfeto:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_sulfeto}}</label></td>
+        </tr>
+        <tr>
+                <td colspan="4"><label class="col-form-label-sm">Magnetismo:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_magnetismo}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Manganês:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_manganes}}</label></td>
+                <td colspan="4"><label class="col-form-label-sm">Carbonato:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.outros_carbonato}}</label></td>
+        </tr>
+{{/if}} 
+
+{{#if result.observacao}}
+        <tr class="table-success" align="center"><th colspan="12" bgcolor="#98bb33">Outros</th></tr>
+        <tr>
+                <td colspan="12"><label class="col-form-label-sm">Observações Complementares:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.observacao}}</label></td>
+        </tr>
+{{/if}}
+
+</table>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-center" style="width:100%;">
+<a href="/api/consulta/Proveniencia/{{result.key_proveniencia}}"><button class="btn btn-success">Metadados do Registro</button></a>
+</div>

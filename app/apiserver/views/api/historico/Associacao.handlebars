@@ -1,0 +1,164 @@
+    <script>
+        function goBack() {
+            window.history.back()
+        }
+    </script>    
+
+    <script>
+        function Mudarestado(el) {
+            var display = document.getElementById(el).style.display;
+            if(display == "none")
+                document.getElementById(el).style.display = 'block';
+            else
+                document.getElementById(el).style.display = 'none';
+        }
+
+        numero = 0;
+
+        function more() {
+            numero++;
+            setValue(numero);
+        }
+
+        function setValue(value) {
+            document.getElementById('num').value = value;
+        }
+
+        setValue(numero);
+
+    </script> 
+
+    <center><h1>Histórico</h1></center>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button id="voltar" name="voltar" class="btn btn-success" onclick="goBack()">Voltar</button>     
+    </div>
+
+    <table width="100%"><tr><td width="50%" valign="top">
+<!-- Dados do Órgão -->
+        <table class="table table-striped">
+        <tr>
+        <td align="center"><label class="h4"><b>Associações entre Órgãos e Projetos</b></label></td>
+        </tr>
+        {{#each result}}
+            <tr><td>
+                <button type="button"  class="btn btn-link" onclick="Mudarestado('{{key}}{{data_criacao}}');">
+                <img src="/img/updown.png" width="25%" height="25%"></button> {{nome}}
+                <div id='{{key}}{{data_criacao}}'>    
+
+                <label class="col-form-label-sm"><b>Chave:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{key}}</label><br>
+
+                {{#if key_orgao}}
+                        <label class="col-form-label-sm"><b>Chave - Órgão Executor:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{key_orgao}}</label><br>
+                {{/if}} 
+
+                {{#if key_projeto}}
+                        <label class="col-form-label-sm"><b>Chave - Órgão Executor:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{key_projeto}}</label><br>
+                {{/if}} 
+
+                </div>
+            </td></tr>    
+        {{/each}}
+        </table>
+    </td>
+
+<!-- Dados de proveniência -->
+    <td valign="top" width="50%">
+        <table class="table table-striped">
+        <tr>
+        <td align="center"><label class="h4"><b>Proveniência</b></label>
+        </td>
+        </tr>
+        {{#each resultProv}}
+            <tr><td>
+                <button type="button" class="btn btn-link" onclick="Mudarestado('{{key}}{{data_criacao}}')">
+                        <img src="/img/updown.png" width="25%" height="25%"></button> {{status}}
+                <div id='{{key}}{{data_criacao}}'>
+
+                <label class="col-form-label-sm"><b>Chave:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{key}}</label><br>
+
+                <hr><b>ALTERAÇÂO</b><hr>
+ 
+                {{#if data_alteracao}}
+                        <label class="col-form-label-sm"><b>Data alteração (Horário GMT):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{data_alteracao}}</label><br>
+                {{/if}} 
+                {{#if nome_alterador}}
+                        <label class="col-form-label-sm"><b>Nome do usuário que alterou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nome_alterador}}</label><br>
+                {{/if}} 
+
+                {{#if usuario_alterador}}
+                        <label class="col-form-label-sm"><b>Usuário que alterou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{usuario_alterador}}</label><br>
+                {{/if}} 
+
+                <hr><b>CRIAÇÃO</b><hr>
+                {{#if data_criacao}}
+                        <label class="col-form-label-sm"><b>Data de criação (Horário GMT):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{data_criacao}}</label><br>
+                {{/if}} 
+
+                {{#if nome_criador}}
+                        <label class="col-form-label-sm"><b>Nome do usuário que criou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nome_criador}}</label><br>
+                {{/if}} 
+
+                {{#if usuario_criador}}
+                        <label class="col-form-label-sm"><b>Usuário que criou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{usuario_criador}}</label><br>
+                {{/if}} 
+
+                <hr><b>SOFTWARE UTILIZADO</b><hr>
+                {{#if software_browser}}
+                        <label class="col-form-label-sm"><b>Origem do lançamento:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{software_browser}}</label><br>
+                {{/if}} 
+
+                {{#if software_version}}
+                        <label class="col-form-label-sm"><b>Versão do software:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{software_version}}</label><br>
+                {{/if}} {{data_alteracao}}
+                {{#if ip}}
+                        <label class="col-form-label-sm"><b>IP:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{ip}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_range}}
+                        <label class="col-form-label-sm"><b>Intervalo:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_range}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_country}}
+                        <label class="col-form-label-sm"><b>País:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_country}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_region}}
+                        <label class="col-form-label-sm"><b>Estado:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_region}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_city}}
+                        <label class="col-form-label-sm"><b>Cidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_city}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_timezone}}
+                        <label class="col-form-label-sm"><b>Fuso horário:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_timezone}}</label><br>
+                {{/if}} 
+
+
+                {{#if geoLocalizacao_ll}}
+                        <label class="col-form-label-sm"><b>Latitude, longitude:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_ll}}</label><br>
+                {{/if}} 
+
+
+                {{#if geoLocalizacao_area}}
+                        <label class="col-form-label-sm"><b>Área (Raio de Precisão, acurácia):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_area}}</label><br>
+                {{/if}} 
+                {{#if geoLocalizacao_metro}}
+                        <label class="col-form-label-sm"><b>Código da Região Metropolitana:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_metro}}</label><br>
+                {{/if}} 
+                {{#if geoLocalizacao_eu}}
+                        <label class="col-form-label-sm"><b>Estado membro da Comunidade Europeia:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_eu}}</label><br>
+                {{/if}} 
+
+                <hr><b>SITUAÇÃO DO REGISTRO</b><hr>
+
+                {{#if status}}
+                        <label class="col-form-label-sm"><b>Situação:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{status}}</label><br>
+                {{/if}} 
+
+                </div>
+            </td></tr>
+        {{/each}}
+        </table>
+    </td></tr>
+    </table> 

@@ -1,0 +1,24 @@
+    <script>
+        function goBack() {
+            window.history.back()
+        }
+    </script>
+    <center><h1>Histórico</h1></center>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button id="voltar" name="voltar" class="btn btn-success" onclick="goBack()">Voltar</button>     
+    </div>
+
+    <table class="table table-striped">
+    {{#each result}}
+        {{#each this}}
+            {{#if @this}}
+                <tr>
+                <td><label class="col-form-label-sm">{{@key}}</label></td>
+                <td><label class="col-form-label-sm">{{this}}</label></td>
+                </tr>
+            {{/if}}    
+        {{/each}}    
+        <tr><td colspan="2" class="table-success"></td></tr>
+    {{/each}}
+    </table>

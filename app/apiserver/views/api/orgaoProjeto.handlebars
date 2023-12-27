@@ -1,0 +1,59 @@
+<center>
+      <h1> 
+            Associação entre Orgãos Executores e os Projetos em que participam.  
+      </h1>
+      <hr>
+</center>
+
+<div class="card">
+<div class="card-body">
+<div class="mt-4">
+    <form name="assoc" action="/api/associar/OrgaoProjeto" method="POST">
+    <table class="table table-striped">
+        <tr align="center"><th>Orgão Executores</th><th>Projetos</th></tr>
+        <tr align="center">
+            <td>
+                <select class="form-control-lg" id="key_orgao" name="key_orgao">
+                {{#each orgaos}}
+                    {{#if Record.excluido}}
+                    {{else}}
+                        <option value="{{Key}}" {{#ifeq Key chave}}selected{{/ifeq}} >{{Record.nome}}</option>
+                    {{/if}}
+                {{/each}}
+                </select>
+            </td>
+            <td>
+                <select class="form-control-lg" id="key_projeto" name="key_projeto">
+                {{#each projetos}}
+                    {{#if Record.excluido}}
+                    {{else}}
+                        <option value="{{Key}}" {{#ifeq Key chave}}selected{{/ifeq}} >{{Record.nome}}</option>
+                    {{/if}}
+                {{/each}}
+                </select>
+            </td>
+        </tr>
+        <tr><td colspan="2">
+            <input type="submit"  id="enviar" name="enviar" value="Executar associação" class="btn btn-success" style="width:100%;">
+        </td></tr>     
+    </table>
+    </form>
+
+    <table class="table table-striped">
+        <tr align="center"><th >Associações existentes</th></tr>
+        {{#each associacao as |item|}}
+            {{#if item.[3]}}
+            {{else}}   
+                <tr align="left" {{#if item.[3]}} bgcolor="#FA8072" {{/if}}> 
+                    <td align="left">
+                        <a href="/api/excluir/AssociacaoOrgaoProjeto/{{item.[0]}}"><button type="button" id="excluir" name="excluir" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir">
+                        <b>Excluir</b> -  {{item.[1]}} - {{item.[2]}}
+                        </button></a>
+                    </td>
+                </tr>
+            {{/if}}
+        {{/each}}
+    </table>
+
+
+</div></div></div>

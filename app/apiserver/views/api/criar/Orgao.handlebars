@@ -1,0 +1,108 @@
+    <center><h1> Inclusão de Novo Orgão Executor </h1></center>
+
+    {{#each erros}}
+        <div class="alert alert-danger">{{ texto }}</div>
+    {{else}}
+
+    {{/each}}
+
+    <div class="card">
+        <div class="card-body">
+    <form name="criar_Orgao" action="/api/criar_Orgao" method="POST">
+
+<center>
+    <table class="table table-striped">
+
+    <tr><td>
+        <label class="col-form-label-sm">Orgão Executor</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="nome" name="nome" placeholder="Nome do Orgão" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Referência</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="referencia" name="referencia" placeholder="Referência" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Ano</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="ano" name="ano" placeholder="Ano" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Tipo de Problema</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="tipo_problema" name="tipo_problema" placeholder="Tipo de Problema" required>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Nível do levantamento</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="nivel_levantamento" name="nivel_levantamento" placeholder="Nível do levantamento" required>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Tipo de Instituição</label> 
+    </td><td>
+        <select class="form-control-sm" id="tipo_instituicao" name="tipo_instituicao">
+            <option></option>
+            <option value="Familiar">Familiar</option>
+            <option value="instituicao_ensino">Instituição de Ensino</option>
+            <option value="instituicao_religiosa">Instituição Religiosa</option>
+            <option value="instituicao_juridica">Instituição Jurídica</option>
+            <option value="instituicao_economica">Instituição Econômica</option>
+            <option value="instituicao_politica">Instituição Política</option>
+            <option value="outro">Outro</option>
+            
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Abrangência</label> 
+    </td><td>
+        <select class="form-control-sm" id="abrangencia" name="abrangencia">
+            <option></option>
+            <option value="Municipal">Municipal</option>
+            <option value="Estadual">Estadual</option>
+            <option value="País">Todo o País</option>
+            <option value="Internacional">Internacional</option>
+            
+        </select>
+    </td></tr>
+ 
+    <tr><td>
+        <label class="col-form-label-sm">Contato - Nome</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="contato_nome" name="contato_nome" placeholder="Nome do contato com o Orgão">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Contato - e-mail</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="contato_email" name="contato_email" placeholder="e-Mail ">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Contato - telefônico</label> 
+    </td><td>
+        <input type="text" id="contato_telefone" name="contato_telefone" class="form-control-sm" >
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Motivo </label> 
+    </td><td>
+        <textarea id="motivo" name="motivo" cols="50" rows="5">Explique o objetivo de sua participação </textarea> 
+    </td></tr>
+
+    <tr><td colspan="2">
+        <input type="submit" id="enviar" name="enviar" value="Adicionar Novo Orgão Executor" class="btn btn-success" style="width:100%;">
+    </td></tr>
+   
+   </table>
+</center> 
+
+    </form>
+    </div>
+    </div>

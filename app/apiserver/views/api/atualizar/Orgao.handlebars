@@ -1,0 +1,114 @@
+    <center><h1> Alterar dados do Orgão Executor </h1></center>
+
+    {{#each erros}}
+        <div class="alert alert-danger">{{ texto }}</div>
+    {{else}}
+
+    {{/each}}
+
+    <div class="card">
+        <div class="card-body">
+    <form name="x0" action="/api/alterar_Orgao" method="POST">
+
+<center>
+    <table class="table table-striped"> 
+
+    <tr><td colspan="2" align="center">
+        <label class="col-form-label-sm">Identificador único deste Orgão Executor: <B>{{resultKey}}</B></label>
+        <input type="hidden" name="key_orgao" value="{{resultKey}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Orgão Executor</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="nome" name="nome" value="{{result.nome}}" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Referência</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="referencia" name="referencia" value="{{result.referencia}}" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Ano</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="ano" name="ano" value="{{result.ano}}" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Tipo de Problema</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="tipo_problema" name="tipo_problema" value="{{result.tipo_problema}}" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Nível do levantamento</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="nivel_levantamento"name="nivel_levantamento" value="{{result.nivel_levantamento}}" required>
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Tipo de Instituição</label> 
+    </td><td>
+        <select class="form-control-sm" id="tipo_instituicao" name="tipo_instituicao">
+            <option></option>
+            <option value="Familiar"                {{#ifeq result.tipo_instituicao "Familiar"}} selected{{/ifeq}}>Familiar</option>
+            <option value="instituicao_ensino"      {{#ifeq result.tipo_instituicao "instituicao_ensino"}} selected{{/ifeq}}>Instituição de Ensino</option>
+            <option value="instituicao_religiosa"   {{#ifeq result.tipo_instituicao "instituicao_religiosa"}} selected{{/ifeq}}>Instituição Religiosa</option>
+            <option value="instituicao_juridica"    {{#ifeq result.tipo_instituicao "instituicao_juridica"}} selected{{/ifeq}}>Instituição Jurídica</option>
+            <option value="instituicao_economica"   {{#ifeq result.tipo_instituicao "instituicao_economica"}} selected{{/ifeq}}>Instituição Econômica</option>
+            <option value="instituicao_politica"    {{#ifeq result.tipo_instituicao "instituicao_politica"}} selected{{/ifeq}}>Instituição Política</option>
+            <option value="outro">Outro</option>
+            
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Abrangência</label> 
+    </td><td>
+        <select class="form-control-sm" id="abrangencia" name="abrangencia">
+            <option></option>
+            <option value="Municipal"       {{#ifeq result.abrangencia "Municipal"}} selected{{/ifeq}}>Municipal</option>
+            <option value="Estadual"        {{#ifeq result.abrangencia "Estadual"}} selected{{/ifeq}}>Estadual</option>
+            <option value="País"            {{#ifeq result.abrangencia "País"}} selected{{/ifeq}}>Todo o País</option>
+            <option value="Internacional"   {{#ifeq result.abrangencia "Internacional"}} selected{{/ifeq}}>Internacional</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Contato - Nome</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="contato_nome" name="contato_nome"  value="{{result.contato_nome}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Contato - e-mail</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="contato_email" name="contato_email" value="{{result.contato_email}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Contato - telefônico</label> 
+    </td><td>
+        <input type="text" id="contato_telefone" name="contato_telefone" class="form-control-sm" value="{{result.contato_telefone}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Motivo </label> 
+    </td><td>
+        <textarea id="motivo" name="motivo" cols="50" rows="5">{{result.motivo}} </textarea> 
+    </td></tr>
+
+    <tr><td colspan="2">
+        <input type="submit" id="enviar" name="enviar" value="Alterar Orgão Executor" class="btn btn-success" style="width:100%;">
+    </td></tr>
+    
+    </table>
+    
+    </center>
+
+    </form>
+    </div>
+    </div>
+    

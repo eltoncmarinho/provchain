@@ -1,0 +1,246 @@
+<center>
+      <h1> 
+            {{ titulo_pagina }}   
+      </h1>
+      <hr>
+</center>
+
+{{#each erros}}
+      <div class="alert alert-danger">{{ texto }}</div>
+{{else}}
+
+{{/each}}
+
+<div class="mt-4">
+{{#switch tipoRegistro}} 
+      {{#case 'Orgao'}} 
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/adicionarOrgao"><button id="incluir" name="incluir" class="btn btn-success">Incluir Novo Orgão Executor</button></a>
+            </div>
+            <div class="d-flex collapse navbar-collapse" id="navbarSupportedContent"></div> 
+            <table class="table table-striped" width="100%" border="0">
+            {{#each lista}}
+                  {{#if Record.excluido}}
+                  <!--
+                        <td colspan='6' align="left" style="background-color: #f1a59c;" ><label class="col-form-label-sm">EXCLUÍDO - <b>{{ Record.nome}}</b><br>{{ Key }}</label></td>
+                        -->
+                  {{else}}
+<tr width="100%">
+<td align="center">
+                              <a href="/api/consulta/Orgao/{{Key}}">     
+                              <button style="width:100%;" type="button" id="consultar" name="consultar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar detalhes">
+                              <b>Consultar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/alterar/Orgao/{{Key}}">      
+                              <button style="width:100%;" type="button" id="alterar" name="alterar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Alterar informações">
+                              <b>Alterar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/excluir/Orgao/{{Key}}">      
+                              <button style="width:100%;" type="button" id="excluir" name="excluir" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir">
+                              <b>Excluir</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/historico/Orgao/{{Key}}">      
+                              <button style="width:100%;" type="button" id="historico" name="historico" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar Histórico">
+                              <b>Histórico</b> - {{ Record.nome}}
+                              </button></a>  
+{{!-- </td><td align="center">
+                              <a href="/api/associar/OrgaoProjeto/{{Key}}">      
+                              <button style="width:100%;" type="button" id="associacao" name="associacao" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Associar a Orgão(s) Executor(es)">
+                              <b>Associar a Orgão(s) Executor(es)</b> - {{ Record.nome}}
+                              </button></a>     --}}
+</td></tr>                                          
+                  {{/if}}
+            {{/each}} 
+</table>               
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/adicionar{{tipoRegistro}}"><button id="incluir" name="incluir" class="btn btn-success">Incluir Novo Orgão Executor</button></a>
+            </div>         
+      {{/case}} 
+
+      {{#case 'Projeto'}} 
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/adicionarProjeto"><button id="incluir" name="incluir" class="btn btn-success">Incluir Novo Projeto</button></a>
+            </div>
+            <div class="d-flex collapse navbar-collapse" id="navbarSupportedContent"></div> 
+            <table class="table table-striped" width="100%" border="0">
+            {{#each lista}}
+                  {{#if Record.excluido}}
+                  <!--
+                        <td colspan='6' align="left" style="background-color: #f1a59c;" ><label class="col-form-label-sm">EXCLUÍDO - <b>{{ Record.nome}}</b><br>{{ Key }}</label></td>
+                        -->
+                  {{else}}
+<tr width="100%">
+<td align="center">
+                              <a href="/api/consulta/Projeto/{{Key}}">     
+                              <button style="width:100%;" type="button" id="consultar" name="consultar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar detalhes">
+                              <b>Consultar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/alterar/Projeto/{{Key}}">      
+                              <button style="width:100%;" type="button" id="alterar" name="alterar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Alterar informações">
+                              <b>Alterar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/excluir/Projeto/{{Key}}">      
+                              <button style="width:100%;" type="button" id="excluir" name="excluir" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir">
+                              <b>Excluir</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/historico/Projeto/{{Key}}">      
+                              <button style="width:100%;" type="button" id="historico" name="historico" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar Histórico">
+                              <b>Histórico</b> - {{ Record.nome}}
+                              </button></a>  
+</td><td align="center">
+                              <a href="/api/associar/OrgaoProjeto/{{Key}}">      
+                              <button style="width:100%;" type="button" id="associacao" name="associacao" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Associar a Orgão(s) Executor(es)">
+                              <b>Associar a Orgão(s) Executor(es)</b> - {{ Record.nome}}
+                              </button></a>                   
+</td><td align="center">
+                              <a href="/api/listar_observacoes/{{Key}}">       
+                              <button style="width:100%;" type="button" id="listar_observacoes" name="listar_observacoes" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Listar Observações">
+                              <b>Listar Observações</b> - {{ Record.nome}}
+                              </button></a>      
+</td></tr>         
+                  {{/if}}
+            {{/each}} 
+         </table>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/adicionarProjeto"><button id="incluir" name="incluir" class="btn btn-success">Incluir Novo Projeto</button></a>
+            </div>         
+      {{/case}} 
+
+      {{#case 'Observacao'}} 
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/adicionarObservacao/{{key_projeto}}"><button  id="incluir" name="incluir" class="btn btn-success">Incluir Nova Observação</button></a>
+            </div>
+            <div class="d-flex collapse navbar-collapse" id="navbarSupportedContent"></div> 
+            <table class="table table-striped" width="100%" border="0">
+            {{#each lista}}
+                  {{#if Record.excluido}}
+                  <!--
+                        <td colspan='6' align="left" style="background-color: #f1a59c;" ><label class="col-form-label-sm">EXCLUÍDO - <b>{{ Record.nome}}</b><br>{{ Key }}</label></td>
+                        -->
+                  {{else}}
+<tr width="100%">
+<td align="center">
+                              <a href="/api/consulta/Observacao/{{Key}}">     
+                              <button style="width:100%;" type="button" id="consultar" name="consultar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar detalhes">
+                              <b>Consultar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/alterar/Observacao/{{Key}}">      
+                              <button style="width:100%;" type="button" id="alterar" name="alterar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Alterar informações">
+                              <b>Alterar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/excluir/Observacao/{{Key}}">      
+                              <button style="width:100%;" type="button" id="excluir" name="excluir" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir">
+                              <b>Excluir</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/historico/Observacao/{{Key}}">      
+                              <button style="width:100%;" type="button" id="historico" name="historico" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar Histórico">
+                              <b>Histórico</b> - {{ Record.nome}}
+                              </button></a>  
+</td><td align="center">
+                              <a href="/api/consulta/Horizonte/{{Key}}">       
+                              <button style="width:100%;" type="button" id="listar_horizontes" name="listar_horizontes" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Listar Observações">
+                              <b>Listar Horizontes </b>- {{ Record.nome}}
+                              </button></a>      
+</td></tr>             
+                  {{/if}}
+            {{/each}} 
+         </table>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/adicionarObservacao/{{key_projeto}}"><button  id="incluir" name="incluir" class="btn btn-success">Incluir Nova Observação</button></a>
+            </div>         
+      {{/case}} 
+
+      {{#case 'Horizonte'}} 
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/api/criar/Horizonte/{{resultKey}}"><button id="incluir" name="incluir" class="btn btn-success">Incluir Novo Horizonte</button></a>
+            </div>
+            <div class="d-flex collapse navbar-collapse" id="navbarSupportedContent"></div> 
+            <table class="table table-striped" width="100%" border="0">
+            {{#each resultHorizonte}}
+                  {{#if Record.excluido}}
+                  <!--
+                        <td colspan='6' align="left" style="background-color: #f1a59c;" ><label class="col-form-label-sm">EXCLUÍDO - <b>{{ Record.nome}}</b><br>{{ Key }}</label></td>
+                        -->
+                  {{else}}
+<tr width="100%">
+<td align="center">
+                              <a href="/api/consulta/Horizonte/{{Key}}">     
+                              <button style="width:100%;" type="button" id="consultar" name="consultar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar detalhes">
+                              <b>Consultar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/alterar/Horizonte/{{Key}}">      
+                              <button style="width:100%;" type="button" id="alterar" name="alterar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Alterar informações">
+                              <b>Alterar</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/excluir/Horizonte/{{Key}}">      
+                              <button style="width:100%;" type="button" id="excluir" name="excluir" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir">
+                              <b>Excluir</b> - {{ Record.nome}}
+                              </button></a>
+</td><td align="center">
+                              <a href="/api/historico/Horizonte/{{Key}}">      
+                              <button style="width:100%;" type="button" id="historico" name="historico" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar Histórico">
+                              <b>Histórico</b> - {{ Record.nome}}
+                              </button></a>  
+</td></tr>            
+                  {{/if}}
+            {{/each}} 
+         </table>
+
+<!--
+            <table class="table table-striped">
+            {{#each resultHorizonte}}
+                        <tr {{#if Record.excluido}} bgcolor="#FA8072" {{/if}}><td align="left">
+                        <label class="col-form-label-sm">
+                        <b> {{ Record.nome}} </B> <br> {{ Key }} 
+                        </label>
+                        </td><td align="right"> 
+                        <div class="d-flex collapse navbar-collapse" id="navbarSupportedContent"></div> 
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Basic radio toggle button group">
+                        {{#if Record.excluido}} Excluído
+                        {{else}}
+                              <a href="/api/consulta/Horizonte/{{ Key }}">     
+                              <button  type="button" id="consultar" name="consultar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar detalhes">
+                              Detalhar
+                              </button></a>
+
+                              <a href="/api/alterar/Horizonte/{{Key}}">      
+                              <button  type="button" id="alterar" name="alterar" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Alterar informações">
+                              Alterar
+                              </button></a>
+
+                              <a href="/api/excluir/Horizonte/{{Key}}">      
+                              <button  type="button" id="excluir" name="excluir" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Excluir">
+                              Excluir
+                              </button></a>
+
+                              <a href="/api/historico/Horizonte/{{Key}}">      
+                              <button  type="button" id="historico" name="historico" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Mostrar Histórico">
+                              Histórico
+                              </button></a>      
+                        {{/if}}                                          
+                        </div>
+                        </td></tr>   
+            {{/each}} 
+            </table>
+-->
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="/api/criar/Horizonte/{{resultKey}}"><button id="incluir" name="incluir" class="btn btn-success">Incluir Novo Horizonte</button></a>
+            </div>         
+      {{/case}} 
+
+      {{#default '<h1>&nbspO <b>PROVChain</B> visa contribuir para a gestão da complexidade inerente à cadeia de produção agrícola melhorando a qualidade e a disponibilização dos dados de solos e incrementando a confiança na plataforma Opensoils, plataforma onde o artefato está inserido.</h1>'}}
+            {{/default}}
+    {{/switch}}
+</div>

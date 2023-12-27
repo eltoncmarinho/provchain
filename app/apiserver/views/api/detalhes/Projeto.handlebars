@@ -1,0 +1,62 @@
+<script>
+        function goBack() {
+                window.history.back()
+        }
+</script>
+<center><h2>Detalhes do Projeto: {{ result.nome }} </h2><hr>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<a href="/listar/Projeto"><button id="retornar" name="retornar" class="btn btn-success">Retornar a lista de Projetos</button></a>
+</div>
+<table class="table table-striped">
+<tr>
+<td align="center" colspan="3"><label class="col-form-label-sm">Identificação única <b>{{ resultkey }}</b></label></td>
+</tr>
+
+{{#if result.nome}}
+        <tr>
+                <td><label class="col-form-label-sm">Nome:</label></td>
+                <td><label class="col-form-label-sm">{{result.nome}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.sigla}}
+        <tr>
+                <td><label class="col-form-label-sm">Sigla:</label></td>
+                <td><label class="col-form-label-sm">{{result.sigla}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.pais}}
+        <tr>
+                <td><label class="col-form-label-sm">País:</label></td>
+                <td><label class="col-form-label-sm">{{result.pais}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.estado}}
+        <tr>
+                <td><label class="col-form-label-sm">Estado:</label></td>
+                <td><label class="col-form-label-sm">{{result.estado}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.municipio}}
+        <tr>
+                <td><label class="col-form-label-sm">Município:</label></td>
+                <td><label class="col-form-label-sm">{{result.municipio}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.abrangencia}}
+        <tr>
+                <td><label class="col-form-label-sm">Abrangência:</label></td>
+                <td><label class="col-form-label-sm">{{result.abrangencia}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.aberto}}
+        <tr>
+                <td><label class="col-form-label-sm">Aberto:</label></td>
+                <td><label class="col-form-label-sm">{{result.aberto}}</label></td>
+        </tr>
+{{/if}}
+
+</table>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-center" style="width:100%;">
+<a href="/api/consulta/Proveniencia/{{result.key_proveniencia}}"><button class="btn btn-success">Metadados do Registro</button></a>
+</div>

@@ -1,0 +1,2602 @@
+{
+    "matizes": [
+      {
+        "matiz": "5R",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho muito escuro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho muito escuro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho muito escuro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-escuro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-rosado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Rosa claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosa claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosa claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "7,5R",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho muito escuro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho muito escuro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho muito escuro-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-escuro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-rosado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Rosa claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosa claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosa claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "10R",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho muito escuro-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-escuro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Branco-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosado"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "2,5YR",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho muito escuro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado-escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-escuro-acinzenado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado-escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado-escuro"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado-claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado-claro"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-avermelhado-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Vermelho-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado-claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado-claro"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-claro"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Branco-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosado"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "5YR",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-avermelhado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento Muito Escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-avermelhado-escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado-escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-avermelhado-escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-amarelado"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-avermelhado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado"
+              },
+              {
+                "numero": "6",
+                "cor": "Vermelho-Amarelado"
+              },
+              {
+                "numero": "8",
+                "cor": "Vermelho-Amarelado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-avermelhado-claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-avermelhado-claro"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo-avermelhado"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo-avermelhado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo-avermelhado"
+              },
+              {
+                "numero": "9",
+                "cor": "Amarelo-avermelhado"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Branco-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosado"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "7,5YR",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno muito escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento muito escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-escuro"
+              },
+              {
+                "numero": "5",
+                "cor": "Bruno-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "6",
+                "cor": "Bruno-forte"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "6",
+                "cor": "Bruno-forte"
+              },
+              {
+                "numero": "8",
+                "cor": "Bruno-forte"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-Claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-Claro"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo-avermelhado"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo-avermelhado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo-avermelhado"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo-avermelhado"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Branco-rosado"
+              },
+              {
+                "numero": "3",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "4",
+                "cor": "Rosado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo-avermelhado"
+              }
+            ]
+          },
+          {
+            "numero": "8,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Branco-rosado"
+              }
+            ]
+          },
+          {
+            "numero": "9",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Rosado-amarelado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "9,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Rosado-amarelado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "10YR",
+        "valores": [
+          {
+            "numero": "2",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento muito escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-acinzentado muito escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-amarelado-escuro"
+              },
+              {
+                "numero": "6",
+                "cor": "Bruno-amarelado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-acinzentado-escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-amarelado-escuro"
+              },
+              {
+                "numero": "6",
+                "cor": "Bruno-amarelado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-amarelado"
+              },
+              {
+                "numero": "6",
+                "cor": "Bruno-amarelado"
+              },
+              {
+                "numero": "8",
+                "cor": "Bruno-amarelado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-brunado-claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-amarelado-claro"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelado-brunado"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelado-brunado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno muito claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno muito claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno muito claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno muito claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno muito claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo"
+              }
+            ]
+          },
+          {
+            "numero": "8,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno muito claro-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "9",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Amarelo-alaranjado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "9,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Amarelo-alaranjado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "2,5Y",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento muito escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-acinzentado muito escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-oliváceo-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-acinzentado-escuro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-oliváceo"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-oliváceo"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-oliváceo-claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-oliváceo-claro"
+              },
+              {
+                "numero": "6",
+                "cor": "Bruno-oliváceo-claro"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-brunado-claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-amarelado-claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-amarelado-claro"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo-oliváceo"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo-oliváceo"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Bruno-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Bruno-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Bruno-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Amarelo-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Amarelo-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo"
+              }
+            ]
+          },
+          {
+            "numero": "8,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Amarelo-claro-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "9",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Amarelo muito claro-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "9,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Amarelo muito claro-acinzentado"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "5Y",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto"
+              },
+              {
+                "numero": "2",
+                "cor": "Preto"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento muito escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-oliváceo-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-oliváceo"
+              },
+              {
+                "numero": "3",
+                "cor": "Oliva"
+              },
+              {
+                "numero": "4",
+                "cor": "Oliva"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-oliváceo"
+              },
+              {
+                "numero": "3",
+                "cor": "Oliva"
+              },
+              {
+                "numero": "4",
+                "cor": "Oliva"
+              },
+              {
+                "numero": "6",
+                "cor": "Oliva"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-oliváceo-claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Oliva-claro-acinzenado"
+              },
+              {
+                "numero": "4",
+                "cor": "Oliva-claro-acinzenado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo-olivácio"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo-olivácio"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Cinzento-claro"
+              },
+              {
+                "numero": "3",
+                "cor": "Amarelo-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Amarelo-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Branco"
+              },
+              {
+                "numero": "2",
+                "cor": "Amarelo-claro-acinzentado"
+              },
+              {
+                "numero": "3",
+                "cor": "Amarelo-claro-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Amarelo-claro-acinzentado"
+              },
+              {
+                "numero": "6",
+                "cor": "Amarelo"
+              },
+              {
+                "numero": "8",
+                "cor": "Amarelo"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "10Y",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado muito escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Oliva-acinzentado muito escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Oliva-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Oliva-acinzentado-escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Oliva"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              },
+              {
+                "numero": "2",
+                "cor": "Oliva-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Oliváceo-claro"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              },
+              {
+                "numero": "2",
+                "cor": "Oliva-acinzentado-claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Oliva-claro-acinzenado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "5GY",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado muito escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado muito escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Verde-oliváceo-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado-escuro"
+              },
+              {
+                "numero": "4",
+                "cor": "Verde-oliváceo"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado"
+              },
+              {
+                "numero": "4",
+                "cor": "Verde-oliváceo-claro"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado-claro"
+              },
+              {
+                "numero": "4",
+                "cor": "Verde-amarelado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "10GY",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "5G",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-esverdeado"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado muito escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-escuro"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-claro-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-claro-acinzentado"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              },
+              {
+                "numero": "2",
+                "cor": "Verde-claro-acinzentado"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "10G",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "5BG",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "10BG",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-esverdeado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "5B",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "10B",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "5PB",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Preto-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "numero": "1",
+                "cor": "Cinzento-azulado-claro"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "matiz": "N",
+        "valores": [
+          {
+            "numero": "2,5",
+            "cromas": [
+              {
+                "cor": "Preto"
+              }
+            ]
+          },
+          {
+            "numero": "3",
+            "cromas": [
+              {
+                "cor": "Cinzento muito escuro"
+              }
+            ]
+          },
+          {
+            "numero": "4",
+            "cromas": [
+              {
+                "cor": "Cinzento-escuro"
+              }
+            ]
+          },
+          {
+            "numero": "5",
+            "cromas": [
+              {
+                "cor": "Cinzento"
+              }
+            ]
+          },
+          {
+            "numero": "6",
+            "cromas": [
+              {
+                "cor": "Cinzento"
+              }
+            ]
+          },
+          {
+            "numero": "7",
+            "cromas": [
+              {
+                "cor": "Cinzento-claro"
+              }
+            ]
+          },
+          {
+            "numero": "8",
+            "cromas": [
+              {
+                "cor": "Branco"
+              }
+            ]
+          },
+          {
+            "numero": "8,5",
+            "cromas": [
+              {
+                "cor": "Branco"
+              }
+            ]
+          },
+          {
+            "numero": "9",
+            "cromas": [
+              {
+                "cor": "Branco"
+              }
+            ]
+          },
+          {
+            "numero": "9,5",
+            "cromas": [
+              {
+                "cor": "Branco"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }

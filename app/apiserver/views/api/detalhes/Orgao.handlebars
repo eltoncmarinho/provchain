@@ -1,0 +1,88 @@
+<script>
+        function goBack() {
+                window.history.back()
+        }
+</script>
+
+<center><h2>Detalhes de Orgão Executor: {{ result.nome }} </h2><hr>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<a href="/listar/Orgao"><button id="retornar" name="retornar" class="btn btn-success">Retornar a lista de Orgão</button></a>
+</div>
+<table class="table table-striped">
+<tr>
+<td align="center" colspan="3"><label class="col-form-label-sm">Identificação única <b>{{ resultkey }}</b></label></td>
+</tr>
+
+{{#if result.nome}}
+        <tr>
+                <td><label class="col-form-label-sm">Órgão Executor:</label></td>
+                <td><label class="col-form-label-sm">{{result.nome}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.referencia}}
+        <tr>
+                <td><label class="col-form-label-sm">Referência:</label></td>
+                <td><label class="col-form-label-sm">{{result.referencia}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.ano}}
+        <tr>
+                <td><label class="col-form-label-sm">Ano:</label></td>
+                <td><label class="col-form-label-sm">{{result.ano}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.tipo_problema}}
+        <tr>
+                <td><label class="col-form-label-sm">Tipo de Problema:</label></td>
+                <td><label class="col-form-label-sm">{{result.tipo_problema}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.nivel_levantamento}}
+        <tr>
+                <td><label class="col-form-label-sm">Nível do levantamento:</label></td>
+                <td><label class="col-form-label-sm">{{result.nivel_levantamento}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.tipo_instituicao}}
+        <tr>
+                <td><label class="col-form-label-sm">Tipo de Instituição:</label></td>
+                <td><label class="col-form-label-sm">{{result.tipo_instituicao}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.abrangencia}}
+        <tr>
+                <td><label class="col-form-label-sm">Abrangência:</label></td>
+                <td><label class="col-form-label-sm">{{result.abrangencia}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.contato_nome}}
+        <tr>
+                <td><label class="col-form-label-sm">Contato - Nome:</label></td>
+                <td><label class="col-form-label-sm">{{result.contato_nome}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.contato_email}}
+        <tr>
+                <td><label class="col-form-label-sm">Contato - e-mail:</label></td>
+                <td><label class="col-form-label-sm">{{result.contato_email}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.contato_telefone}}
+        <tr>
+                <td><label class="col-form-label-sm">Contato - telefônico:</label></td>
+                <td><label class="col-form-label-sm">{{result.contato_telefone}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.motivo}}
+        <tr>
+                <td><label class="col-form-label-sm">Motivo:</label></td>
+                <td><label class="col-form-label-sm">{{result.motivo}}</label></td>
+        </tr>
+{{/if}}
+
+
+</table>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-center" style="width:100%;">
+<a href="/api/consulta/Proveniencia/{{result.key_proveniencia}}"><button class="btn btn-success">Metadados do Registro</button></a>
+</div>

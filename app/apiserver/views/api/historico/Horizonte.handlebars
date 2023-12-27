@@ -1,0 +1,370 @@
+    <script>
+        function goBack() {
+            window.history.back()
+        }
+
+        function Mudarestado(el) {
+            var display = document.getElementById(el).style.display;
+            if(display == "none")
+                document.getElementById(el).style.display = 'block';
+            else
+                document.getElementById(el).style.display = 'none';
+        }
+    </script>    
+
+    <center><h1>Histórico</h1></center>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button id="voltar" name="voltar" class="btn btn-success" onclick="goBack()">Voltar</button>     
+    </div>
+
+    <table width="100%">
+        <tr>
+        <td colspan="2" align="center">
+                <label class="h5"><b>Observação Associada:</b>&nbsp;&nbsp;{{resultObservacao.nome}}</label>
+        </td
+        </tr>
+        <tr><td valign="top">
+
+<!-- Dados do Horizonte -->
+        <table class="table table-striped">
+        <tr>
+        <td align="center"><label class="h4"><b>Horizonte</b></label></td>
+        </tr>
+        {{#each result}}
+            <tr><td>
+                <button type="button" class="btn btn-link" onclick="Mudarestado('{{key}}{{data_criacao}}');">
+                <img src="/img/updown.png" width="25%" height="25%"></button> {{nome}}                        
+                <div id='{{key}}{{data_criacao}}'>    
+                <label class="col-form-label-sm"><b>Chave:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{key}}</label><br>
+                         
+                {{#if nome}}
+                        <label class="col-form-label-sm"><b>Nome:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nome}}</label><br>
+                {{/if}} 
+
+                {{#if transicao_topografia}}
+                        <label class="col-form-label-sm"><b>Topografia:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{transicao_topografia}}</label><br>
+                {{/if}} 
+
+                {{#if transicao_nitidez}}
+                        <label class="col-form-label-sm"><b>Nitidez:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{transicao_nitidez}}</label><br>
+                {{/if}} 
+
+                {{#if limite_metodo}}
+                        <label class="col-form-label-sm"><b>Método:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{limite_metodo}}</label><br>
+                {{/if}} 
+
+                {{#if limite_superior}}
+                        <label class="col-form-label-sm"><b>Limite superior:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{limite_superior}}</label><br>
+                {{/if}} 
+
+                {{#if transicao_superior}}
+                        <label class="col-form-label-sm"><b>Limite superior de transição:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{transicao_superior}}</label><br>
+                {{/if}} 
+
+                {{#if transicao_inferior}}
+                        <label class="col-form-label-sm"><b>Limite inferior de transição:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{transicao_inferior}}</label><br>
+                {{/if}} 
+
+                {{#if limite_inferior}}
+                        <label class="col-form-label-sm"><b>Limite inferior (m):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{limite_inferior}}</label><br>
+                {{/if}} 
+
+                {{#if espessura}}
+                        <label class="col-form-label-sm"><b>Espessura:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{espessura}}</label><br>
+                {{/if}} 
+
+                <hr><b>COR</b><hr>
+                {{#if cor_tipo}}
+                        <label class="col-form-label-sm"><b>Cor:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_tipo}}</label><br>
+                        <label class="col-form-label-sm"><b>Matiz:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_matiz1}}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="col-form-label-sm"><b>Valor:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_valor1}}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="col-form-label-sm"><b>Croma:</b></label><label class="col{{excluido}}{{nome}}{{transicao_topografia}}{{transicao_nitidez}}{{selectcor}}-form-label-bg">&nbsp;&nbsp;{{cor_croma1}}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="col-form-label-sm"><b>Umidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_umidade1}}</label><br>
+                        <label class="col-form-label-sm"><b>Matiz:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_matiz2}}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="col-form-label-sm"><b>Valor:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_valor2}}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="col-form-label-sm"><b>Croma:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_croma2}}</label>&nbsp;&nbsp;&nbsp;
+                        <label class="col-form-label-sm"><b>Umidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cor_umidade2}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>PROPRIEDADE MORFOLÓGICA</b><hr>
+
+                {{#if outros_textura}}
+                        <label class="col-form-label-sm"><b>Textura:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_textura}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if outros_cascalho}}
+                        <label class="col-form-label-sm"><b>Cascalho:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_cascalho}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>ESTRUTURA</b><hr>
+                {{#if estrutura_tipo}}
+                        <label class="col-form-label-sm"><b>Estrutura:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{estrutura_tipo}}</label><br>
+                {{/if}} 
+
+                {{#if estrutura_grau}}
+                        <label class="col-form-label-sm"><b>Grau:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{estrutura_grau}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if estrutura_tamanho}}
+                        <label class="col-form-label-sm"><b>Tamanho:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{estrutura_tamanho}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if estrutura_forma}}
+                        <label class="col-form-label-sm"><b>Forma:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{estrutura_forma}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>CONSISTÊNCIA</b><hr>
+                {{#if consistencia_seco}}
+                        <label class="col-form-label-sm"><b>Seco:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{consistencia_seco}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if consistencia_umido}}
+                        <label class="col-form-label-sm"><b>Úmido:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{consistencia_seco}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if consistencia_molhada_plasticidade}}
+                        <label class="col-form-label-sm"><b>Plasticidade:</b></label><label class="c{{excluido}}{{nome}}{{transicao_topografia}}{{transicao_nitidez}}{{selectcor}}ol-form-label-bg">&nbsp;&nbsp;{{consistencia_molhada_plasticidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if consistencia_molhada_pegajosidade}}
+                        <label class="col-form-label-sm"><b>Pegajosidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{consistencia_molhada_pegajosidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>SUPERFÍCIE DE COMPRESSÂO</b><hr>
+                {{#if compressao_tipo}}
+                        <label class="col-form-label-sm"><b>Tipo:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{compressao_tipo}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if compressao_quantidade}}
+                        <label class="col-form-label-sm"><b>Quantidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{compressao_quantidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if compressao_grau}}
+                        <label class="col-form-label-sm"><b>Grau:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{compressao_grau}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>SUPERFÍCIE DE FRICÇÂO</b><hr>
+                {{#if friccao_quantidade}}
+                        <label class="col-form-label-sm"><b>Quantidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{friccao_quantidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if friccao_tamanho}}
+                        <label class="col-form-label-sm"><b>Tamanho:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{friccao_tamanho}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if friccao_grau}}
+                        <label class="col-form-label-sm"><b>Grau:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{friccao_grau}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>CEROSIDADE</b><hr>
+                {{#if cerosidade_quantidade}}
+                        <label class="col-form-label-sm"><b>Quantidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cerosidade_quantidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if cerosidade_grau}}
+                        <label class="col-form-label-sm"><b>Grau:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{cerosidade_grau}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>POROS</b><hr>
+                {{#if poros_quantidade}}
+                        <label class="col-form-label-sm"><b>Quantidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{poros_quantidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if poros_diametro}}
+                        <label class="col-form-label-sm"><b>Diâmetro:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{poros_diametro}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+
+                <br><hr><b>EFLORESCÊNCIA</b><hr>
+                {{#if eflorescencia_quantidade}}
+                        <label class="col-form-label-sm"><b>Presença(Quantidade):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{eflorescencia_quantidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if eflorescencia_local}}
+                        <label class="col-form-label-sm"><b>Local:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{eflorescencia_local}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if eflorescencia_natureza}}
+                        <label class="col-form-label-sm"><b>Natureza:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{eflorescencia_natureza}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>NÓDULOS E CONCREÇÕES</b><hr>
+                {{#if nodulos_e_concrecoes_quantidade}}
+                        <label class="col-form-label-sm"><b>Quantidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nodulos_e_concrecoes_quantidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if nodulos_e_concrecoes_tamanho}}
+                        <label class="col-form-label-sm"><b>Tamanho:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nodulos_e_concrecoes_tamanho}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if nodulos_e_concrecoes_dureza}}
+                        <label class="col-form-label-sm"><b>Dureza:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nodulos_e_concrecoes_dureza}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+                <br>
+                {{#if nodulos_e_concrecoes_natureza}}
+                        <label class="col-form-label-sm"><b>Natureza:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nodulos_e_concrecoes_natureza}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if nodulos_e_concrecoes_forma}}
+                        <label class="col-form-label-sm"><b>Forma:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nodulos_e_concrecoes_forma}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if nodulos_e_concrecoes_cor}}
+                        <label class="col-form-label-sm"><b>Cor:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nodulos_e_concrecoes_cor}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>RAÍZ</b><hr>
+                {{#if raiz_quantidade}}
+                        <label class="col-form-label-sm"><b>Quantidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{raiz_quantidade}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if raiz_diametro}}
+                        <label class="col-form-label-sm"><b>Diâmetro:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{raiz_diametro}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if raiz_tipo}}
+                        <label class="col-form-label-sm"><b>Tipo:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{raiz_tipo}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>OUTROS</b><hr>
+                {{#if outros_coesao}}
+                        <label class="col-form-label-sm"><b>Coesão:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_coesao}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if outros_cimentacao}}
+                        <label class="col-form-label-sm"><b>Cimentação:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_cimentacao}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if outros_sulfeto}}
+                        <label class="col-form-label-sm"><b>Sulfeto:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_sulfeto}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+                <br>
+                {{#if outros_magnetismo}}
+                        <label class="col-form-label-sm"><b>Magnetismo:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_magnetismo}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if outros_manganes}}
+                        <label class="col-form-label-sm"><b>Manganês:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_manganes}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                {{#if outros_carbonato}}
+                        <label class="col-form-label-sm"><b>Carbonato:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{outros_carbonato}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+                <br><hr><b>OBSERVAÇÕES COMPLEMENTARES</b><hr>
+                {{#if observacao}}
+                        <label class="col-form-label-bg">&nbsp;&nbsp;{{observacao}}</label>&nbsp;&nbsp;&nbsp;
+                {{/if}} 
+
+
+                </div>
+            </td></tr>    
+        {{/each}}
+        </table>
+    </td>
+
+<!-- Dados de proveniência -->
+    <td valign="top" width="50%">
+        <table class="table table-striped">
+        <tr>
+        <td align="center"><label class="h4"><b>Proveniência</b></label>
+        </td>
+        </tr>
+        {{#each resultProv}}
+            <tr><td>
+                <button type="button" class="btn btn-link" onclick="Mudarestado('{{key}}{{data_criacao}}')">
+                        <img src="/img/updown.png" width="25%" height="25%"></button> {{status}}                        
+                <div id='{{key}}{{data_criacao}}'>
+
+                <label class="col-form-label-sm"><b>Chave:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{key}}</label><br>
+
+                <hr><b>ALTERAÇÂO</b><hr>
+ 
+                {{#if data_alteracao}}
+                        <label class="col-form-label-sm"><b>Data alteração (Horário GMT):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{data_alteracao}}</label><br>
+                {{/if}} 
+                {{#if nome_alterador}}
+                        <label class="col-form-label-sm"><b>Nome do usuário que alterou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nome_alterador}}</label><br>
+                {{/if}} 
+
+                {{#if usuario_alterador}}
+                        <label class="col-form-label-sm"><b>Usuário que alterou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{usuario_alterador}}</label><br>
+                {{/if}} 
+
+                <hr><b>CRIAÇÃO</b><hr>
+                {{#if data_criacao}}
+                        <label class="col-form-label-sm"><b>Data de criação (Horário GMT):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{data_criacao}}</label><br>
+                {{/if}} 
+
+                {{#if nome_criador}}
+                        <label class="col-form-label-sm"><b>Nome do usuário que criou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{nome_criador}}</label><br>
+                {{/if}} 
+
+                {{#if usuario_criador}}
+                        <label class="col-form-label-sm"><b>Usuário que criou:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{usuario_criador}}</label><br>
+                {{/if}} 
+
+                <hr><b>SOFTWARE UTILIZADO</b><hr>
+                {{#if software_browser}}
+                        <label class="col-form-label-sm"><b>Origem do lançamento:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{software_browser}}</label><br>
+                {{/if}} 
+
+                {{#if software_version}}
+                        <label class="col-form-label-sm"><b>Versão do software:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{software_version}}</label><br>
+                {{/if}} 
+
+                <hr><b>GEOLOCALIZAÇÃO</b><hr>
+
+                {{#if ip}}
+                        <label class="col-form-label-sm"><b>IP:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{ip}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_range}}
+                        <label class="col-form-label-sm"><b>Intervalo:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_range}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_country}}
+                        <label class="col-form-label-sm"><b>País:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_country}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_region}}
+                        <label class="col-form-label-sm"><b>Estado:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_region}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_city}}
+                        <label class="col-form-label-sm"><b>Cidade:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_city}}</label><br>
+                {{/if}} 
+
+                {{#if geoLocalizacao_timezone}}
+                        <label class="col-form-label-sm"><b>Fuso horário:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_timezone}}</label><br>
+                {{/if}} 
+
+
+                {{#if geoLocalizacao_ll}}
+                        <label class="col-form-label-sm"><b>Latitude, longitude:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_ll}}</label><br>
+                {{/if}} 
+
+
+
+                {{#if geoLocalizacao_area}}
+                        <label class="col-form-label-sm"><b>Área (Raio de Precisão, acurácia):</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_area}}</label><br>
+                {{/if}} 
+                {{#if geoLocalizacao_metro}}
+                        <label class="col-form-label-sm"><b>Código da Região Metropolitana:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_metro}}</label><br>
+                {{/if}} 
+                {{#if geoLocalizacao_eu}}
+                        <label class="col-form-label-sm"><b>Estado membro da Comunidade Europeia:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{geoLocalizacao_eu}}</label><br>
+                {{/if}} 
+
+                <hr><b>SITUAÇÃO DO REGISTRO</b><hr>
+
+                {{#if status}}
+                        <label class="col-form-label-sm"><b>Situação:</b></label><label class="col-form-label-bg">&nbsp;&nbsp;{{status}}</label><br>
+                {{/if}} 
+
+                </div>
+            </td></tr>
+        {{/each}}
+        </table>
+    </td></tr>
+    </table> 

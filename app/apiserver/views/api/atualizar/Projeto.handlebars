@@ -1,0 +1,148 @@
+<script style="text/javascript">
+    function cidades(municipio){
+        $('#municipio option').remove();
+        try { 
+            var estado = document.getElementById("estado").value;    
+        } catch (error) {  
+            var estado = municipio.estado;
+        }
+        if(estado == "Capital") {
+            {{!-- $('#municipio').append('<option>Selecione um municipio</option>'); --}}
+            $('#municipio').append('<option value="Capital">Capital</option>');
+        } else {
+            $.getJSON("/json/estados_cidades.json",function(data){
+                $('#municipio').append('<option value="Capital">Selecione um municipio</option>');
+                $.each(data,function(key,value){
+                    if(value.sigla == estado || value.sigla == municipio.municipio){
+                        $.each(value.cidades,function(chave,dado){
+                            if(dado == municipio.municipio ){
+                                $('#municipio').append('<option selected value="' + dado + '">' + dado + '</option>');
+                            } else {
+                                $('#municipio').append('<option value="' + dado + '">' + dado + '</option>');
+                            }  
+                        });
+                    }
+                });
+            })
+        }
+    }
+
+    function estados(pais){
+        $('#municipio option').remove();
+        $('#estado option').remove();
+        if(pais.pais == "Brasil" || pais.value == "Brasil" || pais == "Brasil"){
+            $.getJSON("/json/estados_cidades.json",function(data){
+                $('#estado').append('<option value="">Selecione um Estado</option>');
+                $.each(data,function(key,value){
+                        if(value.sigla == pais.estado || value.sigla == pais.value ){
+                            $('#estado').append('<option selected value="'+value.sigla+'">'+value.nome+'</option>');
+                        } else {
+                            $('#estado').append('<option value="'+value.sigla+'">'+value.nome+'</option>');
+                        }    
+                    })
+                });
+        } else {
+            $('#estado').append('<option>Selecione um Estado</option>');
+            $('#estado').append('<option selected value="Capital">Capital</option>');
+        }
+    }
+
+    function paises(pais){
+        $('#municipio option').remove();
+        $('#estado option').remove();
+        $('#pais option').remove();
+        $.getJSON("/json/paises.json",function(data){
+            $('#pais').append('<option>Selecione um País</option>');
+            $.each(data,function(key,value){
+                if(value.nome_pais == pais.pais || value.nome_pais == pais.value ){
+                    $('#pais').append('<option selected value="' + value.nome_pais + '">' + value.nome_pais + '</option>');
+                } else {
+                    $('#pais').append('<option value="' + value.nome_pais + '">' + value.nome_pais + '</option>');
+                }    
+            });
+        })
+    }
+    var p = {"pais":"{{result.pais}}","estado":"{{result.estado}}", "municipio": "{{result.municipio}}"};
+    paises(p);
+    estados(p);
+    cidades(p);
+</script>
+
+    <center><h1> Alterar dados deste Projeto </h1></center>
+
+    {{#each erros}}
+        <div class="alert alert-danger">{{ texto }}</div>
+    {{else}}
+
+    {{/each}}
+
+    <div class="card">
+        <div class="card-body">
+    <form name="x0" action="/api/alterar_Projeto" method="POST" onload="paises_alteracao({{result.pais}})">
+
+<center>
+    <table class="table table-striped">
+
+    </td></tr><tr><td colspan="2" align="center">
+        <label class="col-form-label-sm">Identificador único: <B>{{resultKey}}</B></label>
+        <input type="hidden" name="key_projeto" value="{{resultKey}}">
+    
+    </td></tr><tr><td>
+        <label class="col-form-label-sm">Nome do Projeto</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="nome" name="nome" value="{{result.nome}}" required>
+
+    </td></tr><tr><td>
+        <label class="col-form-label-sm">Sigla</label> 
+    </td><td>
+        <input type="text" class="form-control-sm"  size="50" maxlength="50" id="sigla" name="sigla" value="{{result.sigla}}" required>
+    </td></tr>      
+
+    <tr><td>
+        <label class="col-form-label-sm">País</label> {{result.pais}}
+    </td><td>
+            <select class="form-control-sm" id="pais" name="pais" onchange="estados(this)" required></select>
+    </td></tr>    
+    
+    <tr><td>
+        <label class="col-form-label-sm">Estado</label> {{result.estado}}
+    </td><td>
+            <select class="form-control-sm" name="estado" id="estado" onchange="cidades(this)" required></select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Município {{result.municipio}}</label> 
+    </td><td>
+        <select class="form-control-sm" name="municipio" id="municipio" required></select> 
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Projeto aberto</label> 
+    </td><td>
+            <select class="form-control-sm" id="aberto" name="aberto">
+            <option value="Sim" {{#ifeq result.aberto "Sim"}} selected{{/ifeq}}>Sim</option>
+            <option value="Nao" {{#ifeq result.aberto "Nao"}} selected{{/ifeq}}>Não</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Abrangência</label> 
+    </td><td>
+        <select class="form-control-sm" id="abrangencia" name="abrangencia">
+            <option></option>
+            <option value="Municipal"       {{#ifeq result.abrangencia "Municipal"}} selected{{/ifeq}}>Municipal</option>
+            <option value="Estadual"        {{#ifeq result.abrangencia "Estadual"}} selected{{/ifeq}}>Estadual</option>
+            <option value="País"            {{#ifeq result.abrangencia "País"}} selected{{/ifeq}}>Todo o País</option>
+            <option value="Internacional"   {{#ifeq result.abrangencia "Internacional"}} selected{{/ifeq}}>Internacional</option>
+            </select>
+    </td></tr>
+
+    <tr><td colspan="2">
+        <input type="submit" id="enviar" name="enviar" value="Alterar Orgão Executor" class="btn btn-success" style="width:100%;">
+    </td></tr><table></table>
+    
+    </center>
+
+    </form>
+    </div>
+    </div>

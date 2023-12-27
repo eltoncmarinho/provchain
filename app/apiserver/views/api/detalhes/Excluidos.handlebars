@@ -1,0 +1,140 @@
+<center>
+    <h2>Lista de registros excluídos</h2>
+    <hr>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="/"><button id="retornar" name="retornar" class="btn btn-success">Página Inicial</button></a>
+    </div>
+
+    {{!-- {{#if resultProveniencia}} --}}
+    <div class="mt-4">
+        <table width="100%" border="0">
+            <tr align="center">
+                <th>
+                    <h3>UUID - Dado</h3>
+                </th>
+                <th>
+                    <h3>UUID - Proveniência</h3>
+                </th>
+            </tr>
+            {{#each resultProveniencia}}
+            <tr>
+                <td align="center" width="30%">
+                    <b>Histórico</b> - {{key_elemento}}
+                </td>
+                <td align="center" width="30%">
+                    <a href="/api/historico/{{key}}">
+                        <button style="width:100%;" type="button" id="historico" name="historico"
+                            class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Mostrar Histórico">
+                            <b>Histórico</b> - {{key}}
+                        </button></a>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+
+
+    {{!--
+    {{/if}}
+    {{#if resultProjeto}}
+    <hr>
+    <lable class="h3">Projetos excluídos</lable>
+    <hr>
+    <div class="mt-4">
+        {{#each resultProjeto}}
+        <table width="100%" border="0">
+            <tr>
+                <td align="left" width="40%">
+                    {{ Record.nome}}
+                </td>
+                <td align="center" width="30%">
+                    <a href="/api/historico/Orgao/{{Key}}">
+                        <button style="width:100%;" type="button" id="historico" name="historico"
+                            class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Mostrar Histórico">
+                            <b>Histórico</b> - {{ Record.nome}}
+                        </button></a>
+                </td>
+            </tr>
+        </table>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if resultAssociacao}}
+    <hr>
+    <lable class="h3">Associações entre Órgãos e Projetos excluídos</lable>
+    <hr>
+    <div class="mt-4">
+        {{#each resultAssociacao}}
+        <table width="100%" border="0">
+            <tr>
+                <td align="left" width="40%">
+                    {{ Record.key}}
+                </td>
+                <td align="center" width="30%">
+                    <a href="/api/historico/Associacao/{{Key}}">
+                        <button style="width:100%;" type="button" id="historico" name="historico"
+                            class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Mostrar Histórico">
+                            <b>Histórico</b> - {{ Record.key}}
+                        </button></a>
+                </td>
+            </tr>
+        </table>
+        {{/each}}
+    </div>
+    {{/if}}
+
+
+    {{#if resultPerfil}}
+    <hr>
+    <lable class="h3">Perfis excluídos</lable>
+    <hr>
+    <div class="mt-4">
+        {{#each resultPerfil}}
+        <table width="100%" border="0">
+            <tr>
+                <td align="left" width="40%">
+                    {{ Record.nome}}
+                </td>
+                <td align="center" width="30%">
+                    <a href="/api/historico/Perfil/{{Key}}">
+                        <button style="width:100%;" type="button" id="historico" name="historico"
+                            class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Mostrar Histórico">
+                            <b>Histórico</b> - {{ Record.nome}}
+                        </button></a>
+                </td>
+            </tr>
+        </table>
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{#if resultHorizonte}}
+    <hr>
+    <lable class="h3">Horizontes excluídos</lable>
+    <hr>
+    <div class="mt-4">
+        {{#each resultHorizonte}}
+        <table width="100%" border="0">
+            <tr>
+                <td align="left" width="40%">
+                    {{ Record.nome}}
+                </td>
+                <td align="center" width="30%">
+                    <a href="/api/historico/Horizonte/{{Key}}">
+                        <button style="width:100%;" type="button" id="historico" name="historico"
+                            class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Mostrar Histórico">
+                            <b>Histórico</b> - {{ Record.nome}}
+                        </button></a>
+                </td>
+            </tr>
+        </table>
+        {{/each}}
+    </div>
+    {{/if}} --}}

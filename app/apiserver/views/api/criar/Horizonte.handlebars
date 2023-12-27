@@ -1,0 +1,551 @@
+<center><h1> Inclusão de Novo Horizonte</h1></center>
+
+    {{#each erros}}
+        <div class="alert alert-danger">{{ texto }}</div>
+    {{else}}
+
+    {{/each}}
+
+<div class="card">
+    <div class="card-body">
+
+    <form name="criarObservacao" action="/api/criar_Horizonte" method="POST">
+
+    <table class="table table-striped">
+
+    <input type="hidden" name="key_observacao" value="{{key_observacao}}">
+    
+<!-- Identificação do Horizonte -->
+    <div class="row">
+      <div class="col-md">
+        <label class="col-form-label-sm">Nome</label> 
+        <input type="text" maxlength="50" id="nome" name="nome" placeholder="Identificação do Horizonte" required class="form-control">
+        </div>
+    </div>
+<!-- Topografia e Nitidez -->
+    <div class="row">
+      <div class="col-md-2">
+        <label class="col-form-label-sm">Topografia</label> 
+        <select id="transicao_topografia" id="transicao_topografia" name="transicao_topografia" class="form-control" onchange="trocarLimites()">
+            <option></option>
+            <option value="Plana">Plana</option>
+            <option value="Irregular">Irregular</option>
+            <option value="Ondulada">Ondulada</option>
+            <option value="Discontinua">Discontinua</option>
+        </select>
+        </div>
+      <div class="col-md-2">
+        <label class="col-form-label-sm">Nitidez</label> 
+        <select id="transicao_nitidez" id="transicao_nitidez" name="transicao_nitidez" class="form-control">
+            <option></option>
+            <option value="Abrupta">Abrupta</option>
+            <option value="Gradual">Gradual</option>
+            <option value="Clara">Clara</option>
+            <option value="Difusa">Difusa</option>
+        </select>
+      </div>
+    </div>
+    <div id='limites' class=""></div>
+
+<!-- Tipo de cor --> 
+    <legend>Cor</legend>
+    <div class="row">
+      <div class="col-md">
+        <label class="col-form-label-sm" >Método</label> 
+        <select id="selectCor" id="cor_tipo" name="cor_tipo" class="form-control" onchange="mostrarform(this)">
+            <option></option>
+            <option value="corSimples">Cor Simples</option>
+            <option value="corMosqueada">Cor Mosqueada</option>
+            <option value="corVariegada">Cor Variegada</optioesn>
+        </select>
+      </div>
+    </div>
+    <div id='formulario'></div>    
+
+<!-- Propriedade Morfológicas --> 
+    <legend>Propriedade Morfológica</legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Textura</label> 
+        <select id="outros_textura" id="outros_textura" name="outros_textura" class="form-control">
+            <option></option>
+            <option value="Areia">Areia</option>
+            <option value="Areia franca">Areia Franca</option>
+            <option value="Franco arenoso">Franco Arenoso</option>
+            <option value="Franco siltoso">Franco Siltoso</opestion>
+            <option value="Silte">Silte</option>
+            <option value="Franco">Franco</option>
+            <option value="Franco argilo arenoso">Franco Argilo Arenoso</option>
+            <option value="Franco argiloso">Franco Argiloso</option>
+            <option value="Franco argilo siltoso">Franco Argilo Siltoso</option>
+            <option value="Argila arenosa">Argila Arenosa</option>
+            <option value="Argila">Argila</option>
+            <option value="Argila siltosa">Argila Siltosa</option>
+            <option value="muito argiloso">Muito Argiloso</option>        
+          </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'>Cascalho</label> 
+        <select id="outros_cascalho" id="outros_cascalho" name="outros_cascalho" class="form-control">
+            <option></option>
+            <option value="sem cascalho">sem cascalho</option>
+            <option value="com cascalho">com cascalho</option>
+            <option value="cascalhenta">cascalhenta</option>
+            <option value="muito cascalhenta">muito cascalhenta</option>        
+        </select>
+        </div> 
+    </div>
+<!-- Estrutura --> 
+    <legend>Estrutura</legend>  
+   <div class="row col-md">
+      <div class="col-md">
+        <label class="col-md">Tipo</label>
+        <legend><button class="btn btn-outline-secondary btn-sm" type="button" onclick="criarCampoEstrutura()"><i id='botaoErosao' class="fa fa-plus" aria-hidden="true"></i></button>  Estrutura </legend>
+        <select id="estrutura_tipo" id="selectEstrutura" name="selectEstrutura" class="form-control" onchange="trocarEstrutura()"> 
+            <option></option>
+            <option value="Grão Simples">Grão Simples</option>
+            <option value="Maciça">Maciça</option>
+            <option value="Agregado">Agregado</option>        
+        </select>
+        </div>
+    </div>
+    <div id='estrutura' class="form-row"></div>
+    <div id='estruturaFormulario'></div> 
+
+<!-- Consistência --> 
+    <legend>Consistência</legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Seca</label> 
+        <select id="consistencia_seco" name="consistencia_seco" class="form-control">
+            <option></option>
+            <option value="Solta">Solta</option>
+            <option value="Solta a macia">Solta a macia</option> 
+            <option value="Macia">Macia</option> 
+            <option value="Macia a ligeramente dura">Macia a ligeramente dura</option> 
+            <option value="Ligeramente dura">Ligeramente dura</option> 
+            <option value="Ligeramente dura a dura">Ligeramente dura a dura</option> 
+            <option value="Dura">Dura</option> 
+            <option value="Dura a muito dura">Dura a muito dura</option> 
+            <option value="Muito dura">Muito dura</option> 
+            <option value="Muito dura a extremamente dura">Muito dura a extremamente dura</option> 
+            <option value="Extremamente dura">Extremamente dura</option>                           
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'>Úmida</label> 
+        <select id="consistencia_umido" name="consistencia_umido" class="form-control">
+            <option></option>
+            <option value="Solta">Solta</option>
+            <option value="Solta a muito friável">Solta a muito friável</option>
+            <option value="Muito friável">Muito friável</option>
+            <option value="Muito friável a friável">Muito friável a friável</option>
+            <option value="Friável">Friável</option>
+            <option value="Friável a firme">Friável a firme</option>
+            <option value="Firme">Firme</option>
+            <option value="Firme a muito firme">Firme a muito firme</option>
+            <option value="Muito firme">Muito firme</option>
+            <option value="Muito firma a extremamente firme">Muito firma a extremamente firme</option>
+            <option value="Extremamente firme">Extremamente firme</option>             
+            </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'>Plasticidade</label> 
+        <select id="consistencia_molhada_plasticidade" name="consistencia_molhada_plasticidade" class="form-control">
+            <option></option>
+            <option value="Não plastica">Não plastica</option>
+            <option value="Não plastica e ligeramente plastica">Não plastica e ligeramente plastica</option> 
+            <option value="Ligeramente plastica">Ligeramente plastica</option> 
+            <option value="Ligeramente plastica a plastica">Ligeramente plastica a plastica</option> 
+            <option value="Plastica">Plastica</option> 
+            <option value="Plastica a muito plastica">Plastica a muito plastica</option> 
+            <option value="Muito plastica">Muito plastica</option>               
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'>Pegajosidade</label> 
+        <select id="consistencia_molhada_pegajosidade" name="consistencia_molhada_pegajosidade" class="form-control">
+            <option></option>
+            <option value="Não pegajosa">Não pegajosa</option>
+            <option value="Não pegajosa e ligeramente pegajosa">Não pegajosa e ligeramente pegajosa</option> 
+            <option value="Ligeramente pegajosa">Ligeramente pegajosa</option> 
+            <option value="Ligeramente pegajosa a pegajosa">Ligeramente pegajosa a pegajosa</option> 
+            <option value="Pegajosa">Pegajosa</option> 
+            <option value="Pegajosa a muito pegajosa">pegajosa a muito pegajosa</option> 
+            <option value="Muito pegajosa">Muito pegajosa</option>             
+        </select>
+        </div>
+    </div>
+
+<!-- Informações Complementares --> 
+<script style="text/javascript">
+  $(function(){
+        $(".btn-toggle").click(function(e){
+            e.preventDefault();
+            el = $(this).data('element');
+            $(el).toggle();
+        });
+    });
+</script>
+
+<!--
+<legend>
+  <button id="btn-toggle" name="btn-toggle" type="button" class="btn-toggle" data-element="#informacoesComplementares">
+    <div id="legendaInfComp"></div> 
+      <script style="text/javascript">
+          var visivel  = $('#informacoesComplementares').is(':visible');
+          var elemento =  document.getElementById("legendaInfComp");
+          if (visivel) {
+            elemento.innerHTML = "<i class='fa fa-minus'></i>";
+          } else {
+            elemento.innerHTML = "<i class='fa fa-plus'></i>";
+          };
+      </script>
+  </button>
+  <b>Informações Complementares</b> 
+</legend>
+
+
+<div id="informacoesComplementares" style="display:none" >
+  -->
+<!-- Superfície de Compressão --> 
+    <legend>Superfície de Compressão</legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Tipo</label> 
+        <select id="compressao_tipo" name="compressao_tipo" class="form-control">
+            <option></option>
+            <option value="Brilhante">Brilhante</option>
+            <option value="Fosca">Fosca</option>                         
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Quantidade</label> 
+        <select id="compressao_quantidade" name="compressao_quantidade" class="form-control">
+            <option></option>
+            <option value="Pouco">Pouco</option>
+            <option value="Comum">Comum</option>
+            <option value="Abundante">Abundante</option>                        
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Grau</label> 
+        <select id="compressao_grau" name="compressao_grau" class="form-control">
+            <option></option>
+            <option value="Fraco">Fraco</option>
+            <option value="Moderado">Moderado</option>
+            <option value="Forte">Forte</option>                          
+        </select>     
+        </div>
+    </div>
+<!-- Superfície de Fricção --> 
+    <legend>Superfície de Fricção</legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Quantidade</label> 
+        <select id="friccao_quantidade" name="friccao_quantidade" class="form-control">
+            <option></option>
+            <option value="Pouco">Pouco</option>
+            <option value="Comum">Comum</option>
+            <option value="Abundante">Abundante</option>                        
+        </select>     
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Tamanho</label> 
+        <select id="friccao_tamanho" name="friccao_tamanho" class="form-control">
+            <option></option>
+            <option value="Pequeno">Pequeno</option>
+            <option value="Médio">Médio</option>
+            <option value="Grande">Grande</option>                       
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Grau</label> 
+        <select id="friccao_grau" name="friccao_grau" class="form-control">
+            <option></option>
+            <option value="Fraco">Fraco</option>
+            <option value="Moderado">Moderado</option>
+            <option value="Forte">Forte</option>                          
+        </select>
+        </div>
+    </div>
+<!-- Cerosidade -->
+    <legend>Cerosidade </legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Quantidade</label> 
+        <select id="cerosidade_quantidade" name="cerosidade_quantidade" class="form-control">
+            <option></option>
+            <option value="Pouca">Pouca</option>
+            <option value="Pouca a comum">Pouca a comum</option>
+            <option value="Comum">Comum</option>
+            <option value="Comum a abundante">Comum a abundante</option>
+            <option value="Abundante">Abundante</option>                       
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Grau</label> 
+        <select id="cerosidade_grau" name="cerosidade_grau" class="form-control">
+            <option></option>
+            <option value="Fraca">Fraca</option>
+            <option value="Fraca a moderada">Fraca a moderada</option>
+            <option value="Moderada">Moderada</option>
+            <option value="Moderada a forte">Moderada a forte</option>
+            <option value="Forte">Forte</option>                             
+        </select>
+        </div>
+      <div class="col-md">
+        </div>
+    </div>
+<!-- Poros -->
+    <legend>Poros </legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Quantidade</label> 
+        <select id="poros_quantidade" name="poros_quantidade" class="form-control">
+            <option></option>
+            <option value="Poucos">Poucos</option>
+            <option value="Comuns">Comuns</option> 
+            <option value="Abundantes">Abundantes</option>                      
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Diâmetro</label> 
+        <select id="poros_diametro" name="poros_diametro" class="form-control">
+            <option></option>
+            <option value="Muito pequenos">Muito pequenos</option>
+            <option value="Pequenos">Pequenos</option>
+            <option value="Médios">Médios</option>
+            <option value="Grandes">Grandes</option>
+            <option value="Muito grandes">Muito grandes</option>                             
+        </select>
+        </div>
+      <div class="col-md">
+        </div>
+    </div>
+<!-- Eflorescência -->
+    <legend>Eflorescência </legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Presença(Quantidade)</label> 
+        <select id="eflorescencia_quantidade" name="eflorescencia_quantidade" class="form-control">
+            <option></option>
+            <option value="Natureza">Natureza</option>                      
+            <option value="Ausente">Ausente</option>
+            <option value="Não descrito">Não descrito</option>
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Local</label> 
+        <select id="eflorescencia_local" name="eflorescencia_local" class="form-control">
+            <option></option>
+            <option value="Superfície">Superfície</option>
+            <option value="Subsuperfície">Subsuperfície</option>
+            <option value="Superfície e Subsuperfície">Superfície e Subsuperfície</option>                      
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Natureza</label> 
+        <select id="eflorescencia_natureza" name="eflorescencia_natureza" class="form-control">
+            <option></option>
+            <option value="NaCl">NaCl</option>
+            <option value="CaSO4">CaSO4</option> 
+            <option value="MgSO4">MgSO4</option> 
+            <option value="Na2SO4">Na2SO4</option>
+            <option value="CaCo3">CaCo3</option>                           
+        </select>
+        </div>
+
+        <div class="col-md">
+        </div>
+    
+    </div>    
+<!-- Nódulos e Concreções -->
+    <legend>Nódulos e Concreções </legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Quantidade</label> 
+        <select id="nodulos_e_concrecoes_quantidade" name="nodulos_e_concrecoes_quantidade" class="form-control">
+            <option></option>
+            <option value="Muito pouco">Muito pouco</option>
+            <option value="Pouco">Pouco</option>
+            <option value="Frequente">Frequente</option>
+            <option value="Muito frequente">Muito Frequente</option>
+            <option value="Dominante">Dominante</option>             
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Tamanho</label> 
+        <select id="nodulos_e_concrecoes_tamanho" name="nodulos_e_concrecoes_tamanho" class="form-control">
+            <option></option>
+            <option value="Pequeno">Pequeno</option>
+            <option value="Grande">Grande</option>              
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Dureza</label> 
+        <select id="nodulos_e_concrecoes_dureza" name="nodulos_e_concrecoes_dureza" class="form-control">
+            <option></option>
+            <option value="Macio">Macio</option>
+            <option value="Duro">Duro</option>                
+        </select>
+        </div>
+    </div>    
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Natureza </label> 
+        <select id="nodulos_e_concrecoes_natureza" name="nodulos_e_concrecoes_natureza" class="form-control">
+            <option></option>
+            <option value="Carbonático">Carbonático</option>
+            <option value="Ferruginoso">Ferruginoso</option> 
+            <option value="de manganês">de manganês</option> 
+            <option value="gibsíticos">gibsíticos</option>
+            <option value="Ferro-magnesiano">Ferro-magnesiano</option>       
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Forma</label> 
+        <select id="nodulos_e_concrecoes_forma" name="nodulos_e_concrecoes_forma" class="form-control">
+            <option></option>
+            <option value="Esférica">Esférica</option>
+            <option value="Irregular">Irregular</option>
+            <option value="Angular">Angular</option>        
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Cor</label> 
+        <select id="nodulos_e_concrecoes_cor" name="nodulos_e_concrecoes_cor" class="form-control">
+            <option></option>
+            <option value="Preto">Preto</option>
+            <option value="Branco">Branco</option>
+            <option value="Vermelho">Vermelho</option>
+            <option value="Amarelo">Amarelo</option>
+            <option value="Verde">Verde</option>
+            <option value="Purpura">Purpura</option>
+            <option value="Amarelado">Amarelado</option>
+            <option value="Esverdeado">Esverdeado</option>
+            <option value="Azulado">Azulado</option>               
+        </select>
+        </div>
+    </div>        
+<!-- Raiz -->
+    <legend>Raiz </legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Quantidade</label> 
+        <select id="raiz_quantidade" name="raiz_quantidade" class="form-control">
+            <option></option>
+              <option value="Raras">Raras</option>
+              <option value="Poucas">Poucas</option> 
+              <option value="Comuns">Comuns</option> 
+              <option value="Abundantes">Abundantes</option> 
+              <option value="Ausentes">Ausentes</option>             
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Diâmetro</label> 
+        <select id="raiz_diametro" name="raiz_diametro" class="form-control">
+            <option></option>
+            <option value="Muito finas">Muito finas</option>
+            <option value="Muito finas e finas">Muito finas e finas</option>
+            <option value="Finas">Finas</option>
+            <option value="Finas e médias">Finas e médias</option>
+            <option value="Médias">Médias</option>
+            <option value="Médias e grossas">Médias e grossas</option>
+            <option value="Grossas">Grossas</option>
+            <option value="Grossas e muito grossas">Grossas e muito grossas</option>
+            <option value="Muito grossas">Muito grossas</option>                
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Tipo</label> 
+        <select id="raiz_tipo" name="raiz_tipo" class="form-control">
+            <option></option>
+            <option value="Pivotantes">Pivotantes</option>
+            <option value="Pivotantes e fasciculadas">Pivotantes e fasciculadas</option> 
+            <option value="Pivotantes e secundárias">Pivotantes e secundárias</option> 
+            <option value="Fasciculadas">Fasciculadas</option> 
+            <option value="Fasciculadas e secundárias">Fasciculadas e secundárias</option> 
+            <option value="Secundárias">Secundárias</option>              
+        </select>
+        </div>
+    </div>    
+<!-- Outros -->
+    <legend>Outros </legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Coesao</label> 
+        <select id="outros_coesao" name="outros_coesao" class="form-control">
+            <option></option>
+            <option value="Moderadamente coesa">Moderadamente Coesa</option>
+            <option value="Fortemente coesa"> Fortemente Coesa</option>           
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Cimentação</label> 
+        <select id="outros_cimentacao" name="outros_cimentacao" class="form-control">
+            <option></option>
+            <option value="Fracamente cimentado">Fracamente Cimentado</option>
+            <option value="Fortemente cimentado"> Fortemente Cimentado</option>
+            <option value="Extremamente cimentado"> Extremamente Cimentado</option> 
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Sulfeto</label> 
+        <input type="text" maxlength="50" name="outros_sulfeto" id="outros_sulfeto" placeholder="Sulfeto" class="form-control">
+        </div>
+    </div>    
+   <div class="row col-md">
+      <div class="col-md">
+        <label class='col-md'></label>Magnetismo</label> 
+        <select id="outros_magnetismo" name="outros_magnetismo" class="form-control">
+            <option></option>
+            <option value="Fracamente magnético">Fracamente Magnetico</option>
+            <option value="Fortemente magnético"> Fortemente Magnetico</option>
+            <option value="Extremamente magnético"> Extremamente Magnetico</option>          
+        </select>
+        </div>
+      <div class="col-md">
+        <label class='col-md'></label>Manganês</label> 
+        <select id="outros_manganes" name="outros_manganes" class="form-control">
+            <option></option>
+            <option value="Não aparente">Brilhante</option>
+            <option value="Ligeira">Ligeira</option>
+            <option value="Forte">Forte</option>
+            <option value="Muito forte">Muito forte</option>            
+        </select>
+        </div>  
+      <div class="col-md">
+        <label class='col-md'></label>Carbonato</label> 
+        <select id="outros_carbonato" name="outros_carbonato" class="form-control">
+            <option></option>
+            <option value="Não aparente">Brilhante</option>
+            <option value="Ligeira">Ligeira</option>
+            <option value="Forte">Forte</option>
+            <option value="Muito forte">Muito forte</option>            
+        </select>
+        </div>
+    </div>    
+<!--
+  </div> // <div id="informacoesComplementares" style="display:none" >
+-->
+<!-- Observações Complementares -->
+    <legend>Observações Complementares </legend> 
+   <div class="row col-md">
+      <div class="col-md">
+        <textarea id="observacao" name="observacao" cols="80" rows="5" placeholder="Observação"></textarea>
+        </div>
+     </div>
+
+
+<!-- Botão de gravar registro -->
+    <div>
+      <input type="submit" id="enviar" name="enviar" value="Gravar Horizonte" class="btn btn-success" style="width:100%;">
+    </div>
+
+</table>
+
+    </form>
+
+    </div>  
+</div>
