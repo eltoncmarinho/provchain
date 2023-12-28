@@ -58,9 +58,10 @@ usermod -a -G docker root
 
 #Instalando GO 
 #snap install go  --classic
-rm -rf /usr/local/go 
-#apt -y install golang-go
-tar -C /usr/local -xzf /home/go1.21.5.linux-amd64.tar.gz
+#rm -rf /usr/local/go 
+#tar -C /usr/local -xzf /home/go1.21.5.linux-amd64.tar.gz
+
+apt -y install golang-go
 
 #Instalando jq
 apt install jq
@@ -69,7 +70,7 @@ export RAIZ=/home/provchain/
 
 echo ">>>>> Ajustando variáveis de ambiente"
 whereis go
-export GOPATH=/snap/bin/go   #Alterar de acordo com a instalação do GO
+export GOPATH=/usr/bin/go   #Alterar de acordo com a instalação do GO
 export PATH=$PATH:$GOPATH
 export PATH=$RAIZ/bin:$PATH
 export FABRIC_CFG_PATH=$RAIZ/config/
@@ -86,7 +87,7 @@ echo ">>>>>>>> Verificando pré-requisitos >>>>>>>>>>>>>>>>>>"
 echo ">> curl --version" && curl --version
 echo ">> nvm --version" && nvm --version
 echo ">> nodejs --version" && nodejs --version
-echo ">> node --version" && node --version
+echo ">> node --version" && node --versionexport PATH=$PATH:$GOPATH
 echo ">> npm --version" && npm --version
 echo ">> docker --version: " && docker --version
 echo ">> docker-compose --version: " && docker-compose --version
