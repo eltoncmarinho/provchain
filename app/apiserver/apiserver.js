@@ -114,8 +114,12 @@ app.get("/", async function(req, res) {
         res.render('home', {titulo_pagina: "PROVChain - Prova de Conceito"});
 })
 
-app.get("/listar/:docType", (req, res) => {
-        res.redirect ('/api/consulta/' + req.params.docType);
+app.get("/listar/:tipoRegistro", (req, res) => {
+        res.redirect ('/api/consulta/' + req.params.tipoRegistro);
+})
+
+app.get("/listar/:tipoRegistro/:key", (req, res) => {
+        res.redirect ('/api/consulta/' + req.params.tipoRegistro) + '/' + req.params.key;
 })
 
 app.get("/adicionarOrgao", (req, res) => {
@@ -164,7 +168,7 @@ app.get("/adicionarObservacao:key", async function (req, res) {
                  
 
         let yourDate = new Date();
-        const result = await contract.submitTransaction('consultar_elemento', req.params.key);
+        const result = await contract.submitTransaction('consultar_identificador', req.params.key);
         res.render("api/criar/Observacao", {
                 descrito_coletado: user_name,
                 hoje: yourDate.toISOString().split('T')[0],
@@ -178,6 +182,56 @@ app.get("/adicionarObservacao:key", async function (req, res) {
                 req.flash("error_msg", "Houve um erro ao submeter a transação");
                 console.error(`Failed to submit transaction: ${error}`);
                 res.render("api/criar/Observacao" , {
+                        descrito_coletado: user_name,
+                        hoje: yourDate.toISOString().split('T')[0],
+                        projeto: JSON.parse(result),
+                });
+        }        
+})
+                
+app.get("/adicionarAmostra:key", async function (req, res) {
+        try {
+        // load the network configuration
+                const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+                let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8')); 
+        // Create a new file system based wallet for managing identities.
+                const walletPath = path.join(process.cwd(), 'wallet');
+                const wallet = await Wallets.newFileSystemWallet(walletPath);
+                console.log(`Wallet path: ${walletPath}`);
+        
+        // Check to see if we've already enrolled the user.
+                const identity = await wallet.get('appUser');
+                if (!identity) {
+                        console.log('An identity for the user "appUser" does not exist in the wallet');
+                        console.log('Run the registerUser.js application before retrying');
+                        return;
+                }
+        
+        // Create a new gateway for connecting to our peer node.
+                const gateway = new Gateway();
+                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+        
+                // Get the network (channel) our contract is deployed to.
+                const network = await gateway.getNetwork('mychannel');
+        
+                // Get the contract from the network.
+                const contract = network.getContract('provchain');
+                 
+
+        let yourDate = new Date();
+        const result = await contract.submitTransaction('consultar_identificador', req.params.key);
+        res.render("api/criar/Amostra", {
+                hoje: yourDate.toISOString().split('T')[0],
+                projeto: JSON.parse(result),
+        })
+        // Disconnect from the gateway.
+        await gateway.disconnect();       
+        
+        } catch (error) {
+                let yourDate = new Date();
+                req.flash("error_msg", "Houve um erro ao submeter a transação");
+                console.error(`Failed to submit transaction: ${error}`);
+                res.render("api/criar/Amostra" , {
                         descrito_coletado: user_name,
                         hoje: yourDate.toISOString().split('T')[0],
                         projeto: JSON.parse(result),

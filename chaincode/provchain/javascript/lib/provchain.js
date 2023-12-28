@@ -362,7 +362,7 @@ class provchain extends Contract {
                 record = strValue;
             }
 
-            let iterator = await ctx.stub.getHistoryForKey(key);
+            let iterator = await ctx.stub.getHistoryForKey(record.key);
             let res = await iterator.next();
             while (!res.done) {
                 if (res.value) {
@@ -619,9 +619,9 @@ class provchain extends Contract {
         while (!res.done) {
             if (res.value) {
                 // console.info(`found state update with value: ${res.value.value.toString('utf8')}`);
-                // const obj = JSON.parse(res.value.value.toString('utf8'));
-                // result.push(obj);
-                result.push(res);
+                 const obj = JSON.parse(res.value.value.toString('utf8'));
+                 result.push(obj);
+                //result.push(res);
             }
             res = await iterator.next();
         }
@@ -1038,7 +1038,7 @@ class provchain extends Contract {
         classificacao_taxonomica,
         relevo_local,
         relevo_regional,
-        observacao,
+        comentario,
         agente_causador1,
         forma1,
         classe1,
@@ -1094,7 +1094,7 @@ class provchain extends Contract {
                 classificacao_taxonomica,
                 relevo_local,
                 relevo_regional,
-                observacao,
+                comentario,
                 agente_causador1,
                 forma1,
                 classe1,
@@ -1146,7 +1146,7 @@ class provchain extends Contract {
             observacao.classificacao_taxonomica = classificacao_taxonomica;
             observacao.relevo_local = relevo_local;
             observacao.relevo_regional = relevo_regional;
-            observacao.observacao = observacao;
+            observacao.comentario = comentario;
             observacao.agente_causador1 = agente_causador1;
             observacao.forma1 = forma1;
             observacao.classe1 = classe1;
@@ -1525,6 +1525,236 @@ class provchain extends Contract {
         console.info('============= END : Create Proveniencia ===========');
     }
 
+    // Funçoes relacionadas a Amostra
+    async incAlt_Amostra(ctx,
+        key,
+        key_proveniencia,
+        key_horizonte,
+        nome,
+        comentario,
+    ) {
+        console.info('============= START : Create Amostra ===========');
+        var amostra = {};
+        const elementoAsBytes = await ctx.stub.getState(key); // get the car from chaincode state
+        if (!elementoAsBytes || elementoAsBytes.length === 0) {
+
+            amostra = {
+                key,
+                key_proveniencia,
+                key_horizonte,
+                nome,
+                comentario,
+                excluido: false,
+                tipoDoc: 'Amostra',
+                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+            }
+        } else {
+            amostra = JSON.parse(elementoAsBytes.toString());
+
+            amostra.key = key;
+            amostra.key_proveniencia = key_proveniencia;
+            amostra.key_horizonte = key_horizonte;
+            amostra.nome = nome;
+            amostra.comentario = comentario;
+            amostra.excluido = false;
+            amostra.tipoDoc = 'Amostra';
+            amostra.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+        }
+        await ctx.stub.putState(key, Buffer.from(JSON.stringify(amostra)));
+        console.info('============= END : Create Amostra ===========');
+
+    }   
+    
+    async proveniencia_Amostra(ctx,
+        key,
+        key_elemento,
+        user,
+        user_name,
+        ip,
+        geoLocalizacao_range,
+        geoLocalizacao_country,
+        geoLocalizacao_region,
+        geoLocalizacao_eu,
+        geoLocalizacao_timezone,
+        geoLocalizacao_city,
+        geoLocalizacao_ll,
+        geoLocalizacao_metro,
+        geoLocalizacao_area,
+        software_version,
+        software_browser,
+        status,
+    ) {
+        console.info('============= START : Create Proveniencia ===========');
+        var proveniencia = {};
+        const provenienciaAsBytes = await ctx.stub.getState(key);
+        if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
+            proveniencia = {
+                key,
+                key_elemento,
+                usuario_criador: user,              // usuario que criou               
+                nome_criador: user_name,            // nome do criador    
+                usuario_alterador: user,            // usuario fez a ultima alteracao                  
+                nome_alterador: user_name,          // nome que fez a ultima alteracao
+                ip,
+                geoLocalizacao_range,
+                geoLocalizacao_country,
+                geoLocalizacao_region,
+                geoLocalizacao_eu,
+                geoLocalizacao_timezone,
+                geoLocalizacao_city,
+                geoLocalizacao_ll,
+                geoLocalizacao_metro,
+                geoLocalizacao_area,
+                software_version,
+                software_browser,
+                tipoDoc: 'Proveniencia',
+                status,
+                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+            };
+        } else {
+            proveniencia = JSON.parse(provenienciaAsBytes.toString());
+            proveniencia.key = key;
+            proveniencia.key_elemento = key_elemento;
+            proveniencia.usuario_alterador = user;
+            proveniencia.nome_alterador = user_name;
+            proveniencia.ip = ip;
+            proveniencia.geoLocalizacao_range = geoLocalizacao_range;
+            proveniencia.geoLocalizacao_country = geoLocalizacao_country;
+            proveniencia.geoLocalizacao_region = geoLocalizacao_region;
+            proveniencia.geoLocalizacao_eu = geoLocalizacao_eu;
+            proveniencia.geoLocalizacao_timezone = geoLocalizacao_timezone;
+            proveniencia.geoLocalizacao_city = geoLocalizacao_city;
+            proveniencia.geoLocalizacao_ll = geoLocalizacao_ll;
+            proveniencia.geoLocalizacao_metro = geoLocalizacao_metro;
+            proveniencia.geoLocalizacao_area = geoLocalizacao_area;
+            proveniencia.software_version = software_version;
+            proveniencia.software_browser = software_browser;
+            proveniencia.status = status;
+            proveniencia.excluido = false;
+            proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+
+        }
+
+        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
+        console.info('============= END : Create Proveniencia ===========');
+    }
+    
+    // Funçoes relacionadas a Analise
+    async incAlt_Analise(ctx,
+        key,
+        key_proveniencia,
+        key_amostra,
+        nome,
+        resultado,
+    ) {
+        console.info('============= START : Create Analise ===========');
+        var analise = {};
+        const elementoAsBytes = await ctx.stub.getState(key); // get the car from chaincode state
+        if (!elementoAsBytes || elementoAsBytes.length === 0) {
+
+            analise = {
+                key,
+                key_proveniencia,
+                key_amostra,
+                nome,
+                resultado,
+                excluido: false,
+                tipoDoc: 'Analise',
+                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+            }
+        } else {
+            analise = JSON.parse(elementoAsBytes.toString());
+
+            analise.key = key;
+            analise.key_proveniencia = key_proveniencia;
+            analise.key_amostra = key_amostra;
+            analise.nome = nome;
+            analise.resultado = resultado;
+            analise.excluido = false;
+            analise.tipoDoc = 'Analise';
+            analise.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+        }
+        await ctx.stub.putState(key, Buffer.from(JSON.stringify(analise)));
+        console.info('============= END : Create Analise ===========');
+
+    }   
+    
+    async proveniencia_Analise(ctx,
+        key,
+        key_elemento,
+        user,
+        user_name,
+        ip,
+        geoLocalizacao_range,
+        geoLocalizacao_country,
+        geoLocalizacao_region,
+        geoLocalizacao_eu,
+        geoLocalizacao_timezone,
+        geoLocalizacao_city,
+        geoLocalizacao_ll,
+        geoLocalizacao_metro,
+        geoLocalizacao_area,
+        software_version,
+        software_browser,
+        status,
+    ) {
+        console.info('============= START : Create Proveniencia ===========');
+        var proveniencia = {};
+        const provenienciaAsBytes = await ctx.stub.getState(key);
+        if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
+            proveniencia = {
+                key,
+                key_elemento,
+                usuario_criador: user,              // usuario que criou               
+                nome_criador: user_name,            // nome do criador    
+                usuario_alterador: user,            // usuario fez a ultima alteracao                  
+                nome_alterador: user_name,          // nome que fez a ultima alteracao
+                ip,
+                geoLocalizacao_range,
+                geoLocalizacao_country,
+                geoLocalizacao_region,
+                geoLocalizacao_eu,
+                geoLocalizacao_timezone,
+                geoLocalizacao_city,
+                geoLocalizacao_ll,
+                geoLocalizacao_metro,
+                geoLocalizacao_area,
+                software_version,
+                software_browser,
+                tipoDoc: 'Proveniencia',
+                status,
+                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+            };
+        } else {
+            proveniencia = JSON.parse(provenienciaAsBytes.toString());
+            proveniencia.key = key;
+            proveniencia.key_elemento = key_elemento;
+            proveniencia.usuario_alterador = user;
+            proveniencia.nome_alterador = user_name;
+            proveniencia.ip = ip;
+            proveniencia.geoLocalizacao_range = geoLocalizacao_range;
+            proveniencia.geoLocalizacao_country = geoLocalizacao_country;
+            proveniencia.geoLocalizacao_region = geoLocalizacao_region;
+            proveniencia.geoLocalizacao_eu = geoLocalizacao_eu;
+            proveniencia.geoLocalizacao_timezone = geoLocalizacao_timezone;
+            proveniencia.geoLocalizacao_city = geoLocalizacao_city;
+            proveniencia.geoLocalizacao_ll = geoLocalizacao_ll;
+            proveniencia.geoLocalizacao_metro = geoLocalizacao_metro;
+            proveniencia.geoLocalizacao_area = geoLocalizacao_area;
+            proveniencia.software_version = software_version;
+            proveniencia.software_browser = software_browser;
+            proveniencia.status = status;
+            proveniencia.excluido = false;
+            proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+
+        }
+
+        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
+        console.info('============= END : Create Proveniencia ===========');
+    }
+    
 }
 
 module.exports = provchain;

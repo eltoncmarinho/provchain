@@ -134,10 +134,8 @@ router.get('/consulta/blockchain', async function (req, res) {
                 // Get the contract from the network.
                 const contract = network.getContract('provchain');
                 // Evaluate the specified transaction.
-                console.log("01");
-                const result = await contract.evaluateTransaction("listar_tudo");
-//                console.log ("JSON.parse(result): " + JSON.parse(result))
-                console.log("02");
+                const result = await contract.evaluateTransaction("listar_blockchain");
+//                console.log ("JSON.parse(result): " + JSON.parse(result));
 
                 res.render('api/detalhes/Listar', {
                         lista: JSON.parse(result)//.sort('desc'),// 'result.Record.data_criacao', 'desc')),
@@ -178,20 +176,20 @@ router.get('/consulta/:tipoRegistro', async function (req, res) {
                 const contract = network.getContract('provchain');
 
                 // Ajustando titulo
-                switch (req.params.tipoRegistro) {
-                        case 'Orgao': titulo_pagina = 'Lista os Orgãos Executores';
+                switch (req.params.tipoRegistro) { 
+                        case 'Orgao': titulo_pagina = 'Lista os Órgãos Executores';
                                 break;
                         case 'Projeto': titulo_pagina = 'Lista os Projetos cadastrados';
                                 break;
-                        case 'Observacao': titulo_pagina = 'Lista os Observações cadastrados';
+                        case 'Observacao': titulo_pagina = 'Lista as Observações cadastradas para o Projeto selecionado';
                                 break;
                         case 'Horizonte': titulo_pagina = 'Lista os Horizontes cadastrados para a Observação selecionada';
                                 break;
-                        case 'Amostra': titulo_pagina = 'Lista os Amostras cadastrados para o Horizonte selecionado';
+                        case 'Amostra': titulo_pagina = 'Lista as Amostras cadastradas para o Horizonte selecionado';
                                 break;
-                        case 'Analise': titulo_pagina = 'Lista os Analises cadastrados para a Amostra selecionado';
+                        case 'Analise': titulo_pagina = 'Lista as Análises cadastradas para a Amostra selecionada';
                                 break;
-                        case 'Proveniencia': titulo_pagina = 'Proveniência do Registro';
+                        case 'Proveniencia': titulo_pagina = 'Metadados de Proveniência';
                                 break;
                         default: {
                                 req.flash("error_msg", "Esta funcionalidade não foi acionada de forma correta.")
@@ -243,9 +241,9 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                 // Get the contract from the network.
                 const contract = network.getContract('provchain');
 
-
                 // Evaluate the specified transaction.
                 const result = await contract.evaluateTransaction('consultar_identificador', req.params.key);
+
                 if (JSON.parse(result).tipoDoc != undefined) {
                         switch (req.params.tipoRegistro) {
                                 case 'Orgao': {
@@ -281,8 +279,6 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                                         if (JSON.parse(result).tipoDoc === 'Horizonte') {
                                                 const resultObservacao = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_observacao);
                                                 const resultproveniencia = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_proveniencia);
-                                                console.log ("resultObservacao" + resultObservacao)
-
                                                 res.render('api/detalhes/Horizonte', {
                                                         tipoRegistro: 'Horizonte',
                                                         titulo_pagina: "Detalhes de Horizonte",
@@ -303,6 +299,54 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                                         }
                                         break;
                                 }
+                                case 'Amostra': {
+                                        if (JSON.parse(result).tipoDoc === 'Amostra') {
+                                                const resultAmostra = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_horizonte);
+                                                const resultproveniencia = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_proveniencia);
+                                                res.render('api/detalhes/Amostra', {
+                                                        tipoRegistro: 'Amostra',
+                                                        titulo_pagina: "Detalhes da Amostra",
+                                                        result: JSON.parse(result),
+                                                        resultKey: req.params.key,
+                                                        amostra: JSON.parse(resultAmostra),
+                                                        proveniencia: JSON.parse(resultproveniencia),
+                                                });
+                                        } else {
+                                                const resultAmostras = await contract.evaluateTransaction('consultar_dadosAssociados', req.params.key, 'Amostra'); 
+                                                res.render('home', {
+                                                        tipoRegistro: 'Amostra',
+                                                        titulo_pagina: "Lista das Amostras cadastradas",
+                                                        result: JSON.parse(result), 
+                                                        resultKey: req.params.key,
+                                                        resultAmostra: JSON.parse(resultAmostras), // Lista de Horizontes do Observacao 
+                                                });
+                                        }
+                                        break;
+                                }                    
+                                case 'Analise': {
+                                        if (JSON.parse(result).tipoDoc === 'Analise') {
+                                                const resultAnalise = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_amostra);
+                                                const resultproveniencia = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_proveniencia);
+                                                res.render('api/detalhes/Analise', {
+                                                        tipoRegistro: 'Analise',
+                                                        titulo_pagina: "Detalhes da Analise",
+                                                        result: JSON.parse(result),
+                                                        resultKey: req.params.key,
+                                                        analise: JSON.parse(resultAnalise),
+                                                        proveniencia: JSON.parse(resultproveniencia),
+                                                });
+                                        } else {
+                                                const resultAnalises = await contract.evaluateTransaction('consultar_dadosAssociados', req.params.key, 'Analise'); 
+                                                res.render('home', {
+                                                        tipoRegistro: 'Analise',
+                                                        titulo_pagina: "Lista das Análises realizadas",
+                                                        result: JSON.parse(result), 
+                                                        resultKey: req.params.key,
+                                                        resultAnalise: JSON.parse(resultAnalises), // Lista de Horizontes do Observacao 
+                                                });
+                                        }
+                                        break;
+                                }                                                          
                                 case 'Proveniencia': {
                                         const result_elemento = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_elemento);
                                         res.render('api/proveniencia/' + JSON.parse(result_elemento).tipoDoc, {
@@ -368,8 +412,8 @@ router.get('/registros_excluidos', async function (req, res) {
                         resultExcluidos: JSON.parse(resultExc),
                 });
         } catch (error) {
-                console.log('Não foi possível acessar a rotina 0: ' + error);
-                req.flash('error_msg', 'Não foi possível acessar a rotina 0');
+                console.log('Não foi possível acessar a rotina 0X: ' + error);
+                req.flash('error_msg', 'Não foi possível acessar a rotina 0x');
                 res.render('home', { titulo_pagina: "PROVChain - Prova de Conceito" });
         }
 
@@ -417,8 +461,8 @@ router.get('/excluidos', async function (req, res) {
                         resultProveniencia: JSON.parse(resultProv),
                 });
         } catch (error) {
-                console.log('Não foi possível acessar a rotina 0: ' + error);
-                req.flash('error_msg', 'Não foi possível acessar a rotina 0');
+                console.log('Não foi possível acessar a rotina 0y: ' + error);
+                req.flash('error_msg', 'Não foi possível acessar a rotina 0y');
                 res.render('home', { titulo_pagina: "PROVChain - Prova de Conceito" });
         }
 
@@ -558,11 +602,13 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
                 const contract = network.getContract('provchain');
 
                 // Evaluate the specified transaction.
-                console.log ('consultar_identificador: '+ req.params.key)
-                const result = (await contract.evaluateTransaction('consultar_identificador', req.params.key));
+                const result = await contract.evaluateTransaction('consultar_identificador', req.params.key);
+                console.log("JSON.parse(result).tipoDoc:" + JSON.parse(result).tipoDoc )
                 if (JSON.parse(result).tipoDoc != undefined) {
                         const historico = await contract.evaluateTransaction('historico', req.params.key);
+                        console.log ("historico :" + JSON.parse(historico))
                         const historicoProv = await contract.evaluateTransaction('historico', JSON.parse(result).key_proveniencia);
+                        console.log ("historicoProv :" + historicoProv)
                         switch (req.params.tipoRegistro) {
                                 case 'Orgao': {
                                         req.flash("success_msg", "Histórico de " + req.params.key)
@@ -574,7 +620,6 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
                                         })
                                         break;
                                 }
-
                                 case 'Projeto': {
                                         req.flash("success_msg", "Histórico de " + req.params.key)
                                         res.render('api/historico/Projeto', {
@@ -608,7 +653,6 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
                                         })
                                         break;
                                 }
-
                                 case 'Horizonte': {
                                         const historicoObservacao = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_observacao);
                                         req.flash("success_msg", "Histórico de " + req.params.key)
@@ -621,7 +665,30 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
                                         })
                                         break;
                                 }
-
+                                case 'Amostra': {
+                                        const historicoHorizonte = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_horizonte);
+                                        req.flash("success_msg", "Histórico de " + req.params.key)
+                                        res.render('api/historico/Amostra', {
+                                                tipoRegistro: req.params.tipoRegistro,
+                                                result: JSON.parse(historico),
+                                                resultProv: JSON.parse(historicoProv),
+                                                resultHorizonte: JSON.parse(historicoHorizonte),
+                                                parametros: req.params,
+                                        })
+                                        break;
+                                }
+                                case 'Analise': {
+                                        const historicoAmostra = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_amostra);
+                                        req.flash("success_msg", "Histórico de " + req.params.key)
+                                        res.render('api/historico/Analise', {
+                                                tipoRegistro: req.params.tipoRegistro,
+                                                result: JSON.parse(historico),
+                                                resultProv: JSON.parse(historicoProv),
+                                                resultAmostra: JSON.parse(historicoAmostra),
+                                                parametros: req.params,
+                                        })
+                                        break;
+                                }
                                 case 'Proveniencia': {
                                         res.render('api/historico/Proveniencia', {
                                                 tipoRegistro: req.params.tipoRegistro,
@@ -1207,6 +1274,260 @@ router.get('/criar/Horizonte/:key', async function (req, res) {
         }
 });
 
+router.post('/criar_Amostra', async function (req, res) {
+        console.log("===> /api/criar_Amostra/");
+        try {
+                // load the network configuration
+                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+                let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+
+                // Create a new file system based wallet for managing identities.
+                const walletPath = path.join(process.cwd(), 'wallet');
+                const wallet = await Wallets.newFileSystemWallet(walletPath);
+                console.log(`Wallet path: ${walletPath}`);
+
+                // Check to see if we've already enrolled the user.
+                const identity = await wallet.get('appUser');
+                if (!identity) {
+                        console.log('An identity for the user "appUser" does not exist in the wallet');
+                        console.log('Run the registerUser.js application before retrying');
+                        return;
+                }
+
+                // Create a new gateway for connecting to our peer node.
+                const gateway = new Gateway();
+                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+
+                // Get the network (channel) our contract is deployed to.
+                const network = await gateway.getNetwork('mychannel');
+
+                // Get the contract from the network.
+                const contract = network.getContract('provchain');
+
+                // Submit the specified transaction.
+                //console.log('********************* Valores a serem passados para a chaincode *****************')
+                req.body.key_amostra = uuid()
+                req.body.key_proveniencia = uuid();
+
+                // console.log("req.body.key_horizonte:" + req.body.key_horizonte);
+                // console.log("req.body.nome:" + req.body.nome);
+                console.log("req.body:" + req.body);
+                console.log("JSON.stringify(req.body):" + JSON.stringify(req.body));
+
+                const resultado = await contract.submitTransaction('incAlt_Amostra',
+                        req.body.key_amostra,
+                        req.body.key_proveniencia,
+                        req.body.key_horizonte,
+                        req.body.nome,
+                        req.body.comentario,
+                );
+
+                const resultProv = await contract.submitTransaction('proveniencia_Amostra',
+                        req.body.key_proveniencia,
+                        req.body.key_amostra,
+                        user,
+                        user_name,
+                        ip.address(),
+                        geoLocalizacao.range,
+                        geoLocalizacao.country,
+                        geoLocalizacao.region,
+                        geoLocalizacao.eu,
+                        geoLocalizacao.timezone,
+                        geoLocalizacao.city,
+                        geoLocalizacao.ll,
+                        geoLocalizacao.metro,
+                        geoLocalizacao.area,
+                        software_version,
+                        navigator.userAgent,
+                        'Registro incluído',
+                );
+                console.log('Transaction has been submitted');
+                req.flash("success_msg", req.body.nome + " criado com sucesso")
+                res.redirect("/api/consulta/Amostra/" + req.body.key_horizonte);
+
+                // Disconnect from the gateway.
+                await gateway.disconnect();
+
+        } catch (error) {
+                req.flash("error_msg", "Houve um erro ao submeter a transação");
+                console.error(`Failed to submit transaction: ${error}`);
+                res.redirect("/api/consulta/Amostra/" + req.body.key_horizonte);
+        };
+});        
+
+router.get('/criar/Amostra/:key', async function (req, res) {
+        console.log("===> /api/criar/Amostra/" + req.params.key);
+        try {
+                // load the network configuration
+                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+                let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+
+                // Create a new file system based wallet for managing identities.
+                const walletPath = path.join(process.cwd(), 'wallet');
+                const wallet = await Wallets.newFileSystemWallet(walletPath);
+                console.log(`Wallet path: ${walletPath}`);
+
+                // Check to see if we've already enrolled the user.
+                const identity = await wallet.get('appUser');
+                if (!identity) {
+                        console.log('An identity for the user "appUser" does not exist in the wallet');
+                        console.log('Run the registerUser.js application before retrying');
+                        return;
+                }
+                // Create a new gateway for connecting to our peer node.
+                const gateway = new Gateway();
+                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+
+                // Get the network (channel) our contract is deployed to.
+                const network = await gateway.getNetwork('mychannel');
+
+                // Get the contract from the network.
+                const contract = network.getContract('provchain');
+
+                // Submit the specified transaction.
+                const result = await contract.submitTransaction('consultar_identificador', req.params.key);
+                res.render('api/criar/Amostra', {
+                        result: JSON.parse(result),
+                        key_horizonte: req.params.key,
+                })
+
+                // Disconnect from the gateway.
+                await gateway.disconnect();
+
+        } catch (error) {
+                req.flash("error_msg", "Houve um erro ao submeter a transação");
+                console.error(`Failed to submit transaction: ${error}`);
+                res.render("/api/consulta/Horizonte");
+        }
+});
+
+router.post('/criar_Analise', async function (req, res) {
+        console.log("===> /api/criar_Analise/");
+        try {
+                // load the network configuration
+                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+                let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+
+                // Create a new file system based wallet for managing identities.
+                const walletPath = path.join(process.cwd(), 'wallet');
+                const wallet = await Wallets.newFileSystemWallet(walletPath);
+                console.log(`Wallet path: ${walletPath}`);
+
+                // Check to see if we've already enrolled the user.
+                const identity = await wallet.get('appUser');
+                if (!identity) {
+                        console.log('An identity for the user "appUser" does not exist in the wallet');
+                        console.log('Run the registerUser.js application before retrying');
+                        return;
+                }
+
+                // Create a new gateway for connecting to our peer node.
+                const gateway = new Gateway();
+                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+
+                // Get the network (channel) our contract is deployed to.
+                const network = await gateway.getNetwork('mychannel');
+
+                // Get the contract from the network.
+                const contract = network.getContract('provchain');
+
+                // Submit the specified transaction.
+                //console.log('********************* Valores a serem passados para a chaincode *****************')
+                req.body.key_analise = uuid()
+                req.body.key_proveniencia = uuid();
+
+                console.log("req.body.key_amostra:" + req.body.key_amostra);                
+                console.log("req.body.nome:" + req.body.nome);                
+                console.log("req.body.resultado:" + req.body.resultado);                
+
+                const result = await contract.submitTransaction('incAlt_Analise',
+                        req.body.key_analise,
+                        req.body.key_proveniencia,
+                        req.body.key_amostra,
+                        req.body.nome,
+                        req.body.resultado,
+                );
+
+                const resultProv = await contract.submitTransaction('proveniencia_Analise',
+                        req.body.key_proveniencia,
+                        req.body.key_analise,
+                        user,
+                        user_name,
+                        ip.address(),
+                        geoLocalizacao.range,
+                        geoLocalizacao.country,
+                        geoLocalizacao.region,
+                        geoLocalizacao.eu,
+                        geoLocalizacao.timezone,
+                        geoLocalizacao.city,
+                        geoLocalizacao.ll,
+                        geoLocalizacao.metro,
+                        geoLocalizacao.area,
+                        software_version,
+                        navigator.userAgent,
+                        'Registro incluído',
+                );
+
+                console.log('Transaction has been submitted');
+                req.flash("success_msg", req.body.nome + " criada com sucesso")
+                res.redirect("/api/consulta/Analise/" + req.body.key_amostra);
+
+                // Disconnect from the gateway.
+                await gateway.disconnect();
+
+        } catch (error) {
+                req.flash("error_msg", "Houve um erro ao submeter a transação");
+                console.error(`Failed to submit transaction: ${error}`);
+                res.redirect("/api/consulta/Analise/" + req.body.key_amostra);
+        }
+});
+
+router.get('/criar/Analise/:key', async function (req, res) {
+        console.log("===> /api/criar/Analise/" + req.params.key);
+        try {
+                // load the network configuration
+                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+                let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+
+                // Create a new file system based wallet for managing identities.
+                const walletPath = path.join(process.cwd(), 'wallet');
+                const wallet = await Wallets.newFileSystemWallet(walletPath);
+                console.log(`Wallet path: ${walletPath}`);
+
+                // Check to see if we've already enrolled the user.
+                const identity = await wallet.get('appUser');
+                if (!identity) {
+                        console.log('An identity for the user "appUser" does not exist in the wallet');
+                        console.log('Run the registerUser.js application before retrying');
+                        return;
+                }
+                // Create a new gateway for connecting to our peer node.
+                const gateway = new Gateway();
+                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+
+                // Get the network (channel) our contract is deployed to.
+                const network = await gateway.getNetwork('mychannel');
+
+                // Get the contract from the network.
+                const contract = network.getContract('provchain');
+
+                // Submit the specified transaction.
+                const result = await contract.submitTransaction('consultar_identificador', req.params.key);
+                res.render('api/criar/Analise', {
+                        result: JSON.parse(result),
+                        key_amostra: req.params.key,
+                })
+
+                // Disconnect from the gateway.
+                await gateway.disconnect();
+
+        } catch (error) {
+                req.flash("error_msg", "Houve um erro ao submeter a transação");
+                console.error(`Failed to submit transaction: ${error}`);
+                res.render("/api/consulta/Amostra");
+        }
+});
+
 // ***************************************************************************************************************
 // Alteração
 router.post('/alterar_Orgao', async function (req, res) {
@@ -1436,7 +1757,7 @@ router.post('/alterar_Observacao', async function (req, res) {
                         req.body.classificacao_taxonomica,
                         req.body.relevo_local,
                         req.body.relevo_regional,
-                        req.body.observacao,
+                        req.body.comentario,
                         req.body.agente_causador1,
                         req.body.forma1,
                         req.body.classe1,
@@ -1484,6 +1805,7 @@ router.post('/alterar_Observacao', async function (req, res) {
                 req.flash("error_msg", "Houve um erro ao submeter a transação");
                 console.error(`Failed to submit transaction: ${error}`);
                 res.render("/api/consulta/Observacao");
+                //res.redirect('home');
         }
 });
 
@@ -1663,6 +1985,171 @@ router.post('/alterar_Horizonte', async function (req, res) {
         }
 });
 
+router.post('/alterar_Amostra', async function (req, res) {
+        console.log("===> /alterar_Amostra");
+        console.log('/alterar_Amostra');
+
+        try {
+                // load the network configuration
+                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+                let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+
+                // Create a new file system based wallet for managing identities.
+                const walletPath = path.join(process.cwd(), 'wallet');
+                const wallet = await Wallets.newFileSystemWallet(walletPath);
+                console.log(`Wallet path: ${walletPath}`);
+
+                // Check to see if we've already enrolled the user.
+                const identity = await wallet.get('appUser');
+                if (!identity) {
+                        console.log('An identity for the user "appUser" does not exist in the wallet');
+                        console.log('Run the registerUser.js application before retrying');
+                        return;
+                }
+
+                // Create a new gateway for connecting to our peer node.
+                const gateway = new Gateway();
+                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+
+                // Get the network (channel) our contract is deployed to.
+                const network = await gateway.getNetwork('mychannel');
+
+                // Get the contract from the network.
+                const contract = network.getContract('provchain');
+
+                // Submit the specified transaction.
+    
+                const resultProveniencia = await contract.evaluateTransaction('consultar_identificador', req.body.key_amostra);
+                req.body.key_proveniencia = JSON.parse(resultProveniencia).key_proveniencia;
+
+                const resultAmostra = await contract.submitTransaction('incAlt_Amostra',
+                        req.body.key_amostra,
+                        req.body.key_proveniencia,
+                        req.body.key_horizonte,
+                        req.body.nome,
+                        req.body.comentario,
+                );
+
+                const resultProv = await contract.submitTransaction('proveniencia_Amostra',
+                        req.body.key_proveniencia,
+                        req.body.key_amostra,
+                        user,
+                        user_name,
+                        ip.address(),
+                        geoLocalizacao.range,
+                        geoLocalizacao.country,
+                        geoLocalizacao.region,
+                        geoLocalizacao.eu,
+                        geoLocalizacao.timezone,
+                        geoLocalizacao.city,
+                        geoLocalizacao.ll,
+                        geoLocalizacao.metro,
+                        geoLocalizacao.area,
+                        software_version,
+                        navigator.userAgent,
+                        'Registro alterado',
+                );
+                console.log('Transaction has been submitted');
+                req.flash("success_msg", req.body.nome + " alterado com sucesso")
+                res.redirect('/api/consulta/Amostra/' + req.body.key_horizonte);
+
+                // Disconnect from the gateway.
+                await gateway.disconnect();
+
+        } catch (error) {
+                req.flash("error_msg", "Houve um erro ao submeter a transação");
+                console.error(`Failed to submit transaction: ${error}`);
+                res.render("/api/consulta/Amostra/" + req.body.key_horizonte);
+        }
+});
+
+router.post('/alterar_Analise', async function (req, res) {
+        console.log("===> /alterar_Analise");
+        console.log('/alterar_Analise');
+
+        try {
+                // load the network configuration
+                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+                let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+
+                // Create a new file system based wallet for managing identities.
+                const walletPath = path.join(process.cwd(), 'wallet');
+                const wallet = await Wallets.newFileSystemWallet(walletPath);
+                console.log(`Wallet path: ${walletPath}`);
+
+                // Check to see if we've already enrolled the user.
+                const identity = await wallet.get('appUser');
+                if (!identity) {
+                        console.log('An identity for the user "appUser" does not exist in the wallet');
+                        console.log('Run the registerUser.js application before retrying');
+                        return;
+                }
+
+                // Create a new gateway for connecting to our peer node.
+                const gateway = new Gateway();
+                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+
+                // Get the network (channel) our contract is deployed to.
+                const network = await gateway.getNetwork('mychannel');
+
+                // Get the contract from the network.
+                const contract = network.getContract('provchain');
+
+                // Submit the specified transaction.
+                //    console.log('********************* Valores a serem passados para a chaincode *****************')
+                console.log('********************* Valores a serem passados para a chaincode *****************')
+                console.log("req.body.resultKey :" + req.body.resultKey)                
+                console.log("req.body.key_amostra :" + req.body.key_amostra)                
+                console.log("req.body.key_analise :" + req.body.key_analise)                
+                console.log("req.bnaliseody.nome :" + req.body.nome)                
+                console.log("req.body.resultado :" + req.body.resultado)   
+                console.log("req.body :" + JSON.stringify(req.body))   
+                             
+
+                const resultProveniencia = await contract.evaluateTransaction('consultar_identificador', req.body.key_analise);
+                req.body.key_proveniencia = JSON.parse(resultProveniencia).key_proveniencia;
+
+                const resultAmostra = await contract.submitTransaction('incAlt_Analise',
+                        req.body.key_analise,
+                        req.body.key_proveniencia,
+                        req.body.key_amostra,
+                        req.body.nome,
+                        req.body.resultado,
+                );
+
+                const resultProv = await contract.submitTransaction('proveniencia_Analise',
+                        req.body.key_proveniencia,
+                        req.body.key_analise,
+                        user,
+                        user_name,
+                        ip.address(),
+                        geoLocalizacao.range,
+                        geoLocalizacao.country,
+                        geoLocalizacao.region,
+                        geoLocalizacao.eu,
+                        geoLocalizacao.timezone,
+                        geoLocalizacao.city,
+                        geoLocalizacao.ll,
+                        geoLocalizacao.metro,
+                        geoLocalizacao.area,
+                        software_version,
+                        navigator.userAgent,
+                        'Registro alterado',
+                );
+                console.log('Transaction has been submitted');
+                req.flash("success_msg", req.body.nome + " alterada com sucesso")
+                res.redirect('/api/consulta/Analise/' + req.body.key_amostra);
+
+                // Disconnect from the gateway.
+                await gateway.disconnect();
+
+        } catch (error) {
+                req.flash("error_msg", "Houve um erro ao submeter a transação");
+                console.error(`Failed to submit transaction: ${error}`);
+                res.render("/api/consulta/Analise/" + req.body.key_amostra);
+        }
+});
+
 router.get('/alterar/:tipoRegistro', async function (req, res) {
         req.flash("error_msg", req.params.tipoRegistro + " necessita de mais um parâmetro, ou foi declarado equivocadamente.")
         res.redirect('/');
@@ -1688,7 +2175,7 @@ router.get('/alterar/:tipoRegistro/:key', async function (req, res) {
                 // Create a new gateway for connecting to our peer node.
                 const gateway = new Gateway();
                 await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
-
+                
                 // Get the network (channel) our contract is deployed to.
                 const network = await gateway.getNetwork('mychannel');
 
@@ -1697,7 +2184,6 @@ router.get('/alterar/:tipoRegistro/:key', async function (req, res) {
                 // Evaluate the specified transaction.
 
                 let yourDate = new Date();
-                const resultprojetos = await contract.evaluateTransaction("listar_entidade", "Projeto", "", "");
                 const result = await contract.evaluateTransaction('consultar_identificador', req.params.key);
                 if (JSON.parse(result).tipoDoc != undefined) {
                         // Tratamento de alteração de observacao 
@@ -1709,32 +2195,7 @@ router.get('/alterar/:tipoRegistro/:key', async function (req, res) {
                                                 tipoRegistro: req.params.tipoRegistro,                  //
                                                 descrito_coletado: user_name,                           //
                                                 projetos: JSON.parse(resultprojetos),                   // lista de projetos
-                                                //projeto: JSON.parse(dataProjeto),                       // observacao - dados do projeto 
-
                                         })
-                                        break;
-                                case 'Observacao':
-                                        dataProjeto = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_projeto);//.sort('key_observacao', 'desc');
-
-                                        res.render(`api/atualizar/${req.params.tipoRegistro}`, {
-                                                result: JSON.parse(result),                             // result com dados do item parametro indicado
-                                                resultKey: req.params.key,                              // caso observacao esteja sendo alterado usar esta variavel    
-                                                tipoRegistro: req.params.tipoRegistro,                  //
-                                                descrito_coletado: user_name,                           //
-                                                projetos: JSON.parse(resultprojetos),                   // lista de projetos
-                                                projeto: JSON.parse(dataProjeto),                       // observacao - dados do projeto 
-                                        })
-                                        break;
-                                case 'Horizonte':
-                                        dataObservacao = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_observacao);
-
-                                        res.render(`api/atualizar/${req.params.tipoRegistro}`, {
-                                                result: JSON.parse(result),                             // result com dados do item parametro indicado
-                                                resultKey: req.params.key,                              // caso observacao esteja sendo alterado usar esta variavel    
-                                                tipoRegistro: req.params.tipoRegistro,                  //
-                                                dataObservacao: JSON.parse(dataObservacao),
-                                        })
-
                                         break;
                                 case 'Projeto':
                                         const prov = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_proveniencia);
@@ -1745,6 +2206,49 @@ router.get('/alterar/:tipoRegistro/:key', async function (req, res) {
                                                 proveniencia: JSON.parse(prov),
                                         })
                                         break;
+                                case 'Observacao':
+                                        const resultprojetos = await contract.evaluateTransaction("listar_entidade", "Projeto", "", "");
+                                        const dataProjeto = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_projeto);//.sort('key_observacao', 'desc');
+                                        res.render(`api/atualizar/${req.params.tipoRegistro}`, {
+                                                result: JSON.parse(result),                             // result com dados do item parametro indicado
+                                                resultKey: req.params.key,                              // caso observacao esteja sendo alterado usar esta variavel    
+                                                tipoRegistro: req.params.tipoRegistro,                  //
+                                                descrito_coletado: user_name,                           //
+                                                projetos: JSON.parse(resultprojetos),                   // lista de projetos
+                                                projeto: JSON.parse(dataProjeto),                       // observacao - dados do projeto 
+                                        })
+                                        break;
+                                case 'Horizonte':
+                                        const dataObservacao = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_observacao);
+                                        res.render(`api/atualizar/${req.params.tipoRegistro}`, {
+                                                result: JSON.parse(result),                             // result com dados do item parametro indicado
+                                                resultKey: req.params.key,                              // caso observacao esteja sendo alterado usar esta variavel    
+                                                tipoRegistro: req.params.tipoRegistro,                  //
+                                                dataObservacao: JSON.parse(dataObservacao),
+                                        })
+
+                                        break;
+                                case 'Amostra':
+                                        const dataHorizonte = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_horizonte);
+                                        // console.log("dataHorizonte: " + dataHorizonte)
+                                        res.render(`api/atualizar/${req.params.tipoRegistro}`, {
+                                                result: JSON.parse(result),                             
+                                                resultKey: req.params.key,                              
+                                                tipoRegistro: req.params.tipoRegistro,                  
+                                                dataHorizonte: JSON.parse(dataHorizonte),
+                                        })
+
+                                        break;                                        
+                                case 'Analise':
+                                        const dataAmostra = await contract.evaluateTransaction("consultar_identificador", JSON.parse(result).key_amostra);
+                                        res.render(`api/atualizar/${req.params.tipoRegistro}`, {
+                                                result: JSON.parse(result),                            
+                                                resultKey: req.params.key,                                  
+                                                tipoRegistro: req.params.tipoRegistro,                  
+                                                dataAmostra: JSON.parse(dataAmostra),
+                                        })
+
+                                        break;                                        
                                 default: {
                                         req.flash("error_msg", req.params.tipoRegistro + " necessita de mais um parâmetro, ou foi declarado equivocadamente.")
                                         res.redirect('/');
@@ -1758,7 +2262,7 @@ router.get('/alterar/:tipoRegistro/:key', async function (req, res) {
 
         } catch (error) {
                 console.log("FAIL: " + error);
-                req.flash('error_msg', req.params.tipoRegistro + ' não localizado.')
+                req.flash('error_msg', req.params.tipoRegistro + ' não localizado(a).')
                 //req.flash('error_msg', `Não foi possível acessar a rotina 3. Erro - ${error}`);
                 if (req.params.tipoRegistro == "Horizonte") {
                         res.redirect('/api/consulta/' + req.params.tipoRegistro + "/" + req.params.key);
@@ -1770,7 +2274,7 @@ router.get('/alterar/:tipoRegistro/:key', async function (req, res) {
 // ***************************************************************************************************************
 // Exclusão
 router.get('/excluir/:tipoRegistro/:key', async function (req, res) {
-        console.log("===> /api/excluir/" + req.params.key);
+        console.log("===> /api/excluir/" + req.params.tipoRegistro + '/' + req.params.key);
 
         try {
                 const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
@@ -1826,6 +2330,12 @@ router.get('/excluir/:tipoRegistro/:key', async function (req, res) {
                         switch (JSON.parse(result).tipoDoc) {
                                 case 'Horizonte':
                                         res.redirect('/api/consulta/' + req.params.tipoRegistro + "/" + JSON.parse(result).key_observacao);
+                                        break;
+                                case 'Amostra':
+                                        res.redirect('/api/consulta/' + req.params.tipoRegistro + "/" + JSON.parse(result).key_horizonte);
+                                        break;        
+                                case 'Analise':
+                                        res.redirect('/api/consulta/' + req.params.tipoRegistro + "/" + JSON.parse(result).key_amostra);
                                         break;
                                 case 'AssociacaoOrgaoProjeto':
                                         res.redirect('/api/associar/OrgaoProjeto/' + JSON.parse(result).key_projeto);

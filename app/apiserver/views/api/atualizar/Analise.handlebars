@@ -1,0 +1,39 @@
+<center><h1> Alteração dos dados de uma análise </h1></center>
+    {{#each erros}}
+        <div class="alert alert-danger">{{ texto }}</div>
+    {{/each}}
+<div class="card">
+    <div class="card-body">
+    <form name="criarAnalise" action="/api/alterar_Analise" method="POST">
+
+
+    <table class="table table-striped"> 
+
+      <input type="hidden" name="key_amostra" value="{{result.key_amostra}}">
+      <input type="hidden" name="key_analise" value="{{resultKey}}">
+    
+<!-- Identificação do Analise -->
+    <div class="row">
+      <div class="col-md">
+        <label class="col-form-label-sm">Exame solicitado</label> 
+        <input type="text" maxlength="50" id="nome" name="nome" placeholder="Exame" required class="form-control" value="{{result.nome}}">
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md">
+        <label class="col-form-label-sm">Resultado</label> 
+        <input type="text" maxlength="50" id="resultado" name="resultado" placeholder="resultado" required class="form-control" value="{{result.resultado}}">
+        </div>
+    </div>
+
+<!-- Botão de gravar registro -->
+    <div id="botao_horizonte" class="botao">
+      <input type="submit" id="enviar" name="enviar" value="Gravar Amostra" class="btn btn-success" style="width:100%;">
+    </div>
+
+    </table>  
+
+    </form>
+
+    </div>  
+</div>
