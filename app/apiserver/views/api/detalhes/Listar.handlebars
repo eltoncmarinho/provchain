@@ -97,15 +97,15 @@
         Classe <img src="/img/SetaUpDown.jpeg" width="50" height="50">
       </button>
     </th>
-    <th>identificador Único</th>
+    <th align="center">Identificador Único<br>Histórico</th>
   </tr>
   {{#each lista}}
-  {{#if this}}
-  <tr>
-    <td><label class="col-form-label-sm">{{data_criacao}}</label></td>
-    <td><label class="col-form-label-sm">{{docType}}</label></td>
-    <td><label class="col-form-label-sm"><a href="/api/historico/{{docType}}/{{key}}">{{key}}</a></label></td>
-  </tr>
-  {{/if}}
+    {{#if this}}
+    <tr>
+      <td><label class="col-form-label-sm">{{Record.data_criacao}}</label></td>
+      <td><label class="col-form-label-sm">{{Record.tipoDoc}}</label></td>
+      <td><label class="col-form-label-sm"><a href="/api/historico/{{Record.tipoDoc}}/{{Key}}">{{Key}}</a></label></td>
+    </tr>
+    {{/if}}
   {{/each}}
 </table>

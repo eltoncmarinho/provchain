@@ -138,7 +138,7 @@ app.get("/alterarProjeto", (req, res) => {
         res.render ('api/atualizar/Projeto', {uuid: uuid()})
 })
 
-app.get("/adicionarObservacao:key", async function (req, res) {
+app.get("/adicionarObservacao/:key", async function (req, res) {
         try {
         // load the network configuration
                 const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
@@ -189,7 +189,7 @@ app.get("/adicionarObservacao:key", async function (req, res) {
         }        
 })
                 
-app.get("/adicionarAmostra:key", async function (req, res) {
+app.get("/adicionarAmostra/:key", async function (req, res) {
         try {
         // load the network configuration
                 const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');

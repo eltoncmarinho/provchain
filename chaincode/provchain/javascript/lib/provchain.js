@@ -344,13 +344,34 @@ class provchain extends Contract {
     // }
 
     async listar_blockchain(ctx) {
+        console.log('Listar toda a blockchain');
+        const startKey = '';
+        const endKey = '';
+        const allResults = [];
+        for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            allResults.push({ Key: key, Record: record });
+        }
+        // console.log(allResults);
+        //            return JSON.stringify(allResults);
+        return allResults;
+    }
+
+    async listar_blockchain_teste (ctx) {
         console.log('Listar tudo na Blockchain');
         const startKey = '';
         const endKey = '';
         const allResults = [];
 
-        let elemento = '0';
-        let excluido = false;
+        // let elemento = '0';
+        // let excluido = false;
 
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
             let strValue = Buffer.from(value).toString('utf8');
@@ -362,7 +383,7 @@ class provchain extends Contract {
                 record = strValue;
             }
 
-            let iterator = await ctx.stub.getHistoryForKey(record.key);
+            let iterator = await ctx.stub.getHistoryForKey(record.Key);
             let res = await iterator.next();
             while (!res.done) {
                 if (res.value) {
@@ -392,17 +413,6 @@ class provchain extends Contract {
             }
             await iterator.close();
         }
-
-        let iteratorProv = await ctx.stub.getHistoryForKey('de3d76ca4e699bf12821d16e77bf5d8a177cd2f6');
-        let resprov = await iteratorProv.next();
-        while (!resprov.done) {
-            if (resprov.value) {
-                let objProv = JSON.stringify(resprov.value.value.toString('utf8'));
-                allResults.push(objProv);
-            }
-        }
-        await iteratorProv.close();
-
 
         return allResults;
     }
@@ -494,6 +504,64 @@ class provchain extends Contract {
         return allResults;
     }
 
+    // async excluir(ctx,
+    //     elemento,
+    //     user,               // usuario que criou ou fez a ultima alteracao              
+    //     user_name,          // usuario que criou ou fez a ultima alteracao    
+    //     ip,
+    //     geoLocalizacao_range,
+    //     geoLocalizacao_country,
+    //     geoLocalizacao_region,
+    //     geoLocalizacao_eu,
+    //     geoLocalizacao_timezone,
+    //     geoLocalizacao_city,
+    //     geoLocalizacao_ll,
+    //     geoLocalizacao_metro,
+    //     geoLocalizacao_area,
+    //     software_version,
+    //     software_browser
+    // ) {
+
+    //     var exclusao = {};
+    //     const exclusaoAsBytes = await ctx.stub.getState(elemento);
+    //     exclusao = JSON.parse(exclusaoAsBytes.toString());
+
+    //     if (exclusao.tipoDoc != 'Proveniencia') {
+
+    //         const x = exclusao.key_proveniencia;
+
+    //         // Exclusão do elemento de WorldStateDatabase
+    //         await ctx.stub.deleteState(elemento);
+
+    //         // Atualizando Proveniência
+    //         var prov = {};
+    //         const provAsBytes = await ctx.stub.getState(x);
+    //         prov = JSON.parse(provAsBytes.toString());
+    //         prov.key_elemento = elemento;
+    //         prov.usuario_alterador = user;
+    //         prov.nome_alterador = user_name;
+    //         prov.ip = ip;
+    //         prov.geoLocalizacao_range = geoLocalizacao_range;
+    //         prov.geoLocalizacao_country = geoLocalizacao_country;
+    //         prov.geoLocalizacao_region = geoLocalizacao_region;
+    //         prov.geoLocalizacao_eu = geoLocalizacao_eu;
+    //         prov.geoLocalizacao_timezone = geoLocalizacao_timezone;
+    //         prov.geoLocalizacao_city = geoLocalizacao_city;
+    //         prov.geoLocalizacao_ll = geoLocalizacao_ll;
+    //         prov.geoLocalizacao_metro = geoLocalizacao_metro;
+    //         prov.geoLocalizacao_area = geoLocalizacao_area;
+    //         prov.software_version = software_version;
+    //         prov.software_browser = software_browser;
+    //         prov.status = "Registro excluído";
+    //         prov.excluido = true;
+    //         prov.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+    //         const p = await ctx.stub.putState(x, Buffer.from(JSON.stringify(prov)));
+    //         return p
+    //     } else {
+    //         return 0 //'Não é possível excluir registros de Proveniência'
+    //     }
+    // }
+
     async excluir(ctx,
         elemento,
         user,               // usuario que criou ou fez a ultima alteracao              
@@ -515,19 +583,22 @@ class provchain extends Contract {
         var exclusao = {};
         const exclusaoAsBytes = await ctx.stub.getState(elemento);
         exclusao = JSON.parse(exclusaoAsBytes.toString());
-
         if (exclusao.tipoDoc != 'Proveniencia') {
+            exclusao.excluido = true;
+            exclusao.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+            const exc = await ctx.stub.putState(elemento, Buffer.from(JSON.stringify(exclusao)));
 
-            const x = exclusao.key_proveniencia;
+            // Guardar key_proveniencia
+            //        const key_prov =  exclusao.key_proveniencia;   
 
-            // Exclusão do elemento de WorldStateDatabase
-            await ctx.stub.deleteState(elemento);
+            // Exclusão do WorldStateDatabase
+            //        const exclusao = await ctx.stub.deleteState(elemento); // get the element from chaincode state
+            //        return exclusao;        
 
-            // Atualizando Proveniência
+            // Marcando status na Proveniência
             var prov = {};
-            const provAsBytes = await ctx.stub.getState(x);
+            const provAsBytes = await ctx.stub.getState(exclusao.key_proveniencia);
             prov = JSON.parse(provAsBytes.toString());
-            prov.key_elemento = elemento;
             prov.usuario_alterador = user;
             prov.nome_alterador = user_name;
             prov.ip = ip;
@@ -545,72 +616,11 @@ class provchain extends Contract {
             prov.status = "Registro excluído";
             prov.excluido = true;
             prov.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-            const p = await ctx.stub.putState(x, Buffer.from(JSON.stringify(prov)));
-            return p
-        } else {
-            return 0 //'Não é possível excluir registros de Proveniência'
-        }
+            const p = await ctx.stub.putState(exclusao.key_proveniencia, Buffer.from(JSON.stringify(prov)));
+
+            return exc, p
+        }    
     }
-
-    // async excluir_logico(ctx,
-    //     elemento,
-    //     user,               // usuario que criou ou fez a ultima alteracao              
-    //     user_name,          // usuario que criou ou fez a ultima alteracao    
-    //     ip,
-    //     geoLocalizacao_range,
-    //     geoLocalizacao_country,
-    //     geoLocalizacao_region,
-    //     geoLocalizacao_eu,
-    //     geoLocalizacao_timezone,
-    //     geoLocalizacao_city,
-    //     geoLocalizacao_ll,
-    //     geoLocalizacao_metro,
-    //     geoLocalizacao_area,
-    //     software_version,
-    //     software_browser
-    // ) {
-
-    //     var exclusao = {};
-    //     const exclusaoAsBytes = await ctx.stub.getState(elemento);
-    //     exclusao = JSON.parse(exclusaoAsBytes.toString());
-    //     exclusao.excluido = true;
-    //     exclusao.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-    //     const exc = await ctx.stub.putState(elemento, Buffer.from(JSON.stringify(exclusao)));
-
-    //     // Guardar key_proveniencia
-    //     //        const key_prov =  exclusao.key_proveniencia;   
-
-    //     // Exclusão do WorldStateDatabase
-    //     //        const exclusao = await ctx.stub.deleteState(elemento); // get the element from chaincode state
-    //     //        return exclusao;        
-
-    //     // Marcando status na Proveniência
-    //     var prov = {};
-    //     const provAsBytes = await ctx.stub.getState(exclusao.key_proveniencia);
-    //     prov = JSON.parse(provAsBytes.toString());
-    //     prov.usuario_alterador = user;
-    //     prov.nome_alterador = user_name;
-    //     prov.ip = ip;
-    //     prov.geoLocalizacao_range = geoLocalizacao_range;
-    //     prov.geoLocalizacao_country = geoLocalizacao_country;
-    //     prov.geoLocalizacao_region = geoLocalizacao_region;
-    //     prov.geoLocalizacao_eu = geoLocalizacao_eu;
-    //     prov.geoLocalizacao_timezone = geoLocalizacao_timezone;
-    //     prov.geoLocalizacao_city = geoLocalizacao_city;
-    //     prov.geoLocalizacao_ll = geoLocalizacao_ll;
-    //     prov.geoLocalizacao_metro = geoLocalizacao_metro;
-    //     prov.geoLocalizacao_area = geoLocalizacao_area;
-    //     prov.software_version = software_version;
-    //     prov.software_browser = software_browser;
-    //     prov.status = "Registro excluído";
-    //     prov.excluido = true;
-    //     prov.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-    //     const p = await ctx.stub.putState(exclusao.key_proveniencia, Buffer.from(JSON.stringify(prov)));
-
-    //     return exc, p
-
-
-    // }
 
     async historico(ctx, elemento) {
         let iterator = await ctx.stub.getHistoryForKey(elemento);

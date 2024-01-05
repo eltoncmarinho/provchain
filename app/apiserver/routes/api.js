@@ -135,10 +135,12 @@ router.get('/consulta/blockchain', async function (req, res) {
                 const contract = network.getContract('provchain');
                 // Evaluate the specified transaction.
                 const result = await contract.evaluateTransaction("listar_blockchain");
-//                console.log ("JSON.parse(result): " + JSON.parse(result));
+
+                // console.log ("JSON.parse(result): " + JSON.parse(result));
+                // console.log ("result: " + result);
 
                 res.render('api/detalhes/Listar', {
-                        lista: JSON.parse(result)//.sort('desc'),// 'result.Record.data_criacao', 'desc')),
+                        lista: JSON.parse(result),// 'result.Record.data_criacao', 'desc')),
                 });
         } catch (error) {
                 console.log('Não foi possível acessar a rotina 32: ' + error);
@@ -265,14 +267,29 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                                         break;
                                 }
                                 case 'Observacao': {
-                                        const resultproveniencia = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_proveniencia);
-                                        const resultprojeto = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_projeto);
-                                        res.render('api/detalhes/Observacao', {
-                                                result: JSON.parse(result),
-                                                resultkey: req.params.key,
-                                                proveniencia: JSON.parse(resultproveniencia),
-                                                projeto: JSON.parse(resultprojeto),
-                                        })
+                                        if (JSON.parse(result).tipoDoc === 'Observacao') {
+                                                console.log("entrei 1")
+                                                const resultproveniencia = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_proveniencia);
+                                                const resultprojeto = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_projeto);
+                                                res.render('api/detalhes/Observacao', {
+                                                        result: JSON.parse(result),
+                                                        resultkey: req.params.key,
+                                                        proveniencia: JSON.parse(resultproveniencia),
+                                                        projeto: JSON.parse(resultprojeto),
+                                                })
+                                        } else {
+                                                console.log("entrei 2")
+                                                // const resultObservacoes = await contract.evaluateTransaction('consultar_dadosAssociados', req.params.key, 'Observacao'); 
+                                                res.redirect ("/api/listar_observacoes/" + req.params.key);
+                                                // res.render('home', {
+                                                //         tipoRegistro: 'Observacao',
+                                                //         titulo_pagina: "Lista as Observações cadastrados",
+                                                //         result: JSON.parse(result), // Dados da Observacao 
+                                                //         resultKey: req.params.key,
+                                                //         resultObservacao: JSON.parse(resultObservacoes), // Lista de Horizontes do Observacao 
+                                                //         projeto_key: JSON.parse(result).key_projeto,
+                                                // });
+                                        }
                                         break;
                                 }
                                 case 'Horizonte': {
@@ -286,6 +303,7 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                                                         resultKey: req.params.key,
                                                         observacao: JSON.parse(resultObservacao),
                                                         proveniencia: JSON.parse(resultproveniencia),
+                                                        observacao_key: JSON.parse(result).key_observacao,
                                                 });
                                         } else {
                                                 const resultHorizontes = await contract.evaluateTransaction('consultar_dadosAssociados', req.params.key, 'Horizonte'); 
@@ -295,6 +313,7 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                                                         result: JSON.parse(result), // Dados da Observacao 
                                                         resultKey: req.params.key,
                                                         resultHorizonte: JSON.parse(resultHorizontes), // Lista de Horizontes do Observacao 
+                                                        observacao_key: JSON.parse(result).key_observacao,
                                                 });
                                         }
                                         break;
@@ -373,51 +392,51 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
         }
 });
 
-router.get('/registros_excluidos', async function (req, res) {
-        console.log("===> /api/registros_excluidos/");
-        try {
-                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-                const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
-                // Create a new file system based wallet for managing identities.
-                const walletPath = path.join(process.cwd(), 'wallet');
-                const wallet = await Wallets.newFileSystemWallet(walletPath);
+// router.get('/registros_excluidos', async function (req, res) {
+//         console.log("===> /api/registros_excluidos/");
+//         try {
+//                 const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+//                 const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+//                 // Create a new file system based wallet for managing identities.
+//                 const walletPath = path.join(process.cwd(), 'wallet');
+//                 const wallet = await Wallets.newFileSystemWallet(walletPath);
 
-                console.log(`Wallet path: ${walletPath}`);
+//                 console.log(`Wallet path: ${walletPath}`);
 
-                // Check to see if we've already enrolled the user.
-                const identity = await wallet.get('appUser');
-                if (!identity) {
-                        console.log('An identity for the user "appUser" does not exist in the wallet');
-                        console.log('Run the registerUser.js application before retrying');
-                        return;
-                }
+//                 // Check to see if we've already enrolled the user.
+//                 const identity = await wallet.get('appUser');
+//                 if (!identity) {
+//                         console.log('An identity for the user "appUser" does not exist in the wallet');
+//                         console.log('Run the registerUser.js application before retrying');
+//                         return;
+//                 }
 
-                // Create a new gateway for connecting to our peer node.
-                const gateway = new Gateway();
-                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+//                 // Create a new gateway for connecting to our peer node.
+//                 const gateway = new Gateway();
+//                 await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
 
-                // Get the network (channel) our contract is deployed to.
-                const network = await gateway.getNetwork('mychannel');
+//                 // Get the network (channel) our contract is deployed to.
+//                 const network = await gateway.getNetwork('mychannel');
 
-                // Get the contract from the network.
-                const contract = network.getContract('provchain');
+//                 // Get the contract from the network.
+//                 const contract = network.getContract('provchain');
 
-                // Evaluate the specified transaction.
-                const resultExc = await contract.evaluateTransaction("registros_excluidos");
+//                 // Evaluate the specified transaction.
+//                 const resultExc = await contract.evaluateTransaction("registros_excluidos");
 
-                //               console.log("JSON.parse(resultExc): " + JSON.parse(resultExc))                
-                //               console.log("resultExc: " + resultExc)                
+//                 //               console.log("JSON.parse(resultExc): " + JSON.parse(resultExc))                
+//                 //               console.log("resultExc: " + resultExc)                
 
-                res.render('api/detalhes/Excluidos', {
-                        resultExcluidos: JSON.parse(resultExc),
-                });
-        } catch (error) {
-                console.log('Não foi possível acessar a rotina 0X: ' + error);
-                req.flash('error_msg', 'Não foi possível acessar a rotina 0x');
-                res.render('home', { titulo_pagina: "PROVChain - Prova de Conceito" });
-        }
+//                 res.render('api/detalhes/Excluidos', {
+//                         resultExcluidos: JSON.parse(resultExc),
+//                 });
+//         } catch (error) {
+//                 console.log('Não foi possível acessar a rotina 0X: ' + error);
+//                 req.flash('error_msg', 'Não foi possível acessar a rotina 0x');
+//                 res.render('home', { titulo_pagina: "PROVChain - Prova de Conceito" });
+//         }
 
-});
+// });
 
 router.get('/excluidos', async function (req, res) {
         console.log("===> /api/excluidos/");
@@ -603,12 +622,12 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
 
                 // Evaluate the specified transaction.
                 const result = await contract.evaluateTransaction('consultar_identificador', req.params.key);
-                console.log("JSON.parse(result).tipoDoc:" + JSON.parse(result).tipoDoc )
+                // console.log("JSON.parse(result).tipoDoc:" + JSON.parse(result).tipoDoc )
                 if (JSON.parse(result).tipoDoc != undefined) {
                         const historico = await contract.evaluateTransaction('historico', req.params.key);
-                        console.log ("historico :" + JSON.parse(historico))
+                        // console.log ("historico :" + JSON.parse(historico))
                         const historicoProv = await contract.evaluateTransaction('historico', JSON.parse(result).key_proveniencia);
-                        console.log ("historicoProv :" + historicoProv)
+                        // console.log ("historicoProv :" + historicoProv)
                         switch (req.params.tipoRegistro) {
                                 case 'Orgao': {
                                         req.flash("success_msg", "Histórico de " + req.params.key)
@@ -944,7 +963,7 @@ router.post('/criar_Observacao', async function (req, res) {
 
                 // Get the network (channel) our contract is deployed to.
                 const network = await gateway.getNetwork('mychannel');
-
+                
                 // Get the contract from the network.
                 const contract = network.getContract('provchain');
 
@@ -1025,7 +1044,7 @@ router.post('/criar_Observacao', async function (req, res) {
 
                 console.log('Transaction has been submitted');
                 req.flash("success_msg", req.body.nome + " criado com sucesso")
-                res.redirect('/api/consulta/Observacao');
+                res.redirect('/api/consulta/Observacao/' + req.body.key_projeto);
 
                 // Disconnect from the gateway.
                 await gateway.disconnect();
@@ -1033,7 +1052,7 @@ router.post('/criar_Observacao', async function (req, res) {
         } catch (error) {
                 req.flash("error_msg", "Houve um erro ao submeter a transação");
                 console.error(`Failed to submit transaction: ${error}`);
-                res.render("/api/consulta/Observacao");
+                res.redirect("/api/consulta/Observacao/" + req.body.key_projeto);
         }
 });
 
@@ -1311,8 +1330,8 @@ router.post('/criar_Amostra', async function (req, res) {
 
                 // console.log("req.body.key_horizonte:" + req.body.key_horizonte);
                 // console.log("req.body.nome:" + req.body.nome);
-                console.log("req.body:" + req.body);
-                console.log("JSON.stringify(req.body):" + JSON.stringify(req.body));
+                // console.log("req.body:" + req.body);
+                // console.log("JSON.stringify(req.body):" + JSON.stringify(req.body));
 
                 const resultado = await contract.submitTransaction('incAlt_Amostra',
                         req.body.key_amostra,
@@ -1436,9 +1455,9 @@ router.post('/criar_Analise', async function (req, res) {
                 req.body.key_analise = uuid()
                 req.body.key_proveniencia = uuid();
 
-                console.log("req.body.key_amostra:" + req.body.key_amostra);                
-                console.log("req.body.nome:" + req.body.nome);                
-                console.log("req.body.resultado:" + req.body.resultado);                
+                // console.log("req.body.key_amostra:" + req.body.key_amostra);                
+                // console.log("req.body.nome:" + req.body.nome);                
+                // console.log("req.body.resultado:" + req.body.resultado);                
 
                 const result = await contract.submitTransaction('incAlt_Analise',
                         req.body.key_analise,
@@ -1793,7 +1812,7 @@ router.post('/alterar_Observacao', async function (req, res) {
 
                 console.log('Transaction has been submitted');
                 req.flash("success_msg", req.body.nome + " alterado com sucesso")
-                res.redirect('/api/consulta/Observacao');
+                res.redirect('/api/consulta/Observacao/' + req.body.key_projeto);
 
                 // Disconnect from the gateway.
                 console.log('/alterar_Observacao');
@@ -1804,7 +1823,7 @@ router.post('/alterar_Observacao', async function (req, res) {
         } catch (error) {
                 req.flash("error_msg", "Houve um erro ao submeter a transação");
                 console.error(`Failed to submit transaction: ${error}`);
-                res.render("/api/consulta/Observacao");
+                res.redirect('/api/consulta/Observacao/' + req.body.key_projeto);
                 //res.redirect('home');
         }
 });
@@ -2325,9 +2344,12 @@ router.get('/excluir/:tipoRegistro/:key', async function (req, res) {
                         );
 
                         // console.log('Transaction has been submitted');      
-                        req.flash("success_msg", req.params.key + " excluido com sucesso")
+                        req.flash("success_msg", "'" + JSON.parse(result).nome + "' excluido com sucesso - ID:" + req.params.key)
 
                         switch (JSON.parse(result).tipoDoc) {
+                                case 'Observacao':
+                                        res.redirect('/api/listar_observacoes/' + JSON.parse(result).key_projeto);
+                                        break;
                                 case 'Horizonte':
                                         res.redirect('/api/consulta/' + req.params.tipoRegistro + "/" + JSON.parse(result).key_observacao);
                                         break;
