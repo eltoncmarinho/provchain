@@ -1,5 +1,7 @@
-//const host_address = "31.220.57.217"    // VPS na Hostinger durante 2022
-const host_address = "89.117.33.155";   // VPS na Hostinger durante 2023
+//const host_address = "31.220.57.217"          // VPS na Hostinger durante 2022
+//const host_address = "89.117.33.155";         // VPS na Hostinger durante 2023
+const host_address = "59.91.134.100";           // AWS em 2024
+
 const port = 8080;
 
 const os = require('os');
@@ -13,6 +15,7 @@ if (networkInfo.lo[0].address != "127.0.0.1") {
 } else {
         addr = "127.0.0.1"                      // localhost
 }        
+
 
 // Carregandp Módulos
 
