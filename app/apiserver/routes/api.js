@@ -470,11 +470,11 @@ router.get('/excluidos', async function (req, res) {
                 // Evaluate the specified transaction.
                 const resultProv = await contract.evaluateTransaction("listar_excluidos");
 
-                console.log("===============================================================================================")
-                console.log("resultProv: " + resultProv)
-                console.log("===============================================================================================")
-                console.log("JSON.parse(resultProv): " + JSON.parse(resultProv))
-                console.log("===============================================================================================")
+                // console.log("===============================================================================================")
+                // console.log("resultProv: " + resultProv)
+                // console.log("===============================================================================================")
+                // console.log("JSON.parse(resultProv): " + JSON.parse(resultProv))
+                // console.log("===============================================================================================")
 
                 res.render('api/detalhes/Excluidos', {
                         resultProveniencia: JSON.parse(resultProv),
