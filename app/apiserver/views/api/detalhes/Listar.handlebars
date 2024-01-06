@@ -100,12 +100,10 @@
     <th align="center">Identificador Único<br>Histórico</th>
   </tr>
   {{#each lista}}
-    {{#if this}}
     <tr>
       <td><label class="col-form-label-sm">{{Record.data_criacao}}</label></td>
       <td><label class="col-form-label-sm">{{Record.tipoDoc}}</label></td>
       <td><label class="col-form-label-sm"><a href="/api/historico/{{Record.tipoDoc}}/{{Key}}">{{Key}}</a></label></td>
     </tr>
-    {{/if}}
   {{/each}}
 </table>

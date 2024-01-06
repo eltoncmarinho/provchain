@@ -347,21 +347,28 @@ class provchain extends Contract {
         console.log('Listar toda a blockchain');
         const startKey = '';
         const endKey = '';
-        const allResults = [];
+        const results = [];
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            const strValue = Buffer.from(value).toString('utf8');
-            let record;
-            try {
-                record = JSON.parse(strValue);
-            } catch (err) {
-                console.log(err);
-                record = strValue;
+            // const strValue = Buffer.from(value).toString('utf8');
+            // let record;
+            // try {
+            //     record = JSON.parse(strValue);
+            // } catch (err) {
+            //     console.log(err);
+            //     record = strValue;
+            // }
+
+            let iterator = await ctx.stub.getHistoryForKey(key);
+            let res = await iterator.next(); // { done: false };
+            while (!res.done) {
+                let val = res.value.value.toString('utf8');
+                //results.push( val );
+                results.push({ Key: key, Record: JSON.parse(val) });
+                res = await iterator.next();
             }
-            allResults.push({ Key: key, Record: record });
-        }
-        // console.log(allResults);
-        //            return JSON.stringify(allResults);
-        return allResults;
+            iterator.close();
+        }            
+        return results;
     }
 
     async listar_blockchain_teste (ctx) {

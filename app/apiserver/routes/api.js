@@ -136,8 +136,13 @@ router.get('/consulta/blockchain', async function (req, res) {
                 // Evaluate the specified transaction.
                 const result = await contract.evaluateTransaction("listar_blockchain");
 
-                // console.log ("JSON.parse(result): " + JSON.parse(result));
-                // console.log ("result: " + result);
+                console.log ("JSON.parse(result): " + JSON.parse(result));
+                console.log ("data_criacao: " + JSON.parse(result)[2].data_criacao);
+                console.log ("data_criacao: " + JSON.parse(result)[2]);
+                console.log ("data_criacao: " + JSON.parse(result)[2].Record);
+                
+                // console.log ("JSON.parse(result)[1].tipoDoc: " + JSON.parse(result).tipoDoc);
+                // console.log ("JSON.parse(result)[1].key: " + JSON.parse(result).key);
 
                 res.render('api/detalhes/Listar', {
                         lista: JSON.parse(result),// 'result.Record.data_criacao', 'desc')),
