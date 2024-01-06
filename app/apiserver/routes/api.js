@@ -273,7 +273,6 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                                 }
                                 case 'Observacao': {
                                         if (JSON.parse(result).tipoDoc === 'Observacao') {
-                                                console.log("entrei 1")
                                                 const resultproveniencia = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_proveniencia);
                                                 const resultprojeto = await contract.evaluateTransaction('consultar_identificador', JSON.parse(result).key_projeto);
                                                 res.render('api/detalhes/Observacao', {
@@ -282,19 +281,8 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                                                         proveniencia: JSON.parse(resultproveniencia),
                                                         projeto: JSON.parse(resultprojeto),
                                                 })
-                                        } else {
-                                                console.log("entrei 2")
-                                                // const resultObservacoes = await contract.evaluateTransaction('consultar_dadosAssociados', req.params.key, 'Observacao'); 
-                                                res.redirect ("/api/listar_observacoes/" + req.params.key);
-                                                // res.render('home', {
-                                                //         tipoRegistro: 'Observacao',
-                                                //         titulo_pagina: "Lista as Observações cadastrados",
-                                                //         result: JSON.parse(result), // Dados da Observacao 
-                                                //         resultKey: req.params.key,
-                                                //         resultObservacao: JSON.parse(resultObservacoes), // Lista de Horizontes do Observacao 
-                                                //         projeto_key: JSON.parse(result).key_projeto,
-                                                // });
-                                        }
+                                        } else res.redirect ("/api/listar_observacoes/" + req.params.key);
+
                                         break;
                                 }
                                 case 'Horizonte': {
@@ -396,52 +384,6 @@ router.get('/consulta/:tipoRegistro/:key', async function (req, res) {
                 res.redirect('/api/consulta/' + req.params.tipoRegistro);
         }
 });
-
-// router.get('/registros_excluidos', async function (req, res) {
-//         console.log("===> /api/registros_excluidos/");
-//         try {
-//                 const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-//                 const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
-//                 // Create a new file system based wallet for managing identities.
-//                 const walletPath = path.join(process.cwd(), 'wallet');
-//                 const wallet = await Wallets.newFileSystemWallet(walletPath);
-
-//                 console.log(`Wallet path: ${walletPath}`);
-
-//                 // Check to see if we've already enrolled the user.
-//                 const identity = await wallet.get('appUser');
-//                 if (!identity) {
-//                         console.log('An identity for the user "appUser" does not exist in the wallet');
-//                         console.log('Run the registerUser.js application before retrying');
-//                         return;
-//                 }
-
-//                 // Create a new gateway for connecting to our peer node.
-//                 const gateway = new Gateway();
-//                 await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
-
-//                 // Get the network (channel) our contract is deployed to.
-//                 const network = await gateway.getNetwork('mychannel');
-
-//                 // Get the contract from the network.
-//                 const contract = network.getContract('provchain');
-
-//                 // Evaluate the specified transaction.
-//                 const resultExc = await contract.evaluateTransaction("registros_excluidos");
-
-//                 //               console.log("JSON.parse(resultExc): " + JSON.parse(resultExc))                
-//                 //               console.log("resultExc: " + resultExc)                
-
-//                 res.render('api/detalhes/Excluidos', {
-//                         resultExcluidos: JSON.parse(resultExc),
-//                 });
-//         } catch (error) {
-//                 console.log('Não foi possível acessar a rotina 0X: ' + error);
-//                 req.flash('error_msg', 'Não foi possível acessar a rotina 0x');
-//                 res.render('home', { titulo_pagina: "PROVChain - Prova de Conceito" });
-//         }
-
-// });
 
 router.get('/excluidos', async function (req, res) {
         console.log("===> /api/excluidos/");
@@ -624,15 +566,11 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
 
                 // Evaluate the specified transaction.
                 const result = await contract.evaluateTransaction('consultar_identificador', req.params.key);
-                // console.log("JSON.parse(result).tipoDoc:" + JSON.parse(result).tipoDoc )
                 if (JSON.parse(result).tipoDoc != undefined) {
-                        // console.log("entrei");
                         const historico = await contract.evaluateTransaction('historico', req.params.key);
-                        // console.log ("historico :" + JSON.parse(historico))
                         let historicoProv = ''
                         if (JSON.parse(result).tipoDoc != 'Proveniencia') {
                                 historicoProv = await contract.evaluateTransaction('historico', JSON.parse(result).key_proveniencia);
-                                // console.log ("historicoProv :" + historicoProv)
                         } else {
                                 historicoProv = '';
                         }
@@ -741,110 +679,106 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
         }
 });
 
-// ***************************************************************************************************************
+//***************************************************************************************************************
 // Inclusão
-router.post('/criar_Orgao', async function (req, res) {
-        console.log("===> /api/criar_Orgao/");
-        var erros = []
+// router.post('/criar_Orgao', async function (req, res) {
+//         console.log("===> /api/criar_Orgao/");
+//         var erros = []
 
-        if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
-                erros.push({ texto: "Nome inválido" })
-        }
+//         if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
+//                 erros.push({ texto: "Nome inválido" })
+//         }
 
-        if (!req.body.referencia || typeof req.body.referencia == undefined || req.body.referencia == null) {
-                erros.push({ texto: "Referência inválida" })
-        }
+//         if (!req.body.referencia || typeof req.body.referencia == undefined || req.body.referencia == null) {
+//                 erros.push({ texto: "Referência inválida" })
+//         }
 
-        if (req.body.nome.length < 2) {
-                erros.push({ texto: "Nome com tamanho muito pequeno" })
-        }
+//         if (req.body.nome.length < 2) {
+//                 erros.push({ texto: "Nome com tamanho muito pequeno" })
+//         }
 
-        if (erros.length > 0) {
-                res.render("api/criar/Orgao", { erros: erros })
-        } else {
+//         if (erros.length > 0) {
+//                 res.render("api/criar/Orgao", { erros: erros })
+//         } else {
 
-                try {
-                        // load the network configuration
-                        const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-                        let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+//                 try {
+//                         // load the network configuration
+//                         const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+//                         let ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
 
-                        // Create a new file system based wallet for managing identities.
-                        const walletPath = path.join(process.cwd(), 'wallet');
-                        const wallet = await Wallets.newFileSystemWallet(walletPath);
-                        console.log(`Wallet path: ${walletPath}`);
+//                         // Create a new file system based wallet for managing identities.
+//                         const walletPath = path.join(process.cwd(), 'wallet');
+//                         const wallet = await Wallets.newFileSystemWallet(walletPath);
+//                         console.log(`Wallet path: ${walletPath}`);
 
-                        // Check to see if we've already enrolled the user.
-                        const identity = await wallet.get('appUser');
-                        if (!identity) {
-                                console.log('An identity for the user "appUser" does not exist in the wallet');
-                                console.log('Run the registerUser.js application before retrying');
-                                return;
-                        }
+//                         // Check to see if we've already enrolled the user.
+//                         const identity = await wallet.get('appUser');
+//                         if (!identity) {
+//                                 console.log('An identity for the user "appUser" does not exist in the wallet');
+//                                 console.log('Run the registerUser.js application before retrying');
+//                                 return;
+//                         }
 
-                        // Create a new gateway for connecting to our peer node.
-                        const gateway = new Gateway();
-                        await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+//                         // Create a new gateway for connecting to our peer node.
+//                         const gateway = new Gateway();
+//                         await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
 
-                        // Get the network (channel) our contract is deployed to.
-                        const network = await gateway.getNetwork('mychannel');
+//                         // Get the network (channel) our contract is deployed to.
+//                         const network = await gateway.getNetwork('mychannel');
 
-                        // Get the contract from the network.
-                        const contract = network.getContract('provchain');
+//                         // Get the contract from the network.
+//                         const contract = network.getContract('provchain');
 
-                        // Submit the specified transaction.
-                        // console.log('********************* Valores a serem passados para a chaincode *****************')
-                        req.body.key_orgao = uuid()
-                        req.body.key_proveniencia = uuid();
+//                         // Submit the specified transaction.
+//                         // console.log('********************* Valores a serem passados para a chaincode *****************')
+//                         req.body.key_orgao = uuid()
+//                         req.body.key_proveniencia = uuid();
 
-                        const result = await contract.submitTransaction('incAlt_Orgao',
-                                req.body.key_orgao,
-                                req.body.key_proveniencia,
-                                req.body.nome,
-                                req.body.referencia,
-                                req.body.ano,
-                                req.body.tipo_problema,
-                                req.body.nivel_levantamento,
-                                req.body.contato_nome,
-                                req.body.contato_email,
-                                req.body.contato_telefone,
-                                req.body.motivo,
-                                req.body.tipo_instituicao,
-                                req.body.abrangencia,
-                        );
+//                         const result = await contract.submitTransaction('incAlt_Orgao',
+//                                 req.body.key_orgao,
+//                                 req.body.key_proveniencia,
+//                                 req.body.nome,
+//                                 req.body.referencia,
+//                                 req.body.ano,
+//                                 req.body.tipo_problema,
+//                                 req.body.nivel_levantamento,
+//                                 req.body.contato_nome,
+//                                 req.body.contato_email,
+//                                 req.body.contato_telefone,
+//                                 req.body.motivo,
+//                                 req.body.tipo_instituicao,
+//                                 req.body.abrangencia,
+//                                 // Proveniencia
+//                                 user,               
+//                                 user_name,          
+//                                 ip.address(),
+//                                 geoLocalizacao.range,
+//                                 geoLocalizacao.country,
+//                                 geoLocalizacao.region,
+//                                 geoLocalizacao.eu,
+//                                 geoLocalizacao.timezone,
+//                                 geoLocalizacao.city,
+//                                 geoLocalizacao.ll,
+//                                 geoLocalizacao.metro,
+//                                 geoLocalizacao.area,
+//                                 software_version,
+//                                 navigator.userAgent,
+//                                 'Registro incluído',
+//                         );
 
-                        const resultProv = await contract.submitTransaction('proveniencia_Orgao',
-                                req.body.key_proveniencia,
-                                req.body.key_orgao,
-                                user,               // usuario ativo                           
-                                user_name,          // nome do usuario ativo  
-                                ip.address(),
-                                geoLocalizacao.range,
-                                geoLocalizacao.country,
-                                geoLocalizacao.region,
-                                geoLocalizacao.eu,
-                                geoLocalizacao.timezone,
-                                geoLocalizacao.city,
-                                geoLocalizacao.ll,
-                                geoLocalizacao.metro,
-                                geoLocalizacao.area,
-                                software_version,
-                                navigator.userAgent,
-                                'Registro incluído',
-                        );
+//                         console.log('Transaction has been submitted');
+//                         req.flash("success_msg", req.body.nome + " criado com sucesso")
+//                         res.redirect('/api/consulta/Orgao');
+//                         // Disconnect from the gateway.
+//                         await gateway.disconnect();
 
-                        console.log('Transaction has been submitted');
-                        req.flash("success_msg", req.body.nome + " criado com sucesso")
-                        res.redirect('/api/consulta/Orgao');
-                        // Disconnect from the gateway.
-                        await gateway.disconnect();
-
-                } catch (error) {
-                        req.flash("error_msg", "Houve um erro ao submeter a transação");
-                        console.error(`Failed to submit transaction: ${error}`);
-                        res.redirect("/api/consulta/Orgao");
-                }
-        }
-});
+//                 } catch (error) {
+//                         req.flash("error_msg", "Houve um erro ao submeter a transação");
+//                         console.error(`Failed to submit transaction: ${error}`);
+//                         res.redirect("/api/consulta/Orgao");
+//                 }
+//         }
+// });
 
 router.post('/criar_Projeto', async function (req, res) {
         console.log("===> /api/criar_Projeto/");
@@ -929,7 +863,7 @@ router.post('/criar_Projeto', async function (req, res) {
                         );
 
                         console.log('Transaction has been submitted');
-                        req.flash("success_msg", req.body.nome + " criado com sucesso")
+                        req.flash("success_msg", req.body.nome + " criado com sucesso. ID: " + req.body.key_projeto)
                         res.redirect('/api/consulta/Projeto');
                         // Disconnect from the gateway.
                         await gateway.disconnect();
@@ -1024,11 +958,7 @@ router.post('/criar_Observacao', async function (req, res) {
                         req.body.frequencia_sulcos2,
                         req.body.profundidade_sulcos2,
                         req.body.descrito_coletado_por,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Observacao',
-                        req.body.key_proveniencia,
-                        req.body.key_observacao,
+                        // Proveniencia
                         user,
                         user_name,
                         ip.address(),
@@ -1213,11 +1143,7 @@ router.post('/criar_Horizonte', async function (req, res) {
                         req.body.outros_textura,
                         req.body.outros_cascalho,
                         req.body.observacao,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Observacao',
-                        req.body.key_proveniencia,
-                        req.body.key_horizonte,
+                        // Proveniencia
                         user,
                         user_name,
                         ip.address(),
@@ -1328,14 +1254,8 @@ router.post('/criar_Amostra', async function (req, res) {
                 const contract = network.getContract('provchain');
 
                 // Submit the specified transaction.
-                //console.log('********************* Valores a serem passados para a chaincode *****************')
                 req.body.key_amostra = uuid()
                 req.body.key_proveniencia = uuid();
-
-                // console.log("req.body.key_horizonte:" + req.body.key_horizonte);
-                // console.log("req.body.nome:" + req.body.nome);
-                // console.log("req.body:" + req.body);
-                // console.log("JSON.stringify(req.body):" + JSON.stringify(req.body));
 
                 const resultado = await contract.submitTransaction('incAlt_Amostra',
                         req.body.key_amostra,
@@ -1343,11 +1263,7 @@ router.post('/criar_Amostra', async function (req, res) {
                         req.body.key_horizonte,
                         req.body.nome,
                         req.body.comentario,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Amostra',
-                        req.body.key_proveniencia,
-                        req.body.key_amostra,
+                        // Proveniencia
                         user,
                         user_name,
                         ip.address(),
@@ -1459,21 +1375,13 @@ router.post('/criar_Analise', async function (req, res) {
                 req.body.key_analise = uuid()
                 req.body.key_proveniencia = uuid();
 
-                // console.log("req.body.key_amostra:" + req.body.key_amostra);                
-                // console.log("req.body.nome:" + req.body.nome);                
-                // console.log("req.body.resultado:" + req.body.resultado);                
-
                 const result = await contract.submitTransaction('incAlt_Analise',
                         req.body.key_analise,
                         req.body.key_proveniencia,
                         req.body.key_amostra,
                         req.body.nome,
                         req.body.resultado,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Analise',
-                        req.body.key_proveniencia,
-                        req.body.key_analise,
+                        // Proveniencia
                         user,
                         user_name,
                         ip.address(),
@@ -1553,86 +1461,86 @@ router.get('/criar/Analise/:key', async function (req, res) {
 
 // ***************************************************************************************************************
 // Alteração
-router.post('/alterar_Orgao', async function (req, res) {
-        console.log("===> /alterar_Orgao");
-        try {
-                const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
-                const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
-                // Create a new file system based wallet for managing identities.
-                const walletPath = path.join(process.cwd(), 'wallet');
-                const wallet = await Wallets.newFileSystemWallet(walletPath);
-                console.log(`Wallet path: ${walletPath}`);
+// router.post('/alterar_Orgao', async function (req, res) {
+//         console.log("===> /alterar_Orgao");
+//         try {
+//                 const ccpPath = path.resolve(__dirname, '..', '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+//                 const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
+//                 // Create a new file system based wallet for managing identities.
+//                 const walletPath = path.join(process.cwd(), 'wallet');
+//                 const wallet = await Wallets.newFileSystemWallet(walletPath);
+//                 console.log(`Wallet path: ${walletPath}`);
 
-                // Check to see if we've already enrolled the user.
-                const identity = await wallet.get('appUser');
-                if (!identity) {
-                        console.log('An identity for the user "appUser" does not exist in the wallet');
-                        console.log('Run the registerUser.js application before retrying');
-                        return;
-                }
-                // Create a new gateway for connecting to our peer node.
-                const gateway = new Gateway();
-                await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
+//                 // Check to see if we've already enrolled the user.
+//                 const identity = await wallet.get('appUser');
+//                 if (!identity) {
+//                         console.log('An identity for the user "appUser" does not exist in the wallet');
+//                         console.log('Run the registerUser.js application before retrying');
+//                         return;
+//                 }
+//                 // Create a new gateway for connecting to our peer node.
+//                 const gateway = new Gateway();
+//                 await gateway.connect(ccp, { wallet, identity: 'appUser', discovery: { enabled: true, asLocalhost: true } });
 
-                // Get the network (channel) our contract is deployed to.
-                const network = await gateway.getNetwork('mychannel');
+//                 // Get the network (channel) our contract is deployed to.
+//                 const network = await gateway.getNetwork('mychannel');
 
-                // Get the contract from the network.
-                const contract = network.getContract('provchain');
+//                 // Get the contract from the network.
+//                 const contract = network.getContract('provchain');
 
-                // Submit the specified transaction.
-                const resultOrgao = await contract.evaluateTransaction('consultar_identificador', req.body.key_orgao);
-                const rOrgao = JSON.parse(resultOrgao);
-                const resultProveniencia = await contract.evaluateTransaction('consultar_identificador', rOrgao.key_proveniencia);
-                req.body.key_proveniencia = JSON.parse(resultProveniencia).key;
+//                 // Submit the specified transaction.
+//                 const resultOrgao = await contract.evaluateTransaction('consultar_identificador', req.body.key_orgao);
+//                 const rOrgao = JSON.parse(resultOrgao);
+//                 const resultProveniencia = await contract.evaluateTransaction('consultar_identificador', rOrgao.key_proveniencia);
+//                 req.body.key_proveniencia = JSON.parse(resultProveniencia).key;
 
-                await contract.submitTransaction('incAlt_Orgao',
-                        req.body.key_orgao,
-                        req.body.key_proveniencia,
-                        req.body.nome,
-                        req.body.referencia,
-                        req.body.ano,
-                        req.body.tipo_problema,
-                        req.body.nivel_levantamento,
-                        req.body.contato_nome,
-                        req.body.contato_email,
-                        req.body.contato_telefone,
-                        req.body.motivo,
-                        req.body.tipo_instituicao,
-                        req.body.abrangencia,
-                );
+//                 await contract.submitTransaction('incAlt_Orgao',
+//                         req.body.key_orgao,
+//                         req.body.key_proveniencia,
+//                         req.body.nome,
+//                         req.body.referencia,
+//                         req.body.ano,
+//                         req.body.tipo_problema,
+//                         req.body.nivel_levantamento,
+//                         req.body.contato_nome,
+//                         req.body.contato_email,
+//                         req.body.contato_telefone,
+//                         req.body.motivo,
+//                         req.body.tipo_instituicao,
+//                         req.body.abrangencia,
+//                 );
 
-                const resultProv = await contract.submitTransaction('proveniencia_Orgao',
-                        req.body.key_proveniencia,
-                        req.body.key_orgao,
-                        user,
-                        user_name,
-                        ip.address(),
-                        geoLocalizacao.range,
-                        geoLocalizacao.country,
-                        geoLocalizacao.region,
-                        geoLocalizacao.eu,
-                        geoLocalizacao.timezone,
-                        geoLocalizacao.city,
-                        geoLocalizacao.ll,
-                        geoLocalizacao.metro,
-                        geoLocalizacao.area,
-                        software_version,
-                        navigator.userAgent,
-                        'Registro alterado',
-                );
+//                 const resultProv = await contract.submitTransaction('proveniencia_Orgao',
+//                         req.body.key_proveniencia,
+//                         req.body.key_orgao,
+//                         user,
+//                         user_name,
+//                         ip.address(),
+//                         geoLocalizacao.range,
+//                         geoLocalizacao.country,
+//                         geoLocalizacao.region,
+//                         geoLocalizacao.eu,
+//                         geoLocalizacao.timezone,
+//                         geoLocalizacao.city,
+//                         geoLocalizacao.ll,
+//                         geoLocalizacao.metro,
+//                         geoLocalizacao.area,
+//                         software_version,
+//                         navigator.userAgent,
+//                         'Registro alterado',
+//                 );
 
-                console.log('Transaction has been submitted');
-                req.flash("success_msg", req.body.nome + " alterado com sucesso")
-                res.redirect('/api/consulta/Orgao/');
-                // Disconnect from the gateway.
-                await gateway.disconnect();
-        } catch (error) {
-                req.flash("error_msg", "Houve um erro ao submeter a transação 1");
-                console.error(`Failed to submit transaction: ${error}`);
-                res.redirect("/api/consulta/Orgao");
-        }
-});
+//                 console.log('Transaction has been submitted');
+//                 req.flash("success_msg", req.body.nome + " alterado com sucesso")
+//                 res.redirect('/api/consulta/Orgao/');
+//                 // Disconnect from the gateway.
+//                 await gateway.disconnect();
+//         } catch (error) {
+//                 req.flash("error_msg", "Houve um erro ao submeter a transação 1");
+//                 console.error(`Failed to submit transaction: ${error}`);
+//                 res.redirect("/api/consulta/Orgao");
+//         }
+// });
 
 router.post('/alterar_Projeto', async function (req, res) {
         console.log("===> /alterar_Projeto");
@@ -1676,11 +1584,7 @@ router.post('/alterar_Projeto', async function (req, res) {
                         req.body.municipio,
                         req.body.aberto,
                         req.body.abrangencia,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Projeto',
-                        req.body.key_proveniencia,
-                        req.body.key_projeto,
+                        // Proveniencia
                         user,
                         user_name,
                         ip.address(),
@@ -1792,11 +1696,7 @@ router.post('/alterar_Observacao', async function (req, res) {
                         req.body.frequencia_sulcos2,
                         req.body.profundidade_sulcos2,
                         req.body.descrito_coletado_por,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Observacao',
-                        req.body.key_proveniencia,
-                        req.body.key_observacao,
+                        // Proveniencia
                         user,
                         user_name,
                         ip.address(),
@@ -1973,11 +1873,7 @@ router.post('/alterar_Horizonte', async function (req, res) {
                         req.body.outros_textura,
                         req.body.outros_cascalho,
                         req.body.observacao,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Horizonte',
-                        req.body.key_proveniencia,
-                        req.body.key_horizonte,
+                        // Proveniencia 
                         user,
                         user_name,
                         ip.address(),
@@ -2051,11 +1947,7 @@ router.post('/alterar_Amostra', async function (req, res) {
                         req.body.key_horizonte,
                         req.body.nome,
                         req.body.comentario,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Amostra',
-                        req.body.key_proveniencia,
-                        req.body.key_amostra,
+                        // Proveniencia 
                         user,
                         user_name,
                         ip.address(),
@@ -2119,16 +2011,7 @@ router.post('/alterar_Analise', async function (req, res) {
                 const contract = network.getContract('provchain');
 
                 // Submit the specified transaction.
-                //    console.log('********************* Valores a serem passados para a chaincode *****************')
-                console.log('********************* Valores a serem passados para a chaincode *****************')
-                console.log("req.body.resultKey :" + req.body.resultKey)                
-                console.log("req.body.key_amostra :" + req.body.key_amostra)                
-                console.log("req.body.key_analise :" + req.body.key_analise)                
-                console.log("req.bnaliseody.nome :" + req.body.nome)                
-                console.log("req.body.resultado :" + req.body.resultado)   
-                console.log("req.body :" + JSON.stringify(req.body))   
-                             
-
+  
                 const resultProveniencia = await contract.evaluateTransaction('consultar_identificador', req.body.key_analise);
                 req.body.key_proveniencia = JSON.parse(resultProveniencia).key_proveniencia;
 
@@ -2138,11 +2021,7 @@ router.post('/alterar_Analise', async function (req, res) {
                         req.body.key_amostra,
                         req.body.nome,
                         req.body.resultado,
-                );
-
-                const resultProv = await contract.submitTransaction('proveniencia_Analise',
-                        req.body.key_proveniencia,
-                        req.body.key_analise,
+                        // Proveniencia 
                         user,
                         user_name,
                         ip.address(),

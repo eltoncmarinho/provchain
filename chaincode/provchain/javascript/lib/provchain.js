@@ -12,30 +12,30 @@ const { Contract } = require('fabric-contract-api');
 class provchain extends Contract {
 
     async inicializarLivroRazao(ctx) {
-        // >>>>> ORGAO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
-        const orgaos = [
-            {
-                key: '239a5445-374d-455e-9b88-47c1dcd65b301234',
-                key_proveniencia: '24df7a93-ef12-45de-bff0-6a30b16dbdfb1234',
-                nome: 'Empresa Brasileira de Pesquisa Agropecuária',
-                referencia: 'EMBRAPA',
-                ano: '1973',
-                tipo_problema: 'Levantamento semidetalhado',
-                nivel_levantamento: 'Levantamento semidetalhado',
-                contato_nome: '',
-                contato_email: '',
-                contato_telefone: '',
-                motivo: '',
-                tipo_instituicao: 'instituicao_ensino',
-                abrangencia: 'País',
-                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-            },
-        ];
-        for (const orgao of orgaos) {
-            orgao.tipoDoc = 'Orgao';
-            await ctx.stub.putState(orgao.key, Buffer.from(JSON.stringify(orgao)));
-            console.info(`Órgão ${orgao.key} initializado`);
-        }
+        // // >>>>> ORGAO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
+        // const orgaos = [
+        //     {
+        //         key: '239a5445-374d-455e-9b88-47c1dcd65b301234',
+        //         key_proveniencia: '24df7a93-ef12-45de-bff0-6a30b16dbdfb1234',
+        //         nome: 'Empresa Brasileira de Pesquisa Agropecuária',
+        //         referencia: 'EMBRAPA',
+        //         ano: '1973',
+        //         tipo_problema: 'Levantamento semidetalhado',
+        //         nivel_levantamento: 'Levantamento semidetalhado',
+        //         contato_nome: '',
+        //         contato_email: '',
+        //         contato_telefone: '',
+        //         motivo: '',
+        //         tipo_instituicao: 'instituicao_ensino',
+        //         abrangencia: 'País',
+        //         data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+        //     },
+        // ];
+        // for (const orgao of orgaos) {
+        //     orgao.tipoDoc = 'Orgao';
+        //     await ctx.stub.putState(orgao.key, Buffer.from(JSON.stringify(orgao)));
+        //     console.info(`Órgão ${orgao.key} initializado`);
+        // }
         // >>>>> PROJETOS >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
         const projetos = [
             {
@@ -56,22 +56,22 @@ class provchain extends Contract {
             await ctx.stub.putState(projeto.key, Buffer.from(JSON.stringify(projeto)));
             console.info(`Projeto ${projeto.key} initializado`);
         }
-        // >>>>> ASSOCIAÇÕES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
-        const associacoes = [
-            {
-                key: 'd88861bebed6f36de35385f879925edf8353d313',
-                key_orgao: '239a5445-374d-455e-9b88-47c1dcd65b301234',
-                key_projeto: 'ac93a252-1679-4eba-9f15-04d671b580f31234',
-                key_proveniencia: 'a0683526da2dcfc9ac9a5ab546b35a379c49c060',
-                excluido: false,
-                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-            },
-        ];
-        for (const associacao of associacoes) {
-            associacao.tipoDoc = 'AssociacaoOrgaoProjeto';
-            await ctx.stub.putState(associacao.key, Buffer.from(JSON.stringify(associacao)));
-            console.info(`Associação ${associacao.key} descrita`);
-        }
+        // // >>>>> ASSOCIAÇÕES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        
+        // const associacoes = [
+        //     {
+        //         key: 'd88861bebed6f36de35385f879925edf8353d313',
+        //         key_orgao: '239a5445-374d-455e-9b88-47c1dcd65b301234',
+        //         key_projeto: 'ac93a252-1679-4eba-9f15-04d671b580f31234',
+        //         key_proveniencia: 'a0683526da2dcfc9ac9a5ab546b35a379c49c060',
+        //         excluido: false,
+        //         data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+        //     },
+        // ];
+        // for (const associacao of associacoes) {
+        //     associacao.tipoDoc = 'AssociacaoOrgaoProjeto';
+        //     await ctx.stub.putState(associacao.key, Buffer.from(JSON.stringify(associacao)));
+        //     console.info(`Associação ${associacao.key} descrita`);
+        // }
         // >>>>> OBSERVACAO >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   
         const observacoes = [
             { key: '13f2c75746608613e0ad6b92541464289e103134', key_proveniencia: '654cec2f0483e2f9fc7f8efb353dd3def830420b', key_projeto: 'ac93a252-1679-4eba-9f15-04d671b580f31234', nome: 'SIPA 1', data_coleta: '25/04/1995', tipo_observacao: 'Trincheira', latitude: '22,7502778', longitude: '43,6727778', altitude: '', relacaoBA: '', datum: '', estado: 'RJ', municipio: 'Seropédica', observacao: 'linha de pedras a 70cm de profundidade.', pedregosidade: 'Não pedregosa', rochosidade: 'Não rochosa', drenagem: 'Bem drenado', situacao_declive: '', vegetacao_primaria: 'Floresta tropical subcaducifólia', uso_atual: 'pastagem de capim colonião.', koppen: '(tropical) - Quente, com chuvas de verão, temperatura média anual entre 19ºC e 28ºC, pluviosidade média inferior a 2.000 mm/ano', formacao_geologica: '', litologia: '', unidade_mapeamento: '', movimento_de_massa: '', cronologia: '', material_originario: 'produto de alteração das rochas supracitadas.', sibcs_antigo: 'Podzólico Vermelho-Amarelo Tb Distrófico A moderado textura argilosa/muito argilosa fase floresta tropical subcaducifólia relevo suave ondulado.', wrb: '', soil_taxonomy: '', localizacao: 'campo experimental da Fazendinha, km 47, Seropédica.', gilgai: '', classificacao_taxonomica: '', relevo_local: 'Suave ondulado', relevo_regional: 'Ondulado', descrito_coletado_por: 'Aroaldo Lopes Lemos e Braz Calderano Filho.', agente_causador1: '', forma1: '', classe1: '', frequencia_sulcos1: '', profundidade_sulcos1: '', agente_causador2: '', forma2: '', classe2: '', frequencia_sulcos2: '', profundidade_sulcos2: '', excluido: false, data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'), },
@@ -162,31 +162,31 @@ class provchain extends Contract {
         // >>>>>>>>>>>> PROVENIENCIA
         const proveniencias = [
 
-            // >>> Proveniencia ORGAO
-            {
-                key: '24df7a93-ef12-45de-bff0-6a30b16dbdfb1234',
-                key_elemento: '239a5445-374d-455e-9b88-47c1dcd65b301234',
-                usuario_criador: 'appUser',
-                nome_criador: 'Sabrina Oliveira',
-                usuario_alterador: 'appUser',
-                nome_alterador: 'Élton Marinho',
-                ip: '',
-                geoLocalizacao_range: '',
-                geoLocalizacao_country: '',
-                geoLocalizacao_region: '',
-                geoLocalizacao_eu: '',
-                geoLocalizacao_timezone: '',
-                geoLocalizacao_city: '',
-                geoLocalizacao_ll: '',
-                geoLocalizacao_metro: '',
-                geoLocalizacao_area: '',
-                software_version: 'Pentaho Data Integration 7.1',
-                software_browser: '',
+            // // >>> Proveniencia ORGAO
+            // {
+            //     key: '24df7a93-ef12-45de-bff0-6a30b16dbdfb1234',
+            //     key_elemento: '239a5445-374d-455e-9b88-47c1dcd65b301234',
+            //     usuario_criador: 'appUser',
+            //     nome_criador: 'Sabrina Oliveira',
+            //     usuario_alterador: 'appUser',
+            //     nome_alterador: 'Élton Marinho',
+            //     ip: '',
+            //     geoLocalizacao_range: '',
+            //     geoLocalizacao_country: '',
+            //     geoLocalizacao_region: '',
+            //     geoLocalizacao_eu: '',
+            //     geoLocalizacao_timezone: '',
+            //     geoLocalizacao_city: '',
+            //     geoLocalizacao_ll: '',
+            //     geoLocalizacao_metro: '',
+            //     geoLocalizacao_area: '',
+            //     software_version: 'Pentaho Data Integration 7.1',
+            //     software_browser: '',
 
-                status: 'Registro incluído',
-                excluido: false,
-                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-            },
+            //     status: 'Registro incluído',
+            //     excluido: false,
+            //     data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+            // },
 
             // >>> Proveniencia PROJETO
             { key: 'ba85d59a-4f50-40ae-ac5c-8f62d69b2a621234', key_elemento: 'ac93a252-1679-4eba-9f15-04d671b580f31234', usuario_criador: 'appUser', nome_criador: 'Sabrina Oliveira', usuario_alterador: 'appUser', nome_alterador: 'Élton Marinho', ip: '', geoLocalizacao_range: '', geoLocalizacao_country: '', geoLocalizacao_region: '', geoLocalizacao_eu: '', geoLocalizacao_timezone: '', geoLocalizacao_city: '', geoLocalizacao_ll: '', geoLocalizacao_metro: '', geoLocalizacao_area: '', software_version: 'Pentaho Data Integration 7.1', software_browser: '', status: 'Registro incluído', excluido: false, data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'), },
@@ -317,7 +317,6 @@ class provchain extends Contract {
             }
         }
         console.log(allResults);
-        //            return JSON.stringify(allResults);
         return allResults;
     }
 
@@ -397,15 +396,6 @@ class provchain extends Contract {
             return elementoAsBytes.toString();
         }
     }
-
-    // async consultar_elementoAsBytes(ctx, elemento) {
-    //     const elementoAsBytes = await ctx.stub.getState(elemento);
-    //     if (!elementoAsBytes || elementoAsBytes.length === 0) {
-    //         throw new Error(`${elemento} does not exist`);
-    //     }
-    //     console.log(elementoAsBytes);
-    //     return elementoAsBytes;
-    // }
 
     async consultar_dadosAssociados(ctx, id, tipoDocDestino) {
         console.log('Chaincode tipoDoc: <<ENTIDADE>>');
@@ -581,8 +571,6 @@ class provchain extends Contract {
         return result;
     }
 
-    // Funçoes relacionadas ao Orgão executor
-
     // async incAlt_Orgao(ctx,
     //     key,
     //     key_proveniencia,
@@ -597,10 +585,26 @@ class provchain extends Contract {
     //     motivo,
     //     tipo_instituicao,
     //     abrangencia,
+    //     // Proveniencia
+    //     user,
+    //     user_name,
+    //     ip,
+    //     geoLocalizacao_range,
+    //     geoLocalizacao_country,
+    //     geoLocalizacao_region,
+    //     geoLocalizacao_eu,
+    //     geoLocalizacao_timezone,
+    //     geoLocalizacao_city,
+    //     geoLocalizacao_ll,
+    //     geoLocalizacao_metro,
+    //     geoLocalizacao_area,
+    //     software_version,
+    //     software_browser,
+    //     status,         
 
     // ) {
 
-    //     console.info('============= START : changeorgao ===========');
+    //     console.info('============= START : Orgao ===========');
 
     //     var orgao = {};
 
@@ -643,40 +647,18 @@ class provchain extends Contract {
     //         orgao.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
     //     }
     //     await ctx.stub.putState(key, Buffer.from(JSON.stringify(orgao)));
-    //     console.info('============= END : changeorgao ===========');
-    // }
-
-    // async proveniencia_Orgao(ctx,
-    //     key,
-    //     key_elemento,
-    //     user,               // usuario que criou ou fez a ultima alteracao              
-    //     user_name,          // usuario que criou ou fez a ultima alteracao    
-    //     ip,
-    //     geoLocalizacao_range,
-    //     geoLocalizacao_country,
-    //     geoLocalizacao_region,
-    //     geoLocalizacao_eu,
-    //     geoLocalizacao_timezone,
-    //     geoLocalizacao_city,
-    //     geoLocalizacao_ll,
-    //     geoLocalizacao_metro,
-    //     geoLocalizacao_area,
-    //     software_version,
-    //     software_browser,
-    //     status,
-    // ) {
-    //     console.info('============= START : Create Proveniencia ===========');
+    //     console.info('============= END : Orgao ===========');
+    //     console.info('============= START : Proveniencia ===========');
     //     var proveniencia = {};
-    //     const provenienciaAsBytes = await ctx.stub.getState(key);
+    //     const provenienciaAsBytes = await ctx.stub.getState(key_proveniencia);
     //     if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
-    //         //  Criar registro de Proveniencia
     //         proveniencia = {
+    //             key_proveniencia,
     //             key,
-    //             key_elemento,
-    //             usuario_criador: user,              // usuario q
-    //             nome_criador: user_name,            // nome do criador    
-    //             usuario_alterador: user,            // usuario fez a ultima alteracao                  
-    //             nome_alterador: user_name,          // nome que fez a ultima alteracao
+    //             usuario_criador: user,                
+    //             nome_criador: user_name,            
+    //             usuario_alterador: user,            
+    //             nome_alterador: user_name,          
     //             ip,
     //             geoLocalizacao_range,
     //             geoLocalizacao_country,
@@ -689,16 +671,14 @@ class provchain extends Contract {
     //             geoLocalizacao_area,
     //             software_version,
     //             software_browser,
-    //             status,
     //             tipoDoc: 'Proveniencia',
+    //             status,
     //             data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-    //             //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
     //         };
     //     } else {
-    //         // Alterar registro de Proveniencia
     //         proveniencia = JSON.parse(provenienciaAsBytes.toString());
-    //         proveniencia.key = key;
-    //         proveniencia.key_elemento = key_elemento;
+    //         proveniencia.key = key_proveniencia;
+    //         proveniencia.key_elemento = key;
     //         proveniencia.usuario_alterador = user;
     //         proveniencia.nome_alterador = user_name;
     //         proveniencia.ip = ip;
@@ -713,17 +693,14 @@ class provchain extends Contract {
     //         proveniencia.geoLocalizacao_area = geoLocalizacao_area;
     //         proveniencia.software_version = software_version;
     //         proveniencia.software_browser = software_browser;
+    //         proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
     //         proveniencia.status = status;
     //         proveniencia.excluido = false;
-
-    //         //                proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
     //         proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
     //     }
-    //     await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-    //     console.info('============= END : Create Proveniencia ===========');
+    //     await ctx.stub.putState(proveniencia.key, Buffer.from(JSON.stringify(proveniencia)));
+    //     console.info('============= END : Proveniencia ===========');             
     // }
-
-    // Funçoes relacionadas ao Projeto
 
     async incAlt_Projeto(ctx,
         key,
@@ -772,8 +749,8 @@ class provchain extends Contract {
             };
         } else {
             projeto = JSON.parse(projetoAsBytes.toString());
-            projeto.key = key;
-            projeto.key_proveniencia = key_proveniencia;
+            // projeto.key = key;
+            // projeto.key_proveniencia = key_proveniencia;
             projeto.nome = nome;
             projeto.sigla = sigla;
             projeto.pais = pais;
@@ -781,6 +758,8 @@ class provchain extends Contract {
             projeto.municipio = municipio;
             projeto.aberto = aberto;
             projeto.abrangencia = abrangencia;
+            // projeto.excluido = false;
+            // projeto.tipoDoc = 'Projeto';
             projeto.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
         }
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(projeto)));
@@ -788,11 +767,11 @@ class provchain extends Contract {
 
         console.info('============= START : Proveniencia ===========');
         var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key_proveniencia);
+        const provenienciaAsBytes = await ctx.stub.getState(projeto.key_proveniencia);
         if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
             proveniencia = {
-                key_proveniencia,
-                key,
+                key: key_proveniencia,
+                key_elemento: key,
                 usuario_criador: user,                          
                 nome_criador: user_name,              
                 usuario_alterador: user,                            
@@ -811,14 +790,15 @@ class provchain extends Contract {
                 software_browser,
                 tipoDoc: 'Proveniencia',
                 status,
-                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss')
             };
+            await ctx.stub.putState(proveniencia.key, Buffer.from(JSON.stringify(proveniencia)));
         } else {
             proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key_proveniencia;
-            proveniencia.key_elemento = key;
+            // proveniencia.key = projeto.key_proveniencia;
+            // proveniencia.key_elemento = key;
             proveniencia.usuario_alterador = user;
-            proveniencia.nome_alterador = user_name;blockchain
+            proveniencia.nome_alterador = user_name;
             proveniencia.ip = ip;
             proveniencia.geoLocalizacao_range = geoLocalizacao_range;
             proveniencia.geoLocalizacao_country = geoLocalizacao_country;
@@ -827,7 +807,7 @@ class provchain extends Contract {
             proveniencia.geoLocalizacao_timezone = geoLocalizacao_timezone;
             proveniencia.geoLocalizacao_city = geoLocalizacao_city;
             proveniencia.geoLocalizacao_ll = geoLocalizacao_ll;
-            proveniencia.geoLocalizacao_metro = CreategeoLocalizacao_metro;
+            proveniencia.geoLocalizacao_metro = geoLocalizacao_metro;
             proveniencia.geoLocalizacao_area = geoLocalizacao_area;
             proveniencia.software_version = software_version;
             proveniencia.software_browser = software_browser;
@@ -836,8 +816,8 @@ class provchain extends Contract {
             proveniencia.status = status;
             proveniencia.excluido = false;
             proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+            await ctx.stub.putState(proveniencia.key, Buffer.from(JSON.stringify(proveniencia)));
         }
-        await ctx.stub.putState(key_proveniencia, Buffer.from(JSON.stringify(proveniencia)));
         console.info('============= END :  Proveniencia ===========');        
     }
 
@@ -888,7 +868,22 @@ class provchain extends Contract {
         frequencia_sulcos2,
         profundidade_sulcos2,
         descrito_coletado_por,
-
+        // Proveniencia
+        user,
+        user_name,
+        ip,
+        geoLocalizacao_range,
+        geoLocalizacao_country,
+        geoLocalizacao_region,
+        geoLocalizacao_eu,
+        geoLocalizacao_timezone,
+        geoLocalizacao_city,
+        geoLocalizacao_ll,
+        geoLocalizacao_metro,
+        geoLocalizacao_area,
+        software_version,
+        software_browser,
+        status,
     ) {
 
         console.info('============= START : changeObservacao ===========');
@@ -948,10 +943,11 @@ class provchain extends Contract {
                 tipoDoc: 'Observacao',
                 data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
             };
-        } else {
+        } else {niencia.key = projeto.key_proveniencia;
+            // proveniencia.k
             observacao = JSON.parse(observacaoAsBytes.toString());
-            observacao.key = key;
-            observacao.key_proveniencia = key_proveniencia;
+            // observacao.key = key;
+            // observacao.key_proveniencia = key_proveniencia;
             observacao.key_projeto = key_projeto;
             observacao.nome = nome;
             observacao.data_coleta = data_coleta;
@@ -1002,39 +998,18 @@ class provchain extends Contract {
             observacao.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
         }
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(observacao)));
-        console.info('============= END : changeObservacao ===========');
-    }
-
-    async proveniencia_Observacao(ctx,
-        key,
-        key_elemento,
-        user,
-        user_name,
-        ip,
-        geoLocalizacao_range,
-        geoLocalizacao_country,
-        geoLocalizacao_region,
-        geoLocalizacao_eu,
-        geoLocalizacao_timezone,
-        geoLocalizacao_city,
-        geoLocalizacao_ll,
-        geoLocalizacao_metro,
-        geoLocalizacao_area,
-        software_version,
-        software_browser,
-        status,
-    ) {
-        console.info('============= START : Create Proveniencia ===========');
+        console.info('============= END : Observacao ===========');
+        console.info('============= START :  Proveniencia ===========');
         var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key);
+        const provenienciaAsBytes = await ctx.stub.getState(observacao.key_proveniencia);
         if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
             proveniencia = {
-                key,
-                key_elemento,
-                usuario_criador: user,              // usuario que criou               
-                nome_criador: user_name,            // nome do criador    
-                usuario_alterador: user,            // usuario fez a ultima alteracao                  
-                nome_alterador: user_name,          // nome que fez a ultima alteracao
+                key: key_proveniencia,
+                key_elemento: key,
+                usuario_criador: user,                
+                nome_criador: user_name,            
+                usuario_alterador: user,            
+                nome_alterador: user_name,          
                 ip,
                 geoLocalizacao_range,
                 geoLocalizacao_country,
@@ -1050,12 +1025,11 @@ class provchain extends Contract {
                 tipoDoc: 'Proveniencia',
                 status,
                 data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
             };
         } else {
             proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key;
-            proveniencia.key_elemento = key_elemento;
+            proveniencia.key = key_proveniencia;
+            proveniencia.key_elemento = key;
             proveniencia.usuario_alterador = user;
             proveniencia.nome_alterador = user_name;
             proveniencia.ip = ip;
@@ -1073,16 +1047,12 @@ class provchain extends Contract {
             proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             proveniencia.status = status;
             proveniencia.excluido = false;
-            //            proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-
         }
-
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-        console.info('============= END : Create Proveniencia ===========');
+        await ctx.stub.putState(proveniencia.key, Buffer.from(JSON.stringify(proveniencia)));
+        console.info('============= END : Proveniencia ===========');        
     }
 
-    // Funçoes relacionadas ao Horizonte
     async incAlt_Horizonte(ctx,
         key,
         key_proveniencia,
@@ -1117,7 +1087,7 @@ class provchain extends Contract {
         consistencia_molhada_plasticidade,
         compressao_tipo,
         compressao_quantidade,
-        compressao_grau,
+        compressao_grau,        
         friccao_quantidade,
         friccao_tamanho,
         friccao_grau,
@@ -1129,7 +1099,7 @@ class provchain extends Contract {
         raiz_tipo,
         raiz_diametro,
         raiz_quantidade,
-        nodulos_e_concrecoes_quantidade,
+        nodulos_e_concrecoes_quantidade,        
         nodulos_e_concrecoes_tamanho,
         nodulos_e_concrecoes_dureza,
         nodulos_e_concrecoes_natureza,
@@ -1144,8 +1114,24 @@ class provchain extends Contract {
         outros_textura,
         outros_cascalho,
         observacao,
+        // Proveniencia
+        user,
+        user_name,
+        ip,
+        geoLocalizacao_range,
+        geoLocalizacao_country,
+        geoLocalizacao_region,
+        geoLocalizacao_eu,
+        geoLocalizacao_timezone,
+        geoLocalizacao_city,
+        geoLocalizacao_ll,
+        geoLocalizacao_metro,
+        geoLocalizacao_area,
+        software_version,
+        software_browser,
+        status,        
     ) {
-        console.info('============= START : Create Horizonte ===========');
+        console.info('============= START : Horizonte ===========');
         var horizonte = {};
         const elementoAsBytes = await ctx.stub.getState(key); // get the car from chaincode state
         if (!elementoAsBytes || elementoAsBytes.length === 0) {
@@ -1217,8 +1203,8 @@ class provchain extends Contract {
             }
         } else {
             horizonte = JSON.parse(elementoAsBytes.toString());
-            horizonte.key = key;
-            horizonte.key_proveniencia = key_proveniencia;
+            // horizonte.key = key;
+            // horizonte.key_proveniencia = key_proveniencia;
             horizonte.key_observacao = key_observacao;
             horizonte.nome = nome;
             horizonte.transicao_topografia = transicao_topografia;
@@ -1282,39 +1268,17 @@ class provchain extends Contract {
         }
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(horizonte)));
         console.info('============= END : Create Horizonte ===========');
-
-    }
-
-    async proveniencia_Horizonte(ctx,
-        key,
-        key_elemento,
-        user,
-        user_name,
-        ip,
-        geoLocalizacao_range,
-        geoLocalizacao_country,
-        geoLocalizacao_region,
-        geoLocalizacao_eu,
-        geoLocalizacao_timezone,
-        geoLocalizacao_city,
-        geoLocalizacao_ll,
-        geoLocalizacao_metro,
-        geoLocalizacao_area,
-        software_version,
-        software_browser,
-        status,
-    ) {
-        console.info('============= START : Create Proveniencia ===========');
+        console.info('============= START :  Proveniencia ===========');
         var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key);
+        const provenienciaAsBytes = await ctx.stub.getState(horizonte.key_proveniencia);
         if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
             proveniencia = {
-                key,
-                key_elemento,
-                usuario_criador: user,              // usuario que criou               
-                nome_criador: user_name,            // nome do criador    
-                usuario_alterador: user,            // usuario fez a ultima alteracao                  
-                nome_alterador: user_name,          // nome que fez a ultima alteracao
+                key: key_proveniencia,
+                key_elemento: key,
+                usuario_criador: user,                
+                nome_criador: user_name,            
+                usuario_alterador: user,            
+                nome_alterador: user_name,          
                 ip,
                 geoLocalizacao_range,
                 geoLocalizacao_country,
@@ -1330,12 +1294,11 @@ class provchain extends Contract {
                 tipoDoc: 'Proveniencia',
                 status,
                 data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
             };
         } else {
             proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key;
-            proveniencia.key_elemento = key_elemento;
+            proveniencia.key = key_proveniencia;
+            proveniencia.key_elemento = key;
             proveniencia.usuario_alterador = user;
             proveniencia.nome_alterador = user_name;
             proveniencia.ip = ip;
@@ -1350,28 +1313,41 @@ class provchain extends Contract {
             proveniencia.geoLocalizacao_area = geoLocalizacao_area;
             proveniencia.software_version = software_version;
             proveniencia.software_browser = software_browser;
-            proveniencia.usuario_alterador = user;            // usuario fez a ultima alteracao                  
-            proveniencia.nome_alterador = user_name;          // nome que fez a ultima alteracao
+            proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             proveniencia.status = status;
             proveniencia.excluido = false;
-            //            proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-
         }
+        await ctx.stub.putState(proveniencia.key, Buffer.from(JSON.stringify(proveniencia)));
+        console.info('============= END : Proveniencia ===========');        
 
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-        console.info('============= END : Create Proveniencia ===========');
+
     }
 
-    // Funçoes relacionadas a Amostra
     async incAlt_Amostra(ctx,
         key,
         key_proveniencia,
         key_horizonte,
         nome,
         comentario,
+        // Proveniencia
+        user,
+        user_name,
+        ip,
+        geoLocalizacao_range,
+        geoLocalizacao_country,
+        geoLocalizacao_region,
+        geoLocalizacao_eu,
+        geoLocalizacao_timezone,
+        geoLocalizacao_city,
+        geoLocalizacao_ll,
+        geoLocalizacao_metro,
+        geoLocalizacao_area,
+        software_version,
+        software_browser,
+        status,     
     ) {
-        console.info('============= START : Create Amostra ===========');
+        console.info('============= START : Amostra ===========');
         var amostra = {};
         const elementoAsBytes = await ctx.stub.getState(key); // get the car from chaincode state
         if (!elementoAsBytes || elementoAsBytes.length === 0) {
@@ -1388,9 +1364,8 @@ class provchain extends Contract {
             }
         } else {
             amostra = JSON.parse(elementoAsBytes.toString());
-
-            amostra.key = key;
-            amostra.key_proveniencia = key_proveniencia;
+            // amostra.key = key;
+            // amostra.key_proveniencia = key_proveniencia;
             amostra.key_horizonte = key_horizonte;
             amostra.nome = nome;
             amostra.comentario = comentario;
@@ -1399,40 +1374,18 @@ class provchain extends Contract {
             amostra.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
         }
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(amostra)));
-        console.info('============= END : Create Amostra ===========');
-
-    }   
-    
-    async proveniencia_Amostra(ctx,
-        key,
-        key_elemento,
-        user,
-        user_name,
-        ip,
-        geoLocalizacao_range,
-        geoLocalizacao_country,
-        geoLocalizacao_region,
-        geoLocalizacao_eu,
-        geoLocalizacao_timezone,
-        geoLocalizacao_city,
-        geoLocalizacao_ll,
-        geoLocalizacao_metro,
-        geoLocalizacao_area,
-        software_version,
-        software_browser,
-        status,
-    ) {
-        console.info('============= START : Create Proveniencia ===========');
+        console.info('============= END :  Amostra ===========');
+        console.info('============= START :  Proveniencia ===========');
         var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key);
+        const provenienciaAsBytes = await ctx.stub.getState(amostra.key_proveniencia);
         if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
             proveniencia = {
-                key,
-                key_elemento,
-                usuario_criador: user,              // usuario que criou               
-                nome_criador: user_name,            // nome do criador    
-                usuario_alterador: user,            // usuario fez a ultima alteracao                  
-                nome_alterador: user_name,          // nome que fez a ultima alteracao
+                key: key_proveniencia,
+                key_elemento: key,
+                usuario_criador: user,                
+                nome_criador: user_name,            
+                usuario_alterador: user,            
+                nome_alterador: user_name,          
                 ip,
                 geoLocalizacao_range,
                 geoLocalizacao_country,
@@ -1448,12 +1401,11 @@ class provchain extends Contract {
                 tipoDoc: 'Proveniencia',
                 status,
                 data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
             };
         } else {
             proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key;
-            proveniencia.key_elemento = key_elemento;
+            proveniencia.key = key_proveniencia;
+            proveniencia.key_elemento = key;
             proveniencia.usuario_alterador = user;
             proveniencia.nome_alterador = user_name;
             proveniencia.ip = ip;
@@ -1468,23 +1420,37 @@ class provchain extends Contract {
             proveniencia.geoLocalizacao_area = geoLocalizacao_area;
             proveniencia.software_version = software_version;
             proveniencia.software_browser = software_browser;
+            proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             proveniencia.status = status;
             proveniencia.excluido = false;
             proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-
         }
-
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-        console.info('============= END : Create Proveniencia ===========');
-    }
+        await ctx.stub.putState(proveniencia.key, Buffer.from(JSON.stringify(proveniencia)));
+        console.info('============= END : Proveniencia ===========');     
+    }   
     
-    // Funçoes relacionadas a Analise
     async incAlt_Analise(ctx,
         key,
         key_proveniencia,
         key_amostra,
         nome,
         resultado,
+        // Proveniencia
+        user,
+        user_name,
+        ip,
+        geoLocalizacao_range,
+        geoLocalizacao_country,
+        geoLocalizacao_region,
+        geoLocalizacao_eu,
+        geoLocalizacao_timezone,
+        geoLocalizacao_city,
+        geoLocalizacao_ll,
+        geoLocalizacao_metro,
+        geoLocalizacao_area,
+        software_version,
+        software_browser,
+        status,             
     ) {
         console.info('============= START : Create Analise ===========');
         var analise = {};
@@ -1503,9 +1469,8 @@ class provchain extends Contract {
             }
         } else {
             analise = JSON.parse(elementoAsBytes.toString());
-
-            analise.key = key;
-            analise.key_proveniencia = key_proveniencia;
+            // analise.key = key;
+            // analise.key_proveniencia = key_proveniencia;
             analise.key_amostra = key_amostra;
             analise.nome = nome;
             analise.resultado = resultado;
@@ -1514,40 +1479,19 @@ class provchain extends Contract {
             analise.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
         }
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(analise)));
-        console.info('============= END : Create Analise ===========');
-
-    }   
-    
-    async proveniencia_Analise(ctx,
-        key,
-        key_elemento,
-        user,
-        user_name,
-        ip,
-        geoLocalizacao_range,
-        geoLocalizacao_country,
-        geoLocalizacao_region,
-        geoLocalizacao_eu,
-        geoLocalizacao_timezone,
-        geoLocalizacao_city,
-        geoLocalizacao_ll,
-        geoLocalizacao_metro,
-        geoLocalizacao_area,
-        software_version,
-        software_browser,
-        status,
-    ) {
-        console.info('============= START : Create Proveniencia ===========');
+        console.info('============= END : Analise ===========');
+        console.info('============= START : Proveniencia ===========');
         var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key);
+        const provenienciaAsBytes = await ctx.stub.getState(analise.key_proveniencia);
         if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
             proveniencia = {
-                key,
-                key_elemento,
-                usuario_criador: user,              // usuario que criou               
-                nome_criador: user_name,            // nome do criador    
-                usuario_alterador: user,            // usuario fez a ultima alteracao                  
-                nome_alterador: user_name,          // nome que fez a ultima alteracao
+                key: key_proveniencia,
+                key_elemento: key,
+
+                usuario_criador: user,                
+                nome_criador: user_name,            
+                usuario_alterador: user,            
+                nome_alterador: user_name,          
                 ip,
                 geoLocalizacao_range,
                 geoLocalizacao_country,
@@ -1563,12 +1507,11 @@ class provchain extends Contract {
                 tipoDoc: 'Proveniencia',
                 status,
                 data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
             };
         } else {
             proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key;
-            proveniencia.key_elemento = key_elemento;
+            proveniencia.key = key_proveniencia;
+            proveniencia.key_elemento = key;
             proveniencia.usuario_alterador = user;
             proveniencia.nome_alterador = user_name;
             proveniencia.ip = ip;
@@ -1583,16 +1526,15 @@ class provchain extends Contract {
             proveniencia.geoLocalizacao_area = geoLocalizacao_area;
             proveniencia.software_version = software_version;
             proveniencia.software_browser = software_browser;
+            proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             proveniencia.status = status;
             proveniencia.excluido = false;
             proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-
         }
+        await ctx.stub.putState(proveniencia.key, Buffer.from(JSON.stringify(proveniencia)));
+        console.info('============= END : Proveniencia ===========');             
+    }   
 
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-        console.info('============= END : Create Proveniencia ===========');
-    }
-    
 }
 
 module.exports = provchain;

@@ -38,7 +38,7 @@ echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Tira a rede do ar, se estiver no ar..."
 $RAIZ/test-network/network.sh down
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Cria o canal com banco de estado CouchDB"
 $RAIZ/test-network/network.sh up createChannel -ca -s couchdb
-echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Instala o PROVChain" 
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Instala a chaincode no canal e nos nós. Aqui é o foco da PROVChain" 
 CC_SRC_LANGUAGE=${1:-"javascript"}
 CC_SRC_LANGUAGE=`echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:]`
 CC_SRC_PATH="../chaincode/provchain/javascript/"
