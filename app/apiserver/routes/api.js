@@ -1719,9 +1719,6 @@ router.post('/alterar_Observacao', async function (req, res) {
                 res.redirect('/api/consulta/Observacao/' + req.body.key_projeto);
 
                 // Disconnect from the gateway.
-                console.log('/alterar_Observacao');
-
-
                 await gateway.disconnect();
 
         } catch (error) {

@@ -13,6 +13,9 @@ pip3 install selenium
 pip3 install pydot 
 pip3 install webdriver-manager
 pip3 install prov
+pip3 install pandas
+pip3 install numpy
+pip3 install openpyxl
 
 apt update
 apt upgrade

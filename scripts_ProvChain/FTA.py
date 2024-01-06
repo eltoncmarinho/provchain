@@ -14,97 +14,24 @@ from webdriver_manager.chrome import ChromeDriverManager
 chrome = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 #chrome.get("https://www.google.com")
 
-# from selenium import webdriver 
-#  from selenium.webdriver.common.by import By
-#  from selenium.webdriver.common.keys import Keys
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 
 
 import webbrowser
-import os
+# import os
 from selenium.webdriver.chrome.options import Options
+
 ########## Importacao do ProvDocument 
 from prov.dot import prov_to_dot
 from prov.model import ProvDocument
 
-#chrome = webdriver.Chrome(executable_path="chromedriver.exe")
-url_fairchain = "http://127.0.0.1:8080/"
-#url_fairchain = "http://89.117.33.155:8080/"
-
-
-# Cores nos grafos
-cor_orgao = 'lightblue'
-cor_projeto = 'red'
-cor_perfil = 'green'
-cor_horizonte = 'yellow'
-cor_excluido = 'gray'
-cor_lexcluido = 'burlywood2'
-cor_blockchain = 'DodgerBlue'
-
-
-# Posicição dos vertices para layout
-cOrgao = (2,1)
-cHisOrgao = (0,0)
-cAltOrgao = (0,1)
-cExcOrgao = (0,2)
-
-cPrj = (2,4)
-cHisPrj = (0,3)
-cAltPrj = (0,4)
-cExcPrj = (0,5)
-
-cPer = (4,1)
-cHisPer = (6,0)
-cAltPer = (6,1)
-cExcPer = (6,2)
-
-cHor = (4,4)
-cHisHor = (6,3)
-cAltHor = (6,4)
-cExcHor = (6,5)
-
-cExcluidos = (3,5)
-cBlockchain = (3,0)
-
-cLimites01 = (-1,-1)
-cLimites02 = (7,6)
-
-cores = [cor_projeto, cor_projeto, cor_projeto, cor_orgao, cor_orgao, cor_orgao, cor_perfil, cor_perfil, cor_perfil, cor_horizonte, cor_horizonte, cor_horizonte, cor_excluido, cor_excluido, cor_excluido, cor_excluido, cor_lexcluido, cor_blockchain]
-layout = [cPrj, cAltPrj, cHisPrj, cOrgao , cAltOrgao, cHisOrgao, cPer, cAltPer, cHisPer, cHor, cAltHor, cHisHor, cExcHor, cExcPer, cExcOrgao, cExcPrj, cExcluidos, cBlockchain, cLimites01, cLimites02]
+url_provchain = "http://127.0.0.1:8080/"
 
 def titulo_cenario(arquivo, tempo):
     chrome  = webbrowser.get("google-chrome")
     chrome.open_new_tab(arquivo)
     time.sleep(tempo)
-
-def gera_exibe_arquivo (vertices, arestas, vertice_cor, layout, tempo):
-    g = Graph(directed=True)
-
-    #print("- Adiciona os vertices")
-    g.add_vertices(vertices)
-
-    #print("- Adiciona ids e labels aos vertices")
-    for i in range(len(g.vs)):
-        g.vs[i]["id"] = i
-        g.vs[i]["label"] = vertices[i]
-
-    #print("- Adiciona arestas")
-    g.add_edges(arestas)
-
-    #print("- Plotando o gráfico")
-    plot(g, target='imagens/grafo.pdf', 
-        vertex_size=77,
-        vertex_color=vertice_cor,
-        edge_width=[1, 2],
-        edge_color=['black'],
-        layout=layout)
-
-    chrome  = webbrowser.get("google-chrome")
-    chrome.open_new_tab("imagens/grafo.pdf")
-  
-    time.sleep(tempo)   
 
 def lancamento (url_do_forms, nome_do_arquivo, nome_da_guia, linha):
     print(">>> Início de Serviço - Arquivo: " + nome_do_arquivo + " - Guia: " + nome_da_guia + " - url: " + url_do_forms)
@@ -193,19 +120,19 @@ def exibe_proveniencia_cenario_fazendinha(tempo):
     # Adicionando atividade
     d0.activity('atividade:ConsultarOrgao')
     d0.activity('atividade:ConsultarProjeto')
-    d0.activity('atividade:ConsultarPerfil')
+    d0.activity('atividade:Consultarobservacao')
     d0.activity('atividade:ConsultarHorizonte')
 
     # Adicionando as relacoes
     d0.used('atividade:ConsultarOrgao', e2)
     d0.used('atividade:ConsultarProjeto', e2)
-    d0.used('atividade:ConsultarPerfil', e2)
+    d0.used('atividade:Consultarobservacao', e2)
     d0.used('atividade:ConsultarHorizonte', e2)
     
     # Atribuir agentes a atividade
     d0.wasAttributedTo('atividade:ConsultarOrgao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:ConsultarProjeto', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:ConsultarPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:Consultarobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:ConsultarHorizonte', 'ator: Élton Marinho')
 
     # Gerando grafico de proveniencia  
@@ -311,7 +238,7 @@ def exibe_proveniencia_cenario_orgao_executor(tempo):
     chrome.open_new_tab("imagens/proveniencia.pdf")
     time.sleep(tempo)
 
-def exibe_proveniencia_cenario_perfil(tempo):
+def exibe_proveniencia_cenario_observacao(tempo):
     # Criando documento de proveniência vazio
     d0 = ProvDocument() 
 
@@ -332,36 +259,36 @@ def exibe_proveniencia_cenario_perfil(tempo):
     # Adicionando atividade
     d0.activity('atividade:incluirProjeto')
     d0.activity('atividade:incluirOrgao')
-    d0.activity('atividade:incluirPerfil')
+    d0.activity('atividade:incluirobservacao')
     d0.activity('atividade:alterarProjeto')
     d0.activity('atividade:alterarOrgao')
-    d0.activity('atividade:alterarPerfil')
+    d0.activity('atividade:alterarobservacao')
     d0.activity('atividade:exibirHistoricoProjeto')
     d0.activity('atividade:exibirHistoricoOrgao')
-    d0.activity('atividade:exibirHistoricoPerfil')
+    d0.activity('atividade:exibirHistoricoobservacao')
     
     
     # Adicionando as relacoes
 
     d0.used('atividade:incluirProjeto', e2)
     d0.used('atividade:incluirOrgao', e2)
-    d0.used('atividade:incluirPerfil', e2)
+    d0.used('atividade:incluirobservacao', e2)
     d0.used('atividade:alterarProjeto', e2)
     d0.used('atividade:alterarOrgao', e2)
-    d0.used('atividade:alterarPerfil', e2)
+    d0.used('atividade:alterarobservacao', e2)
     d0.used('atividade:exibirHistoricoProjeto', e2)
     d0.used('atividade:exibirHistoricoOrgao', e2)
-    d0.used('atividade:exibirHistoricoPerfil', e2)
+    d0.used('atividade:exibirHistoricoobservacao', e2)
 
     d0.wasAttributedTo('atividade:incluirProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:incluirOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:incluirPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:incluirobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:alterarPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:alterarobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:exibirHistoricoPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:exibirHistoricoobservacao', 'ator: Élton Marinho')
     
     # Gerando grafico de proveniencia  
     dot = prov_to_dot(d0)
@@ -393,43 +320,43 @@ def exibe_proveniencia_cenario_horizonte(tempo):
     # Adicionando atividade
     d0.activity('atividade:incluirProjeto')
     d0.activity('atividade:incluirOrgao')
-    d0.activity('atividade:incluirPerfil')
+    d0.activity('atividade:incluirobservacao')
     d0.activity('atividade:incluirHorizonte')
     d0.activity('atividade:alterarProjeto')
     d0.activity('atividade:alterarOrgao')
-    d0.activity('atividade:alterarPerfil')
+    d0.activity('atividade:alterarobservacao')
     d0.activity('atividade:alterarHorizonte')
     d0.activity('atividade:exibirHistoricoProjeto')
     d0.activity('atividade:exibirHistoricoOrgao')
-    d0.activity('atividade:exibirHistoricoPerfil')
+    d0.activity('atividade:exibirHistoricoobservacao')
     d0.activity('atividade:exibirHistoricoHorizonte')
     
     # Adicionando as relacoes
     d0.used('atividade:incluirProjeto', e2)
     d0.used('atividade:incluirOrgao', e2)
-    d0.used('atividade:incluirPerfil', e2)
+    d0.used('atividade:incluirobservacao', e2)
     d0.used('atividade:incluirHorizonte', e2)    
     d0.used('atividade:alterarProjeto', e2)
     d0.used('atividade:alterarOrgao', e2)
-    d0.used('atividade:alterarPerfil', e2)
+    d0.used('atividade:alterarobservacao', e2)
     d0.used('atividade:alterarHorizonte', e2)
     d0.used('atividade:exibirHistoricoProjeto', e2)
     d0.used('atividade:exibirHistoricoOrgao', e2)
-    d0.used('atividade:exibirHistoricoPerfil', e2)
+    d0.used('atividade:exibirHistoricoobservacao', e2)
     d0.used('atividade:exibirHistoricoHorizonte', e2)
 
 
     d0.wasAttributedTo('atividade:incluirProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:incluirOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:incluirPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:incluirobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:incluirHorizonte', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:alterarPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:alterarobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarHorizonte', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:exibirHistoricoPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:exibirHistoricoobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoHorizonte', 'ator: Élton Marinho')
     
     # Gerando grafico de proveniencia  
@@ -462,55 +389,55 @@ def exibe_proveniencia_cenario_excluir_tudo(tempo):
     # Adicionando atividade
     d0.activity('atividade:incluirProjeto')
     d0.activity('atividade:incluirOrgao')
-    d0.activity('atividade:incluirPerfil')
+    d0.activity('atividade:incluirobservacao')
     d0.activity('atividade:incluirHorizonte')
     d0.activity('atividade:alterarProjeto')
     d0.activity('atividade:alterarOrgao')
-    d0.activity('atividade:alterarPerfil')
+    d0.activity('atividade:alterarobservacao')
     d0.activity('atividade:alterarHorizonte')
     d0.activity('atividade:exibirHistoricoProjeto')
     d0.activity('atividade:exibirHistoricoOrgao')
-    d0.activity('atividade:exibirHistoricoPerfil')
+    d0.activity('atividade:exibirHistoricoobservacao')
     d0.activity('atividade:exibirHistoricoHorizonte')
     d0.activity('atividade:excluirProjeto')
     d0.activity('atividade:excluirOrgao')
-    d0.activity('atividade:excluirPerfil')
+    d0.activity('atividade:excluirobservacao')
     d0.activity('atividade:excluirHorizonte')
     
     # Adicionando as relacoes
     d0.used('atividade:incluirProjeto', e2)
     d0.used('atividade:incluirOrgao', e2)
-    d0.used('atividade:incluirPerfil', e2)
+    d0.used('atividade:incluirobservacao', e2)
     d0.used('atividade:incluirHorizonte', e2)    
     d0.used('atividade:alterarProjeto', e2)
     d0.used('atividade:alterarOrgao', e2)
-    d0.used('atividade:alterarPerfil', e2)
+    d0.used('atividade:alterarobservacao', e2)
     d0.used('atividade:alterarHorizonte', e2)
     d0.used('atividade:exibirHistoricoProjeto', e2)
     d0.used('atividade:exibirHistoricoOrgao', e2)
-    d0.used('atividade:exibirHistoricoPerfil', e2)
+    d0.used('atividade:exibirHistoricoobservacao', e2)
     d0.used('atividade:exibirHistoricoHorizonte', e2)
     d0.used('atividade:excluirProjeto', e2)
     d0.used('atividade:excluirOrgao', e2)
-    d0.used('atividade:excluirPerfil', e2)
+    d0.used('atividade:excluirobservacao', e2)
     d0.used('atividade:excluirHorizonte', e2)
 
 
     d0.wasAttributedTo('atividade:incluirProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:incluirOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:incluirPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:incluirobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:incluirHorizonte', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:alterarPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:alterarobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:alterarHorizonte', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:exibirHistoricoPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:exibirHistoricoobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:exibirHistoricoHorizonte', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:excluirProjeto', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:excluirOrgao', 'ator: Élton Marinho')
-    d0.wasAttributedTo('atividade:excluirPerfil', 'ator: Élton Marinho')
+    d0.wasAttributedTo('atividade:excluirobservacao', 'ator: Élton Marinho')
     d0.wasAttributedTo('atividade:excluirHorizonte', 'ator: Élton Marinho')
     
     # Gerando grafico de proveniencia  
@@ -523,290 +450,53 @@ def exibe_proveniencia_cenario_excluir_tudo(tempo):
     time.sleep(tempo)
 
 
-def lancar_cenario_fazendinha(url_base): 
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario Fazendinha >>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    cores = [cor_orgao, cor_projeto, cor_perfil, cor_horizonte]
-    layout = [cOrgao, cPrj, cPer, cHor, cHisHor, cPer, cHisPer, cAltPer, cExcPer, cHisOrgao, cHisPer, cExcPrj, cExcHor, cLimites01, cLimites02]
-    
-    lancamento (url_base, "Cenario.xlsx", "orgao", 1)
-    gera_exibe_arquivo(['Consultar\nÓrgão'], [], cores, layout, 2)  
-
+def lancar_cenario_01(url_base): 
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario 01 >>>>>>>>>>>>>>>>>>>>>>>>>>>")
     lancamento (url_base, "Cenario.xlsx", "projeto", 1)
-    gera_exibe_arquivo(['Consultar\nÓrgão', 
-                        'Consultar\nProjeto'], [(1,0)], cores, layout, 2) 
-   
-    lancamento (url_base, "Cenario.xlsx", "perfil", 1)
-    gera_exibe_arquivo(['Consultar\nÓrgão', 
-                        'Consultar\nProjeto', 
-                        'Consultar\nPerfil'], [(1,0), (1,2)], cores, layout, 2) 
-
+    lancamento (url_base, "Cenario.xlsx", "observacao", 1)
     lancamento (url_base, "Cenario.xlsx", "horizonte", 1)
-    gera_exibe_arquivo(['Consultar\nÓrgão', 
-                        'Consultar\nProjeto', 
-                        'Consultar\nPerfil', 
-                        'Consultar\nHorizonte'],  [(1,0), (1,2), (2,3)], cores, layout, 2) 
    
-
-
-    lancamento (url_base, "Cenario.xlsx", "horizonte", 1)
-    gera_exibe_arquivo(['Consultar\nÓrgão', 
-                        'Consultar\nProjeto', 
-                        'Consultar\nPerfil', 
-                        'Consultar\nHorizonte'],  [(1,0), (1,2), (2,3)], cores, layout, 2) 
-   
-def lancar_cenario_projeto (url_base): 
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario Projeto >>>>>>>>>>>>>>>>>>>>>>>>>>>")
-
+def lancar_cenario_02 (url_base): 
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario 02 >>>>>>>>>>>>>>>>>>>>>>>>>>>")
     lancamento (url_base, "Cenario.xlsx", "projeto", 2)
-    gera_exibe_arquivo(['Incluir\nProjeto'], [], cores, layout, 2) 
-
     lancamento (url_base, "Cenario.xlsx", "alterarProjeto", 2)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto'], [(1,0)], cores, layout, 2) 
-
     lancamento (url_base, "Cenario.xlsx", "historico", 2)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto'], [(1,0),(2,0)], cores, layout, 2) 
 
-def lancar_cenario_orgao_executor (url_base): 
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario Órgão >>>>>>>>>>>>>>>>>>>>>>>>>>>")
-
-    lancamento (url_base, "Cenario.xlsx", "orgao", 3) 
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão'], [(1,0), (2,0), (3,0)], cores, layout, 2) 
-
-    lancamento (url_base, "Cenario.xlsx", "alterarOrgao", 3)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão'], [(1,0),(2,0), (3,0), (4,3)], cores, layout, 2) 
-
-    lancamento (url_base, "Cenario.xlsx", "historico", 3)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão',
-                        'Histórico\nÓrgão'], [(1,0),(2,0), (3,0), (4,3), (5,3) ], cores, layout, 2) 
-
-def lancar_cenario_perfil (url_base):  
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario Perfil >>>>>>>>>>>>>>>>>>>>>>>>>>>") 
-
-    lancamento (url_base, "Cenario.xlsx", "perfil", 4)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão',     
-                        'Incluir\nPerfil'], [(1,0),(2,0), (3,0), (4,3), (5,3), (6,0) ], cores, layout, 2) 
-
-    lancamento (url_base, "Cenario.xlsx", "alterarPerfil", 4)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil'], [(1,0),(2,0), (3,0), (4,3), (5,3), (6,0),(7,6) ], cores, layout, 2) 
-
+    lancamento (url_base, "Cenario.xlsx", "observacao", 4)
+    lancamento (url_base, "Cenario.xlsx", "alterarObservacao", 4)
     lancamento (url_base, "Cenario.xlsx", "historico", 4)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão',
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6) ], cores, layout, 2) 
         
-def lancar_cenario_horizonte (url_base): 
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario Horizonte >>>>>>>>>>>>>>>>>>>>>>>>>>>")
-    
     lancamento (url_base, "Cenario.xlsx", "horizonte", 5)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', ], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6)], cores, layout, 2) 
-
     lancamento (url_base, "Cenario.xlsx", "alterarHorizonte", 5)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', 
-                        'Alterar\nHorizonte',], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9)], cores, layout, 2) 
-
     lancamento (url_base, "Cenario.xlsx", "historico", 5)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', 
-                        'Alterar\nHorizonte',
-                        'Histórico\nHorizonte'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9),(11,9)], cores, layout, 2) 
 
-def lancar_cenario_excluir_tudo (url_base):     
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario de exclusão >>>>>>>>>>>>>>>>>>>>>>>>>>>")
     lancamento (url_base, "Cenario.xlsx", "excluir", 1)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', 
-                        'Alterar\nHorizonte',
-                        'Histórico\nHorizonte',
-                        'Excluir\nHorizonte'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9),(11,9),(12,9)], cores, layout, 2) 
-
     lancamento (url_base, "Cenario.xlsx", "excluir", 2)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', 
-                        'Alterar\nHorizonte',
-                        'Histórico\nHorizonte',
-                        'Excluir\nHorizonte',
-                        'Excluir\nPerfil'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9),(11,9),(12,9),(13,6)], cores, layout, 2) 
-    
     lancamento (url_base, "Cenario.xlsx", "excluir", 3)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', 
-                        'Alterar\nHorizonte',
-                        'Histórico\nHorizonte',
-                        'Excluir\nHorizonte',
-                        'Excluir\nPerfil',
-                        'Excluir\nÓrgão'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9),(11,9),(12,9),(13,6),(14,3)], cores, layout, 2) 
-
-    lancamento (url_base, "Cenario.xlsx", "excluir", 4)
-    gera_exibe_arquivo(['Incluir\nProjeto',     #0
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',       #3
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',      #6
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte',   #9
-                        'Alterar\nHorizonte',
-                        'Histórico\nHorizonte',
-                        'Excluir\nHorizonte',   #12
-                        'Excluir\nPerfil',
-                        'Excluir\nÓrgão',
-                        'Excluir\nProjeto'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9),(11,9),(12,9),(13,6),(14,3), (15,0)], cores, layout, 2) 
-
+    
+def lancar_cenario_03 (url_base):     
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario 03 >>>>>>>>>>>>>>>>>>>>>>>>>>>")
     lancamento (url_base, "Cenario.xlsx", "excluidos", 1)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', 
-                        'Alterar\nHorizonte',
-                        'Histórico\nHorizonte',
-                        'Excluir\nHorizonte',
-                        'Excluir\nPerfil',
-                        'Excluir\nÓrgão',
-                        'Excluir\nProjeto',
-                        'Excluídos'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9),(11,9),(12,9),(13,6),(14,3), (15,0)], cores, layout, 2) 
-
-def lancar_cenario_lista_blockchain (url_base):     
-    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario de exclusão >>>>>>>>>>>>>>>>>>>>>>>>>>>")
+    
+def lancar_cenario_04 (url_base):     
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>> Cenario 04 >>>>>>>>>>>>>>>>>>>>>>>>>>>")
     lancamento (url_base, "Cenario.xlsx", "lista_blockchain", 1)
-    gera_exibe_arquivo(['Incluir\nProjeto', 
-                        'Alterar\nProjeto', 
-                        'Histórico\nProjeto', 
-                        'Incluir\nÓrgão',
-                        'Alterar\nÓrgão', 
-                        'Histórico\nÓrgão', 
-                        'Incluir\nPerfil',
-                        'Alterar\nPerfil',
-                        'Histórico\nPerfil',
-                        'Incluir\nHorizonte', 
-                        'Alterar\nHorizonte',
-                        'Histórico\nHorizonte',
-                        'Excluir\nHorizonte',
-                        'Excluir\nPerfil',
-                        'Excluir\nÓrgão',
-                        'Excluir\nProjeto',
-                        'Excluídos',
-                        'Lista\nBlockchain'], [(1,0),(2,0),(3,0),(4,3),(5,3),(6,0),(7,6),(8,6), (9,6),(10,9),(11,9),(12,9),(13,6),(14,3), (15,0), (16,0)], cores, layout, 2) 
 
 
 print("================ Inicio de Serviço ================")
-titulo_cenario ("imagens/Inicio_de_Servico.pdf", 3)
+titulo_cenario ("imagens/Inicio_de_servico.jpeg", 1)
 
-titulo_cenario ("imagens/Cenario_Fazendinha.pdf", 3)
-lancar_cenario_fazendinha(url_fairchain)
-#exibe_proveniencia_cenario_fazendinha(3)
+titulo_cenario ("imagens/Cenario_01.jpeg", 1)
+lancar_cenario_01(url_provchain)
 
-titulo_cenario ("imagens/Cenario_Projeto.pdf", 3)
-lancar_cenario_projeto(url_fairchain)
-# #exibe_proveniencia_cenario_projeto(3)
+titulo_cenario ("imagens/Cenario_02.jpeg", 1)
+lancar_cenario_02(url_provchain)
 
-titulo_cenario ("imagens/Cenario_Orgao_Executor.pdf", 3)
-lancar_cenario_orgao_executor(url_fairchain)
-# #exibe_proveniencia_cenario_orgao_executor(3)
+titulo_cenario ("imagens/Cenario_03.jpeg", 1)
+lancar_cenario_03 (url_provchain)
 
-titulo_cenario ("imagens/Cenario_Perfil.pdf", 3)
-lancar_cenario_perfil(url_fairchain)
-#exibe_proveniencia_cenario_perfil(3)
+titulo_cenario ("imagens/Cenario_04.jpeg", 1)
+lancar_cenario_04 (url_provchain)
 
-titulo_cenario ("imagens/Cenario_Horizonte.pdf", 3)
-lancar_cenario_horizonte(url_fairchain)
-#exibe_proveniencia_cenario_horizonte(3)
-
-titulo_cenario ("imagens/Cenario_Exclui_Tudo.pdf", 3)
-lancar_cenario_excluir_tudo (url_fairchain)
-#exibe_proveniencia_cenario_excluir_tudo(3)
-
-titulo_cenario ("imagens/Cenario_Lista_Blockchain.pdf", 3)
-lancar_cenario_lista_blockchain (url_fairchain)
-
-titulo_cenario ("imagens/Fim_de_Servico.pdf", 3)
+titulo_cenario ("imagens/Fim_de_servico.jpeg", 1)
 print("================ Fim de Serviço ================")
