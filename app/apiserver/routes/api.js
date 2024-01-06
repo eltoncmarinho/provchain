@@ -136,10 +136,10 @@ router.get('/consulta/blockchain', async function (req, res) {
                 // Evaluate the specified transaction.
                 const result = await contract.evaluateTransaction("listar_blockchain");
 
-                console.log ("JSON.parse(result): " + JSON.parse(result));
-                console.log ("data_criacao: " + JSON.parse(result)[2].data_criacao);
-                console.log ("data_criacao: " + JSON.parse(result)[2]);
-                console.log ("data_criacao: " + JSON.parse(result)[2].Record);
+                // console.log ("JSON.parse(result): " + JSON.parse(result));
+                // console.log ("data_criacao: " + JSON.parse(result)[2].data_criacao);
+                // console.log ("data_criacao: " + JSON.parse(result)[2]);
+                // console.log ("data_criacao: " + JSON.parse(result)[2].Record);
                 
                 // console.log ("JSON.parse(result)[1].tipoDoc: " + JSON.parse(result).tipoDoc);
                 // console.log ("JSON.parse(result)[1].key: " + JSON.parse(result).key);
@@ -580,10 +580,7 @@ router.get('/historico/:key', async function (req, res) {
                 const contract = network.getContract('provchain');
 
                 // Evaluate the specified transaction.
-                console.log("antes");
                 const historico = await contract.evaluateTransaction('historico', req.params.key);
-                console.log("depois");
-                console.log("historico: " + historico)         
 
                 res.render('api/historico/Excluidos', {
                         result: JSON.parse(historico),
@@ -629,10 +626,16 @@ router.get('/historico/:tipoRegistro/:key', async function (req, res) {
                 const result = await contract.evaluateTransaction('consultar_identificador', req.params.key);
                 // console.log("JSON.parse(result).tipoDoc:" + JSON.parse(result).tipoDoc )
                 if (JSON.parse(result).tipoDoc != undefined) {
+                        // console.log("entrei");
                         const historico = await contract.evaluateTransaction('historico', req.params.key);
                         // console.log ("historico :" + JSON.parse(historico))
-                        const historicoProv = await contract.evaluateTransaction('historico', JSON.parse(result).key_proveniencia);
-                        // console.log ("historicoProv :" + historicoProv)
+                        let historicoProv = ''
+                        if (JSON.parse(result).tipoDoc != 'Proveniencia') {
+                                historicoProv = await contract.evaluateTransaction('historico', JSON.parse(result).key_proveniencia);
+                                // console.log ("historicoProv :" + historicoProv)
+                        } else {
+                                historicoProv = '';
+                        }
                         switch (req.params.tipoRegistro) {
                                 case 'Orgao': {
                                         req.flash("success_msg", "Histórico de " + req.params.key)
@@ -907,11 +910,7 @@ router.post('/criar_Projeto', async function (req, res) {
                                 req.body.municipio,
                                 req.body.aberto,
                                 req.body.abrangencia,
-                        );
-
-                        const resultProv = await contract.submitTransaction('proveniencia_Projeto',
-                                req.body.key_proveniencia,
-                                req.body.key_projeto,
+                                // Proveniencia
                                 user,
                                 user_name,
                                 ip.address(),

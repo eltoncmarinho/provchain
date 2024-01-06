@@ -321,67 +321,15 @@ class provchain extends Contract {
         return allResults;
     }
 
-    // async registros_excluidos(ctx) {
-    //     const startKey = '';
-    //     const endKey = '';
-    //     const allResults = [];
-    //     for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-    //         const strValue = Buffer.from(value).toString('utf8');
-    //         let record;
-    //         try {
-    //             record = JSON.parse(strValue);
-    //         } catch (err) {
-    //             console.log(err);
-    //             record = strValue;
-    //         }
-
-    //         if (record.excluido) {
-    //             allResults.push({ Key: key, Record: record });
-    //         }
-    //     }
-    //     return JSON.stringify(allResults);
-    //     //        return allResults;
-    // }
-
     async listar_blockchain(ctx) {
         console.log('Listar toda a blockchain');
         const startKey = '';
         const endKey = '';
         const results = [];
+        
+        let chave_elemento = '';
         for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            // const strValue = Buffer.from(value).toString('utf8');
-            // let record;
-            // try {
-            //     record = JSON.parse(strValue);
-            // } catch (err) {
-            //     console.log(err);
-            //     record = strValue;
-            // }
-
-            let iterator = await ctx.stub.getHistoryForKey(key);
-            let res = await iterator.next(); // { done: false };
-            while (!res.done) {
-                let val = res.value.value.toString('utf8');
-                //results.push( val );
-                results.push({ Key: key, Record: JSON.parse(val) });
-                res = await iterator.next();
-            }
-            iterator.close();
-        }            
-        return results;
-    }
-
-    async listar_blockchain_teste (ctx) {
-        console.log('Listar tudo na Blockchain');
-        const startKey = '';
-        const endKey = '';
-        const allResults = [];
-
-        // let elemento = '0';
-        // let excluido = false;
-
-        for await (const { key, value } of ctx.stub.getStateByRange(startKey, endKey)) {
-            let strValue = Buffer.from(value).toString('utf8');
+            const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
                 record = JSON.parse(strValue);
@@ -390,38 +338,32 @@ class provchain extends Contract {
                 record = strValue;
             }
 
-            let iterator = await ctx.stub.getHistoryForKey(record.Key);
-            let res = await iterator.next();
-            while (!res.done) {
-                if (res.value) {
-                    let obj = JSON.parse(res.value.value.toString('utf8'));
-                    allResults.push(obj);
+            if ( record.tipoDoc === 'Proveniencia') {
+                chave_elemento = record.key_elemento
 
-                    if (JSON.parse(res).tipoDoc === 'Proveniencia') {
-                        elemento = JSON.parse(res).key_elemento;
-                        excluido = JSON.parse(res).excluido;
-                    }
+                let iterator = await ctx.stub.getHistoryForKey(key);
+                let res = await iterator.next(); // { done: false };
+                while (!res.done) {
+                    let val = res.value.value.toString('utf8');
+                    //results.push( val );
+                    results.push({ Key: key, Record: JSON.parse(val) });
+                    res = await iterator.next();
                 }
-                res = await iterator.next(); 
-            }
-            console.log("excluido: " + excluido);
-            if (excluido) { // Se estiver excluido, É tipoDoc Proveniencia
-                let iteratorProv = await ctx.stub.getHistoryForKey(elemento);
-                let resprov = await iteratorProv.next();
-                while (!resprov.done) {
-                    if (resprov.value) {
-                        // let objProv = JSON.parse(resprov);
-                        // let objProv = JSON.parse(resprov.value.value.toString('utf8'));
-                        allResults.push(resprov);
-                    }
-                    resprov = await iterator.next();
-                }
-                await iteratorProv.close();
-            }
-            await iterator.close();
-        }
+                iterator.close();
 
-        return allResults;
+                let iterator1 = await ctx.stub.getHistoryForKey(chave_elemento);
+                let res1 = await iterator1.next(); // { done: false };
+                while (!res1.done) {
+                    let val1 = res1.value.value.toString('utf8');
+                    //results.push( val );
+                    results.push({ Key: chave_elemento, Record: JSON.parse(val1) });
+                    res1 = await iterator1.next();
+                }
+                iterator1.close();
+            }
+
+        }            
+        return results;
     }
 
     async listar_excluidos(ctx) {
@@ -438,7 +380,7 @@ class provchain extends Contract {
                 record = strValue;
             }
 
-            if (record.excluido) {
+            if (record.tipoDoc === 'Proveniencia' && record.excluido) {
                 allResults.push(record);
             }
         }
@@ -595,13 +537,6 @@ class provchain extends Contract {
             exclusao.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             const exc = await ctx.stub.putState(elemento, Buffer.from(JSON.stringify(exclusao)));
 
-            // Guardar key_proveniencia
-            //        const key_prov =  exclusao.key_proveniencia;   
-
-            // Exclusão do WorldStateDatabase
-            //        const exclusao = await ctx.stub.deleteState(elemento); // get the element from chaincode state
-            //        return exclusao;        
-
             // Marcando status na Proveniência
             var prov = {};
             const provAsBytes = await ctx.stub.getState(exclusao.key_proveniencia);
@@ -648,74 +583,161 @@ class provchain extends Contract {
 
     // Funçoes relacionadas ao Orgão executor
 
-    async incAlt_Orgao(ctx,
+    // async incAlt_Orgao(ctx,
+    //     key,
+    //     key_proveniencia,
+    //     nome,
+    //     referencia,
+    //     ano,
+    //     tipo_problema,
+    //     nivel_levantamento,
+    //     contato_nome,
+    //     contato_email,
+    //     contato_telefone,
+    //     motivo,
+    //     tipo_instituicao,
+    //     abrangencia,
+
+    // ) {
+
+    //     console.info('============= START : changeorgao ===========');
+
+    //     var orgao = {};
+
+    //     const orgaoAsBytes = await ctx.stub.getState(key);
+    //     if (!orgaoAsBytes || orgaoAsBytes.length === 0) {
+    //         orgao = {
+    //             key,
+    //             key_proveniencia,
+    //             nome,
+    //             referencia,
+    //             ano,
+    //             tipo_problema,
+    //             nivel_levantamento,
+    //             contato_nome,
+    //             contato_email,
+    //             contato_telefone,
+    //             motivo,
+    //             tipo_instituicao,
+    //             abrangencia,
+    //             excluido: false,
+    //             tipoDoc: 'Orgao',
+    //             data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+    //         }
+    //     } else {
+    //         orgao = JSON.parse(orgaoAsBytes.toString());
+    //         orgao.key = key;
+    //         orgao.key_proveniencia = key_proveniencia;
+
+    //         orgao.nome = nome;
+    //         orgao.referencia = referencia;
+    //         orgao.ano = ano;
+    //         orgao.tipo_problema = tipo_problema;
+    //         orgao.nivel_levantamento = nivel_levantamento;
+    //         orgao.contato_nome = contato_nome;
+    //         orgao.contato_email = contato_email;
+    //         orgao.contato_telefone = contato_telefone;
+    //         orgao.motivo = motivo;
+    //         orgao.tipo_instituicao = tipo_instituicao;
+    //         orgao.abrangencia = abrangencia;
+    //         orgao.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+    //     }
+    //     await ctx.stub.putState(key, Buffer.from(JSON.stringify(orgao)));
+    //     console.info('============= END : changeorgao ===========');
+    // }
+
+    // async proveniencia_Orgao(ctx,
+    //     key,
+    //     key_elemento,
+    //     user,               // usuario que criou ou fez a ultima alteracao              
+    //     user_name,          // usuario que criou ou fez a ultima alteracao    
+    //     ip,
+    //     geoLocalizacao_range,
+    //     geoLocalizacao_country,
+    //     geoLocalizacao_region,
+    //     geoLocalizacao_eu,
+    //     geoLocalizacao_timezone,
+    //     geoLocalizacao_city,
+    //     geoLocalizacao_ll,
+    //     geoLocalizacao_metro,
+    //     geoLocalizacao_area,
+    //     software_version,
+    //     software_browser,
+    //     status,
+    // ) {
+    //     console.info('============= START : Create Proveniencia ===========');
+    //     var proveniencia = {};
+    //     const provenienciaAsBytes = await ctx.stub.getState(key);
+    //     if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
+    //         //  Criar registro de Proveniencia
+    //         proveniencia = {
+    //             key,
+    //             key_elemento,
+    //             usuario_criador: user,              // usuario q
+    //             nome_criador: user_name,            // nome do criador    
+    //             usuario_alterador: user,            // usuario fez a ultima alteracao                  
+    //             nome_alterador: user_name,          // nome que fez a ultima alteracao
+    //             ip,
+    //             geoLocalizacao_range,
+    //             geoLocalizacao_country,
+    //             geoLocalizacao_region,
+    //             geoLocalizacao_eu,
+    //             geoLocalizacao_timezone,
+    //             geoLocalizacao_city,
+    //             geoLocalizacao_ll,
+    //             geoLocalizacao_metro,
+    //             geoLocalizacao_area,
+    //             software_version,
+    //             software_browser,
+    //             status,
+    //             tipoDoc: 'Proveniencia',
+    //             data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+    //             //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
+    //         };
+    //     } else {
+    //         // Alterar registro de Proveniencia
+    //         proveniencia = JSON.parse(provenienciaAsBytes.toString());
+    //         proveniencia.key = key;
+    //         proveniencia.key_elemento = key_elemento;
+    //         proveniencia.usuario_alterador = user;
+    //         proveniencia.nome_alterador = user_name;
+    //         proveniencia.ip = ip;
+    //         proveniencia.geoLocalizacao_range = geoLocalizacao_range;
+    //         proveniencia.geoLocalizacao_country = geoLocalizacao_country;
+    //         proveniencia.geoLocalizacao_region = geoLocalizacao_region;
+    //         proveniencia.geoLocalizacao_eu = geoLocalizacao_eu;
+    //         proveniencia.geoLocalizacao_timezone = geoLocalizacao_timezone;
+    //         proveniencia.geoLocalizacao_city = geoLocalizacao_city;
+    //         proveniencia.geoLocalizacao_ll = geoLocalizacao_ll;
+    //         proveniencia.geoLocalizacao_metro = geoLocalizacao_metro;
+    //         proveniencia.geoLocalizacao_area = geoLocalizacao_area;
+    //         proveniencia.software_version = software_version;
+    //         proveniencia.software_browser = software_browser;
+    //         proveniencia.status = status;
+    //         proveniencia.excluido = false;
+
+    //         //                proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+    //         proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
+    //     }
+    //     await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
+    //     console.info('============= END : Create Proveniencia ===========');
+    // }
+
+    // Funçoes relacionadas ao Projeto
+
+    async incAlt_Projeto(ctx,
         key,
         key_proveniencia,
         nome,
-        referencia,
-        ano,
-        tipo_problema,
-        nivel_levantamento,
-        contato_nome,
-        contato_email,
-        contato_telefone,
-        motivo,
-        tipo_instituicao,
+        sigla,
+        pais,
+        estado,
+        municipio,
+        aberto,
         abrangencia,
-
-    ) {
-
-        console.info('============= START : changeorgao ===========');
-
-        var orgao = {};
-
-        const orgaoAsBytes = await ctx.stub.getState(key);
-        if (!orgaoAsBytes || orgaoAsBytes.length === 0) {
-            orgao = {
-                key,
-                key_proveniencia,
-                nome,
-                referencia,
-                ano,
-                tipo_problema,
-                nivel_levantamento,
-                contato_nome,
-                contato_email,
-                contato_telefone,
-                motivo,
-                tipo_instituicao,
-                abrangencia,
-                excluido: false,
-                tipoDoc: 'Orgao',
-                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-            }
-        } else {
-            orgao = JSON.parse(orgaoAsBytes.toString());
-            orgao.key = key;
-            orgao.key_proveniencia = key_proveniencia;
-
-            orgao.nome = nome;
-            orgao.referencia = referencia;
-            orgao.ano = ano;
-            orgao.tipo_problema = tipo_problema;
-            orgao.nivel_levantamento = nivel_levantamento;
-            orgao.contato_nome = contato_nome;
-            orgao.contato_email = contato_email;
-            orgao.contato_telefone = contato_telefone;
-            orgao.motivo = motivo;
-            orgao.tipo_instituicao = tipo_instituicao;
-            orgao.abrangencia = abrangencia;
-            orgao.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-        }
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(orgao)));
-        console.info('============= END : changeorgao ===========');
-    }
-
-    async proveniencia_Orgao(ctx,
-        key,
-        key_elemento,
-        user,               // usuario que criou ou fez a ultima alteracao              
-        user_name,          // usuario que criou ou fez a ultima alteracao    
+        //Proveniencia
+        user,
+        user_name,
         ip,
         geoLocalizacao_range,
         geoLocalizacao_country,
@@ -730,83 +752,9 @@ class provchain extends Contract {
         software_browser,
         status,
     ) {
-        console.info('============= START : Create Proveniencia ===========');
-        var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key);
-        if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
-            //  Criar registro de Proveniencia
-            proveniencia = {
-                key,
-                key_elemento,
-                usuario_criador: user,              // usuario q
-                nome_criador: user_name,            // nome do criador    
-                usuario_alterador: user,            // usuario fez a ultima alteracao                  
-                nome_alterador: user_name,          // nome que fez a ultima alteracao
-                ip,
-                geoLocalizacao_range,
-                geoLocalizacao_country,
-                geoLocalizacao_region,
-                geoLocalizacao_eu,
-                geoLocalizacao_timezone,
-                geoLocalizacao_city,
-                geoLocalizacao_ll,
-                geoLocalizacao_metro,
-                geoLocalizacao_area,
-                software_version,
-                software_browser,
-                status,
-                tipoDoc: 'Proveniencia',
-                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-            };
-        } else {
-            // Alterar registro de Proveniencia
-            proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key;
-            proveniencia.key_elemento = key_elemento;
-            proveniencia.usuario_alterador = user;
-            proveniencia.nome_alterador = user_name;
-            proveniencia.ip = ip;
-            proveniencia.geoLocalizacao_range = geoLocalizacao_range;
-            proveniencia.geoLocalizacao_country = geoLocalizacao_country;
-            proveniencia.geoLocalizacao_region = geoLocalizacao_region;
-            proveniencia.geoLocalizacao_eu = geoLocalizacao_eu;
-            proveniencia.geoLocalizacao_timezone = geoLocalizacao_timezone;
-            proveniencia.geoLocalizacao_city = geoLocalizacao_city;
-            proveniencia.geoLocalizacao_ll = geoLocalizacao_ll;
-            proveniencia.geoLocalizacao_metro = geoLocalizacao_metro;
-            proveniencia.geoLocalizacao_area = geoLocalizacao_area;
-            proveniencia.software_version = software_version;
-            proveniencia.software_browser = software_browser;
-            proveniencia.status = status;
-            proveniencia.excluido = false;
-
-            //                proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-            proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-        }
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-        console.info('============= END : Create Proveniencia ===========');
-    }
-
-    // Funçoes relacionadas ao Projeto
-    async incAlt_Projeto(ctx,
-        key,
-        key_proveniencia,
-        nome,
-        sigla,
-        pais,
-        estado,
-        municipio,
-        aberto,
-        abrangencia,
-
-    ) {
-
-        console.info('============= START : changeprojeto ===========');
-
+        console.info('============= START : Projeto ===========');
         var projeto = {};
-
-        const projetoAsBytes = await ctx.stub.getState(key); // get the car from chaincode state
+        const projetoAsBytes = await ctx.stub.getState(key); 
         if (!projetoAsBytes || projetoAsBytes.length === 0) {
             projeto = {
                 key,
@@ -818,7 +766,6 @@ class provchain extends Contract {
                 municipio,
                 aberto,
                 abrangencia,
-
                 excluido: false,
                 tipoDoc: 'Projeto',
                 data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
@@ -835,42 +782,21 @@ class provchain extends Contract {
             projeto.aberto = aberto;
             projeto.abrangencia = abrangencia;
             projeto.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-
         }
         await ctx.stub.putState(key, Buffer.from(JSON.stringify(projeto)));
-        console.info('============= END : changeprojeto ===========');
-    }
+        console.info('============= END : Projeto ===========');       
 
-    async proveniencia_Projeto(ctx,
-        key,
-        key_elemento,
-        user,
-        user_name,
-        ip,
-        geoLocalizacao_range,
-        geoLocalizacao_country,
-        geoLocalizacao_region,
-        geoLocalizacao_eu,
-        geoLocalizacao_timezone,
-        geoLocalizacao_city,
-        geoLocalizacao_ll,
-        geoLocalizacao_metro,
-        geoLocalizacao_area,
-        software_version,
-        software_browser,
-        status,
-    ) {
-        console.info('============= START : Create Proveniencia ===========');
+        console.info('============= START : Proveniencia ===========');
         var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key);
+        const provenienciaAsBytes = await ctx.stub.getState(key_proveniencia);
         if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
             proveniencia = {
+                key_proveniencia,
                 key,
-                key_elemento,
-                usuario_criador: user,              // usuario que criou               
-                nome_criador: user_name,            // nome do criador    
-                usuario_alterador: user,            // usuario fez a ultima alteracao                  
-                nome_alterador: user_name,          // nome que fez a ultima alteracao
+                usuario_criador: user,                          
+                nome_criador: user_name,              
+                usuario_alterador: user,                            
+                nome_alterador: user_name,          
                 ip,
                 geoLocalizacao_range,
                 geoLocalizacao_country,
@@ -886,14 +812,13 @@ class provchain extends Contract {
                 tipoDoc: 'Proveniencia',
                 status,
                 data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
             };
         } else {
             proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key;
-            proveniencia.key_elemento = key_elemento;
+            proveniencia.key = key_proveniencia;
+            proveniencia.key_elemento = key;
             proveniencia.usuario_alterador = user;
-            proveniencia.nome_alterador = user_name;
+            proveniencia.nome_alterador = user_name;blockchain
             proveniencia.ip = ip;
             proveniencia.geoLocalizacao_range = geoLocalizacao_range;
             proveniencia.geoLocalizacao_country = geoLocalizacao_country;
@@ -902,124 +827,20 @@ class provchain extends Contract {
             proveniencia.geoLocalizacao_timezone = geoLocalizacao_timezone;
             proveniencia.geoLocalizacao_city = geoLocalizacao_city;
             proveniencia.geoLocalizacao_ll = geoLocalizacao_ll;
-            proveniencia.geoLocalizacao_metro = geoLocalizacao_metro;
+            proveniencia.geoLocalizacao_metro = CreategeoLocalizacao_metro;
             proveniencia.geoLocalizacao_area = geoLocalizacao_area;
             proveniencia.software_version = software_version;
             proveniencia.software_browser = software_browser;
-            proveniencia.usuario_alterador = user;            // usuario fez a ultima alteracao                  
-            proveniencia.nome_alterador = user_name;          // nome que fez a ultima alteracao
+            proveniencia.usuario_alterador = user;                        
+            proveniencia.nome_alterador = user_name;          
             proveniencia.status = status;
             proveniencia.excluido = false;
-            //            proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
             proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-
         }
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-        console.info('============= END : Create Proveniencia ===========');
+        await ctx.stub.putState(key_proveniencia, Buffer.from(JSON.stringify(proveniencia)));
+        console.info('============= END :  Proveniencia ===========');        
     }
 
-    // Funçoes relacionadas a Associacoes 
-    async associar_Orgao_Projeto(ctx,
-        key,
-        key_orgao,
-        key_projeto,
-        key_proveniencia,
-
-    ) {
-        console.info('============= START : Create Orgao ===========');
-
-        const projeto = {
-            key,
-            key_orgao,
-            key_projeto,
-            key_proveniencia,
-            excluido: false,
-            tipoDoc: 'AssociacaoOrgaoProjeto',
-            data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-        };
-
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(projeto)));
-        console.info('============= END : Create projeto ===========');
-
-    }
-
-    async criarProveniencia_Orgao_Projeto(ctx,
-        key,
-        key_elemento,
-        user,
-        user_name,
-        ip,
-        geoLocalizacao_range,
-        geoLocalizacao_country,
-        geoLocalizacao_region,
-        geoLocalizacao_eu,
-        geoLocalizacao_timezone,
-        geoLocalizacao_city,
-        geoLocalizacao_ll,
-        geoLocalizacao_metro,
-        geoLocalizacao_area,
-        software_version,
-        software_browser,
-        status,
-    ) {
-        console.info('============= START : Create Proveniencia ===========');
-        var proveniencia = {};
-        const provenienciaAsBytes = await ctx.stub.getState(key);
-        if (!provenienciaAsBytes || provenienciaAsBytes.length === 0) {
-            proveniencia = {
-                key,
-                key_elemento,
-                usuario_criador: user,              // usuario que criou               
-                nome_criador: user_name,            // nome do criador    
-                usuario_alterador: user,            // usuario fez a ultima alteracao                  
-                nome_alterador: user_name,          // nome que fez a ultima alteracao
-                ip,
-                geoLocalizacao_range,
-                geoLocalizacao_country,
-                geoLocalizacao_region,
-                geoLocalizacao_eu,
-                geoLocalizacao_timezone,
-                geoLocalizacao_city,
-                geoLocalizacao_ll,
-                geoLocalizacao_metro,
-                geoLocalizacao_area,
-                software_version,
-                software_browser,
-                tipoDoc: 'Proveniencia',
-                status,
-                data_criacao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-                //                data_alteracao: new Date().toString('yyyy-MM-dd hh:mm:ss'),
-            };
-        } else {
-            proveniencia = JSON.parse(provenienciaAsBytes.toString());
-            proveniencia.key = key;
-            proveniencia.key_elemento = key_elemento;
-            proveniencia.usuario_alterador = user;
-            proveniencia.nome_alterador = user_name;
-            proveniencia.ip = ip;
-            proveniencia.geoLocalizacao_range = geoLocalizacao_range;
-            proveniencia.geoLocalizacao_country = geoLocalizacao_country;
-            proveniencia.geoLocalizacao_region = geoLocalizacao_region;
-            proveniencia.geoLocalizacao_eu = geoLocalizacao_eu;
-            proveniencia.geoLocalizacao_timezone = geoLocalizacao_timezone;
-            proveniencia.geoLocalizacao_city = geoLocalizacao_city;
-            proveniencia.geoLocalizacao_ll = geoLocalizacao_ll;
-            proveniencia.geoLocalizacao_metro = geoLocalizacao_metro;
-            proveniencia.geoLocalizacao_area = geoLocalizacao_area;
-            proveniencia.software_version = software_version;
-            proveniencia.software_browser = software_browser;
-            proveniencia.status = status;
-            proveniencia.excluido = false;
-            //            proveniencia.data_alteracao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-            proveniencia.data_criacao = new Date().toString('yyyy-MM-dd hh:mm:ss');
-
-        }
-
-        await ctx.stub.putState(key, Buffer.from(JSON.stringify(proveniencia)));
-        console.info('============= END : Create Proveniencia ===========');
-    }
-
-    // Funçoes relacionadas ao Observacao
     async incAlt_Observacao(ctx,
         key,
         key_proveniencia,

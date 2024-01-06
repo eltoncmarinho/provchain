@@ -24,12 +24,12 @@ export RAIZ=/home/provchain/
 
 # Remover bloco genesis caso exista
 if $RAIZ/test-network/channel-artifacts/mychannel.block; then 
-    rm $RAIZ/test-network/channel-artifacts/mychannel.block
+    rm -f $RAIZ/test-network/channel-artifacts/mychannel.block
 fi   
 
 # Remover package da chaincode caso exista
 if $RAIZ/test-network/provchain.tar.gz; then 
-    rm $RAIZ/test-network/provchain.tar.gz
+    rm -f $RAIZ/test-network/provchain.tar.gz
 fi
 
 # Iniciar Rede e Blockchain
