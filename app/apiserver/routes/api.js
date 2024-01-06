@@ -946,7 +946,7 @@ router.post('/criar_Observacao', async function (req, res) {
                         req.body.classificacao_taxonomica,
                         req.body.relevo_local,
                         req.body.relevo_regional,
-                        req.body.observacao,
+                        req.body.comentario,
                         req.body.agente_causador1,
                         req.body.forma1,
                         req.body.classe1,
@@ -1142,7 +1142,7 @@ router.post('/criar_Horizonte', async function (req, res) {
                         req.body.outros_carbonato,
                         req.body.outros_textura,
                         req.body.outros_cascalho,
-                        req.body.observacao,
+                        req.body.comentario,
                         // Proveniencia
                         user,
                         user_name,
@@ -1872,7 +1872,7 @@ router.post('/alterar_Horizonte', async function (req, res) {
                         req.body.outros_carbonato,
                         req.body.outros_textura,
                         req.body.outros_cascalho,
-                        req.body.observacao,
+                        req.body.comentario,
                         // Proveniencia 
                         user,
                         user_name,

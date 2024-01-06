@@ -26,7 +26,7 @@
     <div class="row">
       <div class="col-md-2">
         <label class="col-form-label-sm">Topografia</label> 
-        <select id="transicao_topografia" id="transicao_topografia" name="transicao_topografia" class="form-control" onchange="trocarLimites()">
+        <select id="transicao_topografia" name="transicao_topografia" class="form-control" onchange="trocarLimites()">
             <option></option>
             <option value="Plana">Plana</option>
             <option value="Irregular">Irregular</option>
@@ -36,7 +36,7 @@
         </div>
       <div class="col-md-2">
         <label class="col-form-label-sm">Nitidez</label> 
-        <select id="transicao_nitidez" id="transicao_nitidez" name="transicao_nitidez" class="form-control">
+        <select id="transicao_nitidez" name="transicao_nitidez" class="form-control">
             <option></option>
             <option value="Abrupta">Abrupta</option>
             <option value="Gradual">Gradual</option>
@@ -52,7 +52,7 @@
     <div class="row">
       <div class="col-md">
         <label class="col-form-label-sm" >Método</label> 
-        <select id="selectCor" id="cor_tipo" name="cor_tipo" class="form-control" onchange="mostrarform(this)">
+        <select id="selectCor" name="cor_tipo" class="form-control" onchange="mostrarform(this)">
             <option></option>
             <option value="corSimples">Cor Simples</option>
             <option value="corMosqueada">Cor Mosqueada</option>
@@ -67,7 +67,7 @@
    <div class="row col-md">
       <div class="col-md">
         <label class='col-md'></label>Textura</label> 
-        <select id="outros_textura" id="outros_textura" name="outros_textura" class="form-control">
+        <select id="outros_textura" name="outros_textura" class="form-control">
             <option></option>
             <option value="Areia">Areia</option>
             <option value="Areia franca">Areia Franca</option>
@@ -86,7 +86,7 @@
         </div>
       <div class="col-md">
         <label class='col-md'>Cascalho</label> 
-        <select id="outros_cascalho" id="outros_cascalho" name="outros_cascalho" class="form-control">
+        <select id="outros_cascalho" name="outros_cascalho" class="form-control">
             <option></option>
             <option value="sem cascalho">sem cascalho</option>
             <option value="com cascalho">com cascalho</option>
@@ -101,7 +101,7 @@
       <div class="col-md">
         <label class="col-md">Tipo</label>
         <legend><button class="btn btn-outline-secondary btn-sm" type="button" onclick="criarCampoEstrutura()"><i id='botaoErosao' class="fa fa-plus" aria-hidden="true"></i></button>  Estrutura </legend>
-        <select id="estrutura_tipo" id="selectEstrutura" name="selectEstrutura" class="form-control" onchange="trocarEstrutura()"> 
+        <select id="selectEstrutura" name="selectEstrutura" class="form-control" onchange="trocarEstrutura()"> 
             <option></option>
             <option value="Grão Simples">Grão Simples</option>
             <option value="Maciça">Maciça</option>
@@ -533,7 +533,7 @@
     <legend>Observações Complementares </legend> 
    <div class="row col-md">
       <div class="col-md">
-        <textarea id="observacao" name="observacao" cols="80" rows="5" placeholder="Observação"></textarea>
+        <textarea id="comentario" name="comentario" cols="80" rows="5" placeholder="Observação"></textarea>
         </div>
      </div>
 
