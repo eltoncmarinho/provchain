@@ -2,7 +2,7 @@
 
 clear 
 
-echo "=====>>> instalarprovchain.sh"
+cho ">>>>> Início de Serviço - Criar canal e instalar nele o Contrato Inteligente"
 
 export MSYS_NO_PATHCONV=1
 
@@ -13,12 +13,14 @@ echo ">>>>> Início de Serviço "
 # Remover as identidades das carteiras
 rm -rf apiserver/wallet/*
 
-# liberar porta 8080
+echo "Liberando porta"
 if lsof -t -i:8080; then
     kill -9 $(lsof -t -i:8080)
+    echo ">> Porta 8080 liberada"    
 else 
-    echo ">> Porta 8080 estava liberada"    
-fi    
+    kill -9 $(lsof -t -i:80)
+    echo ">> Porta 80 liberada"    
+fi  
 
 export RAIZ=/home/provchain/
 
@@ -38,7 +40,7 @@ echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Tira a rede do ar, se estiver no ar..."
 $RAIZ/test-network/network.sh down
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Cria o canal com banco de estado CouchDB"
 $RAIZ/test-network/network.sh up createChannel -ca -s couchdb
-echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Instala a chaincode no canal e nos nós. Aqui é o foco da PROVChain" 
+echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Instala a chaincode em todos os nós do canal mychannel. Aqui é o foco da PROVChain" 
 CC_SRC_LANGUAGE=${1:-"javascript"}
 CC_SRC_LANGUAGE=`echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:]`
 CC_SRC_PATH="../chaincode/provchain/javascript/"
@@ -48,8 +50,8 @@ $RAIZ/test-network/network.sh deployCC -ccn provchain -ccv 1 -cci inicializarLiv
 pushd $RAIZ/app/apiserver
     node enrollAdmin.js
     node registerUser.js
-    node apiserver.js &
-    #nohup node apiserver.js &
+    #node apiserver.js &
+    nohup node apiserver.js &
 popd     
 
 cat <<EOF
@@ -59,5 +61,5 @@ Total setup execution time : $(($(date +%s) - starttime)) secs ...
 
 =====================================================================
 
-echo ">>>>> Fim de Serviço"
+cho ">>>>> Fim de Serviço - Criar canal e instalar nele o Contrato Inteligente"
 EOF

@@ -2,7 +2,7 @@
 
 clear 
 
-echo "=====>>> instalarmodulos.sh"
+cho ">>>>> Início de Serviço - Instalar Módulos"
 
 pushd /home/provchain/app/apiserver
     npm init 
@@ -38,4 +38,4 @@ popd
 apt update 
 apt upgrade
 
-echo ">>>>> Fim de Serviço"
+echo ">>>>> Fim de Serviço - Instalar Módulos"

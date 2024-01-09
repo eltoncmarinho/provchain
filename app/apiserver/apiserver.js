@@ -1,21 +1,27 @@
-//const host_address = "31.220.57.217"          // VPS na Hostinger durante 2022
-//const host_address = "89.117.33.155";         // VPS na Hostinger durante 2023
-const host_address = "59.91.134.100";           // AWS em 2024
-
-const port = 8080;
+const host_address_publico = "18.207.152.196";          // AWS IP Públicoem 2024
+const host_address_privado = "172.31.22.6";             // AWS IP Públicoem 2024
 
 const os = require('os');
-const networkInfo = os.networkInterfaces();
-//console. log(networkInfo) // objeto.
-console.log("networkInfo.lo[0].address:" + networkInfo.lo[0].address) // ip
 
+// const ipLido = os.networkInterfaces().lo[0].address;
+// console.log ("==========================================");
+// console.log (os.networkInterfaces().eth0);
+// console.log ("==========================================");
+
+let port = 8080;
 var addr = "";
-if (networkInfo.lo[0].address != "127.0.0.1") {
-        addr = host_address                     // VPS na Hostinger durante 2023
+
+// if (ipLido != host_address_privado) {                  // ip privado da AWS
+if (os.networkInterfaces().eth0) {                  // ip privado da AWS
+        addr = host_address_publico;                     
+        port = 80;
 } else {
-        addr = "127.0.0.1"                      // localhost
+        addr = "127.0.0.1";                      // localhost
+        port = 8080;
 }        
 
+console.log("addr: " + addr);
+console.log("==============================================");
 
 // Carregandp Módulos
 
@@ -35,7 +41,6 @@ var server = http.createServer(app);
 
 app.use(express.urlencoded({ extended: true}))
 app.use(express.json())
-
 
 const handlebars = require ('express-handlebars')
 // Configurações

@@ -7,7 +7,7 @@
 #Limpar a tela
 clear
 
-echo "=====>>> instalarprequisitos.sh"
+cho ">>>>> Início de Serviço - Instalar Pré-requisitos"
 
 #Instalando curl
 apt install curl
@@ -39,6 +39,9 @@ npm install -g npm@latest
 echo ">>>>> Atualizando a versão baixada do fabric-samples"
 
 #Instalando docker
+systemctl stop docker
+rm -rf /var/lib/docker  
+
 apt install docker
 apt install docker-compose
 
@@ -82,16 +85,15 @@ apt update
 apt upgrade
 
 clear
-
 echo ">>>>>>>> Verificando pré-requisitos >>>>>>>>>>>>>>>>>>"
 echo ">> curl --version" && curl --version
 echo ">> nvm --version" && nvm --version
 echo ">> nodejs --version" && nodejs --version
-echo ">> node --version" && node --versionexport PATH=$PATH:$GOPATH
+echo ">> node --version" && node --version
 echo ">> npm --version" && npm --version
 echo ">> docker --version: " && docker --version
 echo ">> docker-compose --version: " && docker-compose --version
 echo ">> go version" && go version
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
-echo ">>>>> Fim de Serviço"
+cho ">>>>> Fim de Serviço - Instalar Pré-requisitos"
