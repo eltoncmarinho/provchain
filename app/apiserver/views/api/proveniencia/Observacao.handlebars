@@ -1,0 +1,95 @@
+<script>
+        function goBack() {
+                window.history.back()
+        }
+</script>
+
+<center><p><h2>Proveniência do dados da Observação</h2></p></center>
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<button class="btn btn-success" onclick="goBack()">Voltar</button>       
+</div>
+
+<table class="table table-striped">
+{{#if result.key}}
+        <tr><td><label class="col-form-label-sm">Chave da proveniência:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.key}}</label></td></tr>
+{{/if}} 
+
+{{#if result.data_criacao}}
+        <tr><td><label class="col-form-label-sm">Data alteração (Horário GMT):</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.data_criacao}}</label></td></tr>
+{{/if}} 
+
+{{#if result.nome_alterador}}
+        <tr><td><label class="col-form-label-sm">Nome do usuário que alterou:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nome_alterador}}</label></td></tr>
+{{/if}} 
+
+{{#if result.usuario_alterador}}
+        <tr><td><label class="col-form-label-sm">Usuário que alterou:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.usuario_alterador}}</label></td></tr>
+{{/if}} 
+
+
+{{#if result.data_criacao}}
+        <tr><td><label class="col-form-label-sm">Data de criação (Horário GMT):</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.data_criacao}}</label></td></tr>
+{{/if}} 
+
+{{#if result.nome_criador}}
+        <tr><td><label class="col-form-label-sm">Nome do usuário que criou:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.nome_criador}}</label></td></tr>
+{{/if}} 
+
+{{#if result.usuario_criador}}
+        <tr><td><label class="col-form-label-sm">Usuário que criou:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.usuario_criador}}</label></td></tr>
+{{/if}} 
+
+
+
+{{#if result.software_browser}}
+        <tr><td><label class="col-form-label-sm">Navegador que efetuou o lançamento:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.software_browser}}</label></td></tr>
+{{/if}} 
+
+{{#if result.software_version}}
+        <tr><td><label class="col-form-label-sm">Versão do software:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.software_version}}</label></td></tr>
+{{/if}} 
+
+{{#if result.ip}}
+        <tr><td><label class="col-form-label-sm">IP:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.ip}}</label></td></tr>
+{{/if}} 
+
+{{#if result.geoLocalizacao_range}}
+        <tr><td><label class="col-form-label-sm">Intervalo:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_range}}</label></td></tr>
+{{/if}} 
+
+{{#if result.geoLocalizacao_country}}
+        <tr><td><label class="col-form-label-sm">País:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_country}}</label></td></tr>
+{{/if}} 
+
+{{#if result.geoLocalizacao_region}}
+        <tr><td><label class="col-form-label-sm">Estado:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_region}}</label></td></tr>
+{{/if}} 
+
+{{#if result.geoLocalizacao_city}}
+        <tr><td><label class="col-form-label-sm">Cidade:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_city}}</label></td></tr>
+{{/if}} 
+
+{{#if result.geoLocalizacao_timezone}}
+        <tr><td><label class="col-form-label-sm">Fuso horário:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_timezone}}</label></td></tr>
+{{/if}} 
+
+
+{{#if result.geoLocalizacao_ll}}
+        <tr><td><label class="col-form-label-sm">Latitude, longitude:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_ll}}</label></td></tr>
+{{/if}} 
+
+{{#if result.geoLocalizacao_area}}
+        <tr><td><label class="col-form-label-sm">Área (Raio de Precisão, acurácia):</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_area}}</label></td></tr>
+{{/if}} 
+{{#if result.geoLocalizacao_metro}}
+        <tr><td><label class="col-form-label-sm">Código da Região Metropolitana:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_metro}}</label></td></tr>
+{{/if}} 
+{{#if result.geoLocalizacao_eu}}
+        <tr><td><label class="col-form-label-sm">Estado membro da Comunidade Europeia:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.geoLocalizacao_eu}}</label></td></tr>
+{{/if}} 
+
+{{#if result.status}}
+        <tr><td><label class="col-form-label-sm">Situação:</label><label class="col-form-label-bg">&nbsp;&nbsp;{{result.status}}</label></td></tr>
+{{/if}} 
+</table>

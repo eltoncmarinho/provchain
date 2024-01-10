@@ -1,0 +1,621 @@
+<script style="text/javascript">
+    function cidades(municipio){
+        $('#municipio option').remove();
+        try {
+            var estado = document.getElementById("estado").value;    
+        } catch (error) {  
+            var estado = municipio.estado;
+        }
+        if(estado == "Capital") {
+            {{!-- $('#municipio').append('<option>Selecione um município</option>'); --}}
+            $('#municipio').append('<option value="Capital">Capital</option>');
+        } else {
+            $.getJSON("/json/estados_cidades.json",function(data){
+                $('#municipio').append('<option value="Capital">Selecione um município</option>');
+                $.each(data,function(key,value){
+                    if(value.sigla == estado || value.sigla == municipio.municipio){
+                        $.each(value.cidades,function(chave,dado){
+                            if(dado == municipio.municipio ){
+                                $('#municipio').append('<option selected value="' + dado + '">' + dado + '</option>');
+                            } else {
+                                $('#municipio').append('<option value="' + dado + '">' + dado + '</option>');
+                            }  
+                        });
+                    }
+                });
+            })
+        }
+    }
+
+    function estados(pais){
+        $('#municipio option').remove();
+        $('#estado option').remove();
+        if(pais.pais == "Brasil" || pais.value == "Brasil" || pais == "Brasil"){
+            $.getJSON("/json/estados_cidades.json",function(data){
+                $('#estado').append('<option value="">Selecione um Estado</option>');
+                $.each(data,function(key,value){
+                        if(value.sigla == pais.estado || value.sigla == pais.value ){
+                            $('#estado').append('<option selected value="'+value.sigla+'">'+value.nome+'</option>');
+                        } else {
+                            $('#estado').append('<option value="'+value.sigla+'">'+value.nome+'</option>');
+                        }    
+                    })
+                });
+        } else {
+            $('#estado').append('<option>Selecione um Estado</option>');
+            $('#estado').append('<option value="Capital">Capital</option>');
+        }
+    }
+
+    function paises(pais){
+        $('#municipio option').remove();
+        $('#estado option').remove();
+        $('#pais option').remove();
+        $.getJSON("/json/paises.json",function(data){
+            $('#pais').append('<option>Selecione um País</option>');
+            $.each(data,function(key,value){image.png
+                if(value.nome_pais == pais.pais || value.nome_pais == pais.value ){
+                    $('#pais').append('<option selected value="' + value.nome_pais + '">' + value.nome_pais + '</option>');
+                } else {
+                    $('#pais').append('<option value="' + value.nome_pais + '">' + value.nome_pais + '</option>');
+                }    
+            });
+        })
+    }
+    var p = {"pais":"Brasil","estado":"{{result.estado}}", "municipio": "{{result.municipio}}"};
+    paises(p);
+    estados(p);
+    cidades(p);
+</script>
+
+
+</script>
+<center><h1> Alteração de Observação</h1></center>
+
+    {{#each erros}}
+        <div class="alert alert-danger">{{ texto }}</div>
+    {{else}}
+    
+    {{/each}}  
+
+<div class="card">
+    <div class="card-body">
+
+    <form name="criarObservacao" action="/api/alterar_Observacao" method="POST">
+
+    <input type="hidden" id="key_observacao" name="key_observacao" value="{{resultKey}}">
+
+    <center>
+    <table class="table table-striped">
+
+    <tr class="table-success" align="center"><th colspan="2" bgcolor="bla">Projeto associado</th></tr>
+    <tr><td>
+        <label class="col-form-label-sm">Projeto associado</label> 
+    </td><td>
+        <select  id="key_projeto" name="key_projeto" required>
+            <option value="">Selecione ...</option>
+            {{#each projetos}}
+                {{#if Record.excluido}}
+                {{else}}
+                    <option value="{{Key}}">{{Record.nome}}</option>
+                {{/if}}                    
+            {{/each}}
+            <option value="{{result.key_projeto}}" selected="selected">{{projeto.nome}}</option>
+        </select>
+    </td></tr>
+
+    <tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Identificação e Localização</th></tr>
+
+
+    <tr><td>
+        <label class="col-form-label-sm">Identificação</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="nome" name="nome" placeholder="Identificação da Observação" required value="{{result.nome}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Data da coleta</label> {{result.data_coleta}}
+    </td><td>
+        
+        <input type="date" id="data_coleta" name="data_coleta" placeholder="Data de coleta" value="{{result.data_coleta}}"> 
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Tipo de Observação *{{result.tipo_observacao}}*</label> 
+    </td><td>
+        <select  id="tipo_observacao" name="tipo_observacao">
+            <option value="Não informado">Selecione ...</option>
+            <option value="Perfil" {{#ifeq result.tipo_observacao "Perfil"}} selected{{/ifeq}}>Perfil/Trincheira</option>
+            <option value="Tradagem" {{#ifeq result.tipo_observacao "Tradagem"}} selected{{/ifeq}}>Tradagem</option>            
+        </select>
+    </td></tr>
+
+     <tr><td>
+        <label class="col-form-label-sm">Localização - Estado</label> 
+    </td><td>
+        <select class="form-control-sm" id="estado" name="estado" onchange="cidades(this)" required></select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Localização - Municipio</label> 
+    </td><td>
+        <select class="form-control-sm" id="municipio" name="municipio" required></select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Latitude</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="latitude" name="latitude" placeholder="Latitude" value="{{result.latitude}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Longitude</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="longitude" name="longitude" placeholder="Longitude" value="{{result.longitude}}">
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Altitude (m)</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="altitude" name="altitude" placeholder="Altitude" value="{{result.altitude}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">SiBCS antigo</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="sibcs_antigo" name="sibcs_antigo" placeholder="SiBCS antigo" value="{{result.sibcs_antigo}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">WRB</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="wrb" name="wrb" placeholder="World Reference Base" value="{{result.wrb}}">
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Soil Taxonomy</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="soil_taxonomy" name="soil_taxonomy" placeholder="Soil Taxonomy" value="{{result.soil_taxonomy}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Datum </label> 
+    </td><td>
+        <select  id="datum" name="datum">
+            <option value="Não informado" >Selecione ...</option>
+            <option value="SIRGAS 2000"{{#ifeq result.datum "SIRGAS 2000"}} selected{{/ifeq}}>SIRGAS 2000</option>
+            <option value="Outro" {{#ifeq result.datum "Outro"}} selected{{/ifeq}}>Outro</option>            
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Unidade de Mapeamento</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="unidade_mapeamento" name="unidade_mapeamento" placeholder="Unidade de Mapeamento" value="{{result.unidade_mapeamento}}">
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Localização</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="localizacao" name="localizacao" placeholder="Localização" value="{{result.localizacao}}">    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Relação B/A</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="relacaoBA" name="relacaoBA" placeholder="Relação B/A" value="{{result.relacaoBA}}">     
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Gilgai </label> 
+    </td><td>
+        <select  id="gilgai" name="gilgai">
+            <option value="Não informado" >Selecione ...</option>
+            <option value="Sim"{{#ifeq result.gilgai "Sim"}} selected{{/ifeq}}>Sim</option>
+            <option value="Não"{{#ifeq result.gilgai "Não"}} selected{{/ifeq}}>Não</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>        
+        <label class="col-form-label-sm">Classificação taxonômica</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="classificacao_taxonomica" name="classificacao_taxonomica" placeholder="Classificação Taxonômica" value="{{result.classificacao_taxonomica}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Uso atual </label> 
+    </td><td>
+        <select id="uso_atual" name="uso_atual">
+            <option value="Não informado"{{#ifeq result.uso_atual "Não informado"}} selected {{/ifeq}}>Selecione ...</option>
+            <option value="Ocupação habitacional"{{#ifeq result.uso_atual "Ocupação habitacional"}} selected {{/ifeq}}>Ocupação habitacional</option>
+            <option value="Área agrícola perene"{{#ifeq result.uso_atual "Área agrícola perene"}} selected {{/ifeq}}>Área agrícola perene</option>
+            <option value="Área agrícola temporária"{{#ifeq result.uso_atual "Área agrícola temporária"}} selected {{/ifeq}}>Área agrícola temporária</option>
+            <option value="Área de pastagem plantada"{{#ifeq result.uso_atual "Área de pastagem plantada"}} selected {{/ifeq}}>Área de pastagem plantada</option>
+            <option value="Área de pastagem degradada"{{#ifeq result.uso_atual "Área de pastagem degradada"}} selected {{/ifeq}}>Área de pastagem degradada</option>
+            <option value="Reserva natural"{{#ifeq result.uso_atual "Reserva natural"}} selected {{/ifeq}} >Reserva natural</option>
+            <option value="Campo Antrópico"{{#ifeq result.uso_atual "Campo Antrópico"}} selected {{/ifeq}}>Campo Antrópico</option>
+            <option value="Solo Exposto"{{#ifeq result.uso_atual "Solo Exposto"}} selected {{/ifeq}}>Solo Exposto</option>
+            <option value="Vegetação Nativa"{{#ifeq result.uso_atual "Vegetação Nativa"}} selected {{/ifeq}}>Vegetação Nativa</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Formação geológica</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="formacao_geologica" name="formacao_geologica" placeholder="Formação Geológica" value="{{result.formacao_geologica}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Litologia</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="litologia" name="litologia" placeholder="Litologia" value="{{result.litologia}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Cronologia</label> 
+    </td><td>
+        <select id="cronologia" name="cronologia">
+            <option value="Não informado"{{#ifeq result.cronologia "Não informado"}} selected{{/ifeq}}>Selecione ...</option>
+            <option value="Holoceno" {{#ifeq result.cronologia "Holoceno"}} selected{{/ifeq}}>Holoceno</option>
+            <option value="Pleistoceno" {{#ifeq result.cronologia "Pleistoceno"}} selected{{/ifeq}}>Pleistoceno</option>
+            <option value="Piloceno" {{#ifeq result.cronologia "Piloceno"}} selected{{/ifeq}}>Piloceno</option>
+            <option value="Mioceno" {{#ifeq result.cronologia "Mioceno"}} selected{{/ifeq}}>Mioceno</option>
+            <option value="Oligoceno" {{#ifeq result.cronologia "Oligoceno"}} selected{{/ifeq}}>Oligoceno</option>
+            <option value="Eoceno" {{#ifeq result.cronologia "Eoceno"}} selected{{/ifeq}}>Eoceno</option>
+            <option value="Paleoceno" {{#ifeq result.cronologia "Paleoceno"}} selected{{/ifeq}}>Paleoceno</option>
+            <option value="Cretáceo" {{#ifeq result.cronologia "Cretáceo"}} selected{{/ifeq}}>Cretáceo</option>
+            <option value="Jurássico" {{#ifeq result.cronologia "Jurássico"}} selected{{/ifeq}}>Jurásico</option>
+            <option value="Triássico" {{#ifeq result.cronologia "Triássico"}} selected{{/ifeq}}>Triássico</option>
+            <option value="Permiano" {{#ifeq result.cronologia "Permiano"}} selected{{/ifeq}}>Permiano</option>
+            <option value="Carbonífero" {{#ifeq result.cronologia "Carbonífero"}} selected{{/ifeq}}>Carbonífero</option>
+            <option value="Devoniano" {{#ifeq result.cronologia "Devoniano"}} selected{{/ifeq}}>Devoniano</option>
+            <option value="Siluriano" {{#ifeq result.cronologia "Siluriano"}} selected{{/ifeq}}>Siluriano</option>
+            <option value="Ordoviciano" {{#ifeq result.cronologia "Ordoviciano"}} selected{{/ifeq}}>Ordoviciano</option>
+            <option value="Cambriano" {{#ifeq result.cronologia "Cambriano"}} selected{{/ifeq}}>Cambriano</option>
+            <option value="Proterozóico" {{#ifeq result.cronologia "Proterozóico"}} selected{{/ifeq}}>Proterozóico</option>
+            <option value="Arqueozóico" {{#ifeq result.cronologia "Arqueozóico"}} selected{{/ifeq}}>Arqueozóico</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Material Originário</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="material_originario" name="material_originario" placeholder="Material Originário" value="{{result.material_originario}}">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Köppen-Geiger</label> 
+    </td><td>
+        <select id="koppen" name="koppen">
+            <option value="Não informado"{{#ifeq result.koppen "Não informado"}} selected{{/ifeq}}>Não informado</option>
+            <option value="Af"{{#ifeq result.koppen "Af"}} selected{{/ifeq}}>Af</option>
+            <option value="Am"{{#ifeq result.koppen "Am"}} selected{{/ifeq}}>Am</option>
+            <option value="Aw"{{#ifeq result.koppen "Aw"}} selected{{/ifeq}}>Aw</option>
+            <option value="As"{{#ifeq result.koppen "As"}} selected{{/ifeq}}>As</option>
+            <option value="BS"{{#ifeq result.koppen "BS"}} selected{{/ifeq}}>BS</option>
+            <option value="BS"{{#ifeq result.koppen "BS"}} selected{{/ifeq}}>BS</option>
+            <option value="BW"{{#ifeq result.koppen "BW"}} selected{{/ifeq}}>BW</option>
+            <option value="BW"{{#ifeq result.koppen "BW"}} selected{{/ifeq}}>BW</option>
+            <option value="Cf"{{#ifeq result.koppen "Cf"}} selected{{/ifeq}}>Cf</option>
+            <option value="Cf"{{#ifeq result.koppen "Cf"}} selected{{/ifeq}}>Cf</option>
+            <option value="Cf"{{#ifeq result.koppen "Cf"}} selected{{/ifeq}}>Cf</option>
+            <option value="Cw"{{#ifeq result.koppen "Cw"}} selected{{/ifeq}}>Cw</option>
+            <option value="Cw"{{#ifeq result.koppen "Cw"}} selected{{/ifeq}}>Cw</option>
+            <option value="Cw"{{#ifeq result.koppen "Cw"}} selected{{/ifeq}}>Cw</option>
+            <option value="Cs"{{#ifeq result.koppen "Cs"}} selected{{/ifeq}}>Cs</option>
+            <option value="Cs"{{#ifeq result.koppen "Cs"}} selected{{/ifeq}}>Cs</option>
+            <option value="Cs"{{#ifeq result.koppen "Cs"}} selected{{/ifeq}}>Cs</option>
+            <option value="Df"{{#ifeq result.koppen "Df"}} selected{{/ifeq}}>Df</option>
+            <option value="Df"{{#ifeq result.koppen "Df"}} selected{{/ifeq}}>Df</option>
+            <option value="Df"{{#ifeq result.koppen "Df"}} selected{{/ifeq}}>Df</option>
+            <option value="Df"{{#ifeq result.koppen "Df"}} selected{{/ifeq}}>Df</option>
+            <option value="Dw"{{#ifeq result.koppen "Dw"}} selected{{/ifeq}}>Dw</option>
+            <option value="Dw"{{#ifeq result.koppen "Dw"}} selected{{/ifeq}}>Dw</option>
+            <option value="Dw"{{#ifeq result.koppen "Dw"}} selected{{/ifeq}}>Dw</option>
+            <option value="Dw"{{#ifeq result.koppen "Dw"}} selected{{/ifeq}}>Dw</option>
+            <option value="ET"{{#ifeq result.koppen "ET"}} selected{{/ifeq}}>ET</option>
+            <option value="EF"{{#ifeq result.koppen "EF"}} selected{{/ifeq}}>EF</option>
+            <option value="EM"{{#ifeq result.koppen "EM"}} selected{{/ifeq}}>EM</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Situação de declive</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="situacao_declive" name="situacao_declive" placeholder="Situação de declive" value="{{result.situacao_declive}}">
+    </td></tr>    
+
+    <tr><td>
+        <label class="col-form-label-sm">Vegetação Primária</label> 
+    </td><td>
+        <select  id="vegetacao_primaria" name="vegetacao_primaria">
+            <option value="Não informado" {{#ifeq result.vegetacao_primaria "Não informado"}} selected{{/ifeq}}>Selecione ...</option>
+            <option value="Floresta equatorial"{{#ifeq result.vegetacao_primaria "Floresta equatorial"}} selected{{/ifeq}}>Floresta equatorial</option>
+            <option value="Floresta tropical"{{#ifeq result.vegetacao_primaria "Floresta tropical"}} selected{{/ifeq}}>Floresta tropical</option>
+            <option value="Floresta subtropical"{{#ifeq result.vegetacao_primaria "Floresta subtropical"}} selected{{/ifeq}}>Floresta subtropical</option>
+            <option value="Vegetação de restinga"{{#ifeq result.vegetacao_primaria "Vegetação de restinga"}} selected{{/ifeq}}>Vegetação de restinga</option>
+            <option value="Cerrado equatorial"{{#ifeq result.vegetacao_primaria "Cerrado equatorial"}} selected{{/ifeq}}>Cerrado equatorial</option>
+            <option value="Cerrado e cerradão tropcial"{{#ifeq result.vegetacao_primaria "Cerrado e cerradão tropcial"}} selected{{/ifeq}}>Cerrado e cerradão tropcial</option>
+            <option value="Caatinga"{{#ifeq result.vegetacao_primaria "Caatinga"}} selected{{/ifeq}}>Caatinga</option>
+            <option value="Campo"{{#ifeq result.vegetacao_primaria "Campo"}} selected{{/ifeq}}>Campo</option>
+            <option value="Outras formações"{{#ifeq result.vegetacao_primaria "Outras formações"}} selected{{/ifeq}}>Outras formações</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Pedregosidade</label> 
+    </td><td>
+        <select id="pedregosidade" name="pedregosidade">
+            <option value="Não informado" {{#ifeq result.pedregosidade "Não informado"}} selected{{/ifeq}}>Selecione ...</option>
+            <option value="Não pedregoso"{{#ifeq result.pedregosidade "Não pedregoso"}} selected{{/ifeq}}>Não pedregoso</option>
+            <option value="Não pedregoso a ligeiramente pedregoso"{{#ifeq result.pedregosidade "Não pedregoso a ligeiramente pedregoso"}} selected{{/ifeq}}>Não pedregoso a ligeiramente pedregoso</option>
+            <option value="Ligeiramente pedregoso"{{#ifeq result.pedregosidade "Ligeiramente pedregoso"}} selected{{/ifeq}}>Ligeiramente pedregoso</option>
+            <option value="Ligeiramente a moderadamente pedregoso"{{#ifeq result.pedregosidade "Ligeiramente a moderadamente pedregoso"}} selected{{/ifeq}}>Ligeiramente a moderadamente pedregoso</option>
+            <option value="Moderadamente pedregoso"{{#ifeq result.pedregosidade "Campo"}} selected{{/ifeq}}>Moderadamente pedregoso</option>
+            <option value="Moderadamente pedregoso a pedregoso"{{#ifeq result.pedregosidade "Moderadamente pedregoso a pedregoso"}} selected{{/ifeq}}>Moderadamente pedregoso a pedregoso</option>
+            <option value="Pedregoso"{{#ifeq result.pedregosidade "Pedregoso"}} selected{{/ifeq}}>Pedregoso</option>
+            <option value="Pedregoso a muito pedregoso"{{#ifeq result.pedregosidade "Pedregoso a muito pedregoso"}} selected{{/ifeq}}>Pedregoso a muito pedregoso</option>
+            <option value="Muito pedregoso"{{#ifeq result.pedregosidade "Muito pedregoso"}} selected{{/ifeq}}>Muito pedregoso</option>
+            <option value="Muito pedregoso a extremamente pedregoso"{{#ifeq result.pedregosidade "Muito pedregoso a extremamente pedregoso"}} selected{{/ifeq}}>Muito pedregoso a extremamente pedregoso</option>
+            <option value="Extremamente pedregoso"{{#ifeq result.pedregosidade "Extremamente pedregoso"}} selected{{/ifeq}}>Extremamente pedregoso</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Rochosidade</label> 
+    </td><td>
+        <select id="rochosidade" name="rochosidade">
+            <option value="Não informado" {{#ifeq result.rochosidade "Não informado"}} selected{{/ifeq}}>Selecione ...</option>
+            <option value="Não rochoso"{{#ifeq result.rochosidade "Não rochoso"}} selected{{/ifeq}}>Não rochoso</option>
+            <option value="Não rochoso a ligeiramente rochoso"{{#ifeq result.rochosidade "Não rochoso a ligeiramente rochoso"}} selected{{/ifeq}}>Não rochoso a ligeiramente rochoso</option>
+            <option value="Ligeiramente rochoso"{{#ifeq result.rochosidade "Ligeiramente rochoso"}} selected{{/ifeq}}>Ligeiramente rochoso</option>
+            <option value="Ligeiramente a moderadamente rochoso"{{#ifeq result.rochosidade "Ligeiramente a moderadamente rochoso"}} selected{{/ifeq}}>Ligeiramente a moderadamente rochoso</option>
+            <option value="Moderadamente rochoso"{{#ifeq result.rochosidade "Moderadamente rochoso"}} selected{{/ifeq}}>Moderadamente rochoso</option>
+            <option value="Moderadamente rochoso a rochoso"{{#ifeq result.rochosidade "Moderadamente rochoso a rochoso"}} selected{{/ifeq}}>Moderadamente rochoso a rochoso</option>
+            <option value="Rochoso"{{#ifeq result.rochosidade "Rochoso"}} selected{{/ifeq}}>Rochoso</option>
+            <option value="Rochoso a muito rochoso"{{#ifeq result.rochosidade "Rochoso a muito rochoso"}} selected{{/ifeq}}>Rochoso a muito rochoso</option>
+            <option value="Muito rochoso"{{#ifeq result.rochosidade "Muito rochoso"}} selected{{/ifeq}}>Muito rochoso</option>
+            <option value="Muito rochoso a extremamente rochoso"{{#ifeq result.rochosidade "Muito rochoso a extremamente rochoso"}} selected{{/ifeq}}>Muito rochoso a extremamente rochoso</option>
+            <option value="Extremamente rochoso"{{#ifeq result.rochosidade "Extremamente rochoso"}} selected{{/ifeq}}>Extremamente rochoso</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Drenagem</label> 
+    </td><td>
+        <select id="drenagem" name="drenagem">
+            <option value='Não informado'{{#ifeq result.drenagem 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+            <option value='Extremamente drenado'{{#ifeq result.drenagem 'Extremamente drenado'}} selected{{/ifeq}}>Extremamente drenado</option>
+            <option value='Extremamente a fortemente drenado'{{#ifeq result.drenagem 'Extremamente a fortemente drenado'}} selected{{/ifeq}}>Extremamente a fortemente drenado</option>
+            <option value='Fortemente drenado'{{#ifeq result.drenagem 'Fortemente drenado'}} selected{{/ifeq}}>Fortemente drenado</option>
+            <option value='Fortemente a acentuadamente drenado'{{#ifeq result.drenagem 'Fortemente a acentuadamente drenado'}} selected{{/ifeq}}>Fortemente a acentuadamente drenado</option>
+            <option value='Acentuadamente drenado'{{#ifeq result.drenagem 'Acentuadamente drenado'}} selected{{/ifeq}}>Acentuadamente drenado</option>
+            <option value='Bem drenado'{{#ifeq result.drenagem 'Bem drenado'}} selected{{/ifeq}}>Bem drenado</option>
+            <option value='Bem drenado a moderadamente drenado'{{#ifeq result.drenagem 'Bem drenado a moderadamente drenado'}} selected{{/ifeq}}>Bem drenado a moderadamente drenado</option>
+            <option value='Moderadamente drenado'{{#ifeq result.drenagem 'Moderadamente drenado'}} selected{{/ifeq}}>Moderadamente drenado</option>
+            <option value='Moderadamente a imperfeitamente drenado'{{#ifeq result.drenagem 'Moderadamente a imperfeitamente drenado'}} selected{{/ifeq}}>Moderadamente a imperfeitamente drenado</option>
+            <option value='Imperfeitamente drenado'{{#ifeq result.drenagem 'Imperfeitamente drenado'}} selected{{/ifeq}}>Imperfeitamente drenado</option>
+            <option value='Imperfeitamente a mal drenado'{{#ifeq result.drenagem 'Imperfeitamente a mal drenado'}} selected{{/ifeq}}>Imperfeitamente a mal drenado</option>
+            <option value='Mal drenado'{{#ifeq result.drenagem 'Mal drenado'}} selected{{/ifeq}}>Mal drenado</option>
+            <option value='Mal a muito mal drenado'{{#ifeq result.drenagem 'Mal a muito mal drenado'}} selected{{/ifeq}}>Mal a muito mal drenado</option>
+            <option value='Muito mal drenado'{{#ifeq result.drenagem 'Muito mal drenado'}} selected{{/ifeq}}>Muito mal drenado</option>
+
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Relevo local *{{result.relevo_local}}*</label> 
+    </td><td>
+        <select id="relevo_local" name="relevo_local">
+            <option value='Não informado'{{#ifeq result.relevo_local 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+            <option value='Plano'{{#ifeq result.relevo_local 'Plano'}} selected{{/ifeq}}>Plano</option>
+            <option value='Plano a suave ondulado'{{#ifeq result.relevo_local 'Plano a suave ondulado'}} selected{{/ifeq}}>Plano a suave ondulado</option>
+            <option value='Suave ondulado'{{#ifeq result.relevo_local 'Suave ondulado'}} selected{{/ifeq}}>Suave ondulado</option>
+            <option value='Suave ondulado a ondulado'{{#ifeq result.relevo_local 'Suave ondulado a ondulado'}} selected{{/ifeq}}>Suave ondulado a ondulado</option>
+            <option value='Ondulado'{{#ifeq result.relevo_local 'Ondulado'}} selected{{/ifeq}}>Ondulado</option>
+            <option value='Ondulado a forte ondulado'{{#ifeq result.relevo_local 'Ondulado a forte ondulado'}} selected{{/ifeq}}>Ondulado a forte ondulado</option>
+            <option value='Forte ondulado'{{#ifeq result.relevo_local 'Forte ondulado'}} selected{{/ifeq}}>Forte ondulado</option>
+            <option value='Forte ondulado a montanhoso'{{#ifeq result.relevo_local 'Forte ondulado a montanhoso'}} selected{{/ifeq}}>Forte ondulado a montanhoso</option>
+            <option value='Montanhoso a escarpado'{{#ifeq result.relevo_local 'Montanhoso a escarpado'}} selected{{/ifeq}}>Montanhoso a escarpado</option>
+            <option value='Escarpado'{{#ifeq result.relevo_local 'Escarpado'}} selected{{/ifeq}}>Escarpado</option>
+
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Relevo Regional</label> 
+    </td><td>
+        <select id="relevo_regional" name="relevo_regional">
+            <option value='Não informado'{{#ifeq result.relevo_regional 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+            <option value='Plano'{{#ifeq result.relevo_regional 'Plano'}} selected{{/ifeq}}>Plano</option>
+            <option value='Plano a suave ondulado'{{#ifeq result.relevo_regional 'Plano a suave ondulado'}} selected{{/ifeq}}>Plano a suave ondulado</option>
+            <option value='Suave ondulado'{{#ifeq result.relevo_regional 'Suave ondulado'}} selected{{/ifeq}}>Suave ondulado</option>
+            <option value='Suave ondulado a ondulado'{{#ifeq result.relevo_regional 'Suave ondulado a ondulado'}} selected{{/ifeq}}>Suave ondulado a ondulado</option>
+            <option value='Ondulado'{{#ifeq result.relevo_regional 'Ondulado'}} selected{{/ifeq}}>Ondulado</option>
+            <option value='Ondulado a forte ondulado'{{#ifeq result.relevo_regional 'Ondulado a forte ondulado'}} selected{{/ifeq}}>Ondulado a forte ondulado</option>
+            <option value='Forte ondulado'{{#ifeq result.relevo_regional 'Forte ondulado'}} selected{{/ifeq}}>Forte ondulado</option>
+            <option value='Forte ondulado a montanhoso'{{#ifeq result.relevo_regional 'Forte ondulado a montanhoso'}} selected{{/ifeq}}>Forte ondulado a montanhoso</option>
+            <option value='Montanhoso a escarpado'{{#ifeq result.relevo_regional 'Montanhoso a escarpado'}} selected{{/ifeq}}>Montanhoso a escarpado</option>
+            <option value='Escarpado'{{#ifeq result.relevo_regional 'Escarpado'}} selected{{/ifeq}}>Escarpado</option>
+
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Movimento de massa</label> 
+    </td><td>
+        <select  id="movimento_de_massa" name="movimento_de_massa">
+            <option value='Não informado'{{#ifeq result.movimento_de_massa 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+            <option value='Não aparente'{{#ifeq result.movimento_de_massa 'Não aparente'}} selected{{/ifeq}}>Não aparente</option>
+            <option value='Rastejo'{{#ifeq result.movimento_de_massa 'Rastejo'}} selected{{/ifeq}}>Rastejo</option>
+            <option value='Escorregamentos'{{#ifeq result.movimento_de_massa 'Escorregamentos'}} selected{{/ifeq}}>Escorregamentos</option>
+            <option value='Corrida de massa'{{#ifeq result.movimento_de_massa 'Corrida de massa'}} selected{{/ifeq}}>Corrida de massa</option>
+            <option value='Queda de blocos'{{#ifeq result.movimento_de_massa 'Queda de blocos'}} selected{{/ifeq}}>Queda de blocos</option>
+
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Comentários</label> 
+    </td><td>
+        <textarea id="comentario" name="comentario" cols="50" rows="5" placeholder="Deixe aqui seus comentários">{{result.comentario}}
+        </textarea>
+    </td></tr>
+
+
+
+                <tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Erosão</th></tr>                
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Agente causador</label> 
+                </td><td>
+                    <select  id="agente_causador1" name="agente_causador1">
+                        <option value='Não informado'{{#ifeq result.agente_causador1 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='Eólica'{{#ifeq result.agente_causador1 'Eólica'}} selected{{/ifeq}}>Eólica</option>
+                        <option value='Hídrica'{{#ifeq result.agente_causador1 'Hídrica'}} selected{{/ifeq}}>Hídrica</option>
+                        <option value='Não aparente'{{#ifeq result.agente_causador1 'Não aparente'}} selected{{/ifeq}}>Não aparente</option>
+
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Forma </label> 
+                </td><td>
+                    <select  id="forma1" name="forma1">
+                        <option value='Não informado'{{#ifeq result.forma1 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='forma01'{{#ifeq result.forma1 'forma01'}} selected{{/ifeq}}>forma01</option>
+                        <option value='forma02'{{#ifeq result.forma1 'forma02'}} selected{{/ifeq}}>forma02</option>
+                        <option value='forma03'{{#ifeq result.forma1 'forma03'}} selected{{/ifeq}}>forma03</option>
+                        <option value='forma04'{{#ifeq result.forma1 'forma04'}} selected{{/ifeq}}>forma04</option>
+                        <option value='forma05'{{#ifeq result.forma1 'forma05'}} selected{{/ifeq}}>forma05</option>
+                        <option value='forma06'{{#ifeq result.forma1 'forma06'}} selected{{/ifeq}}>forma06</option>
+
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Classe </label> 
+                </td><td>
+                    <select  id="classe1" name="classe1">
+                        <option value='Não informado'{{#ifeq result.classe1 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='Não aparente'{{#ifeq result.classe1 'Não aparente'}} selected{{/ifeq}}>Não aparente</option>
+                        <option value='Ligeira'{{#ifeq result.classe1 'Ligeira'}} selected{{/ifeq}}>Ligeira</option>
+                        <option value='Moderada'{{#ifeq result.classe1 'Moderada'}} selected{{/ifeq}}>Moderada</option>
+                        <option value='Forte'{{#ifeq result.classe1 'Forte'}} selected{{/ifeq}}>Forte</option>
+                        <option value='Muito forte'{{#ifeq result.classe1 'Muito forte'}} selected{{/ifeq}}>Muito forte</option>
+                        <option value='Extremamente forte'{{#ifeq result.classe1 'Extremamente forte'}} selected{{/ifeq}}>Extremamente forte</option>
+
+                    </select>    
+                </td></tr>
+
+
+                <tr><td>
+                    <label class="col-form-label-sm">Frequência dos Sulcos</label> 
+                </td><td>
+                    <select  id="frequencia_sulcos1" name="frequencia_sulcos1">
+                        <option value='Não informado'{{#ifeq result.frequencia_sulcos1 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='Ocasionais'{{#ifeq result.frequencia_sulcos1 'Ocasionais'}} selected{{/ifeq}}>Ocasionais</option>
+                        <option value='Frequentes'{{#ifeq result.frequencia_sulcos1 'Frequentes'}} selected{{/ifeq}}>Frequentes</option>
+                        <option value='Muito Frequentes'{{#ifeq result.frequencia_sulcos1 'Muito Frequentes'}} selected{{/ifeq}}>Muito Frequentes</option>
+
+                    </select>
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Profundidade dos Sulcos</label> 
+                </td><td>
+                    <select  id="profundidade_sulcos1" name="profundidade_sulcos1">
+                        <option value='Não informado'{{#ifeq result.profundidade_sulcos1 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='superficiais'{{#ifeq result.profundidade_sulcos1 'superficiais'}} selected{{/ifeq}}>superficiais</option>
+                        <option value='rasos'{{#ifeq result.profundidade_sulcos1 'rasos'}} selected{{/ifeq}}>rasos</option>
+                        <option value='profundos'{{#ifeq result.profundidade_sulcos1 'profundos'}} selected{{/ifeq}}>profundos</option>
+                        <option value='voçorocas'{{#ifeq result.profundidade_sulcos1 'voçorocas'}} selected{{/ifeq}}>voçorocas</option>
+
+                    </select>
+                </td></tr>
+      
+                <tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Erosão</th></tr>
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Agente causador</label> 
+                </td><td>
+                    <select id="agente_causador2" name="agente_causador2">
+                        <option value='Não informado'{{#ifeq result.agente_causador2 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='Eólica'{{#ifeq result.agente_causador2 'Eólica'}} selected{{/ifeq}}>Eólica</option>
+                        <option value='Hídrica'{{#ifeq result.agente_causador2 'Hídrica'}} selected{{/ifeq}}>Hídrica</option>
+                        <option value='Não aparente'{{#ifeq result.agente_causador2 'Não aparente'}} selected{{/ifeq}}>Não aparente</option>
+
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Forma </label> 
+                </td><td>
+                    <select id="forma2" name="forma2">
+                        <option value='Não informado'{{#ifeq result.forma2 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='forma01'{{#ifeq result.forma2 'forma01'}} selected{{/ifeq}}>forma01</option>
+                        <option value='forma02'{{#ifeq result.forma2 'forma02'}} selected{{/ifeq}}>forma02</option>
+                        <option value='forma03'{{#ifeq result.forma2 'forma03'}} selected{{/ifeq}}>forma03</option>
+                        <option value='forma04'{{#ifeq result.forma2 'forma04'}} selected{{/ifeq}}>forma04</option>
+                        <option value='forma05'{{#ifeq result.forma2 'forma05'}} selected{{/ifeq}}>forma05</option>
+                        <option value='forma06'{{#ifeq result.forma2 'forma06'}} selected{{/ifeq}}>forma06</option>
+
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Classe </label> 
+                </td><td>
+                    <select  id="classe2" name="classe2">
+                        <option value='Não informado'{{#ifeq result.classe2 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='Não aparente'{{#ifeq result.classe2 'Não aparente'}} selected{{/ifeq}}>Não aparente</option>
+                        <option value='Ligeira'{{#ifeq result.classe2 'Ligeira'}} selected{{/ifeq}}>Ligeira</option>
+                        <option value='Moderada'{{#ifeq result.classe2 'Moderada'}} selected{{/ifeq}}>Moderada</option>
+                        <option value='Forte'{{#ifeq result.classe2 'Forte'}} selected{{/ifeq}}>Forte</option>
+                        <option value='Muito forte'{{#ifeq result.classe2 'Muito forte'}} selected{{/ifeq}}>Muito forte</option>
+                        <option value='Extremamente forte'{{#ifeq result.classe2 'Extremamente forte'}} selected{{/ifeq}}>Extremamente forte</option>
+
+                    </select>    
+                </td></tr>
+
+
+                <tr><td>
+                    <label class="col-form-label-sm">Frequência dos Sulcos</label> 
+                </td><td>
+                    <select id="frequencia_sulcos2" name="frequencia_sulcos2">
+                        <option value='Não informado'{{#ifeq result.frequencia_sulcos2 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='Ocasionais'{{#ifeq result.frequencia_sulcos2 'Ocasionais'}} selected{{/ifeq}}>Ocasionais</option>
+                        <option value='Frequentes'{{#ifeq result.frequencia_sulcos2 'Frequentes'}} selected{{/ifeq}}>Frequentes</option>
+                        <option value='Muito Frequentes'{{#ifeq result.frequencia_sulcos2 'Muito Frequentes'}} selected{{/ifeq}}>Muito Frequentes</option>
+
+                    </select>
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Profundidade dos Sulcos</label> 
+                </td><td>
+                    <select id="profundidade_sulcos2" name="profundidade_sulcos2">
+                        <option value='Não informado'{{#ifeq result.profundidade_sulcos2 'Não informado'}} selected{{/ifeq}}>Não informado</option>
+                        <option value='superficiais'{{#ifeq result.profundidade_sulcos2 'superficiais'}} selected{{/ifeq}}>superficiais</option>
+                        <option value='rasos'{{#ifeq result.profundidade_sulcos2 'rasos'}} selected{{/ifeq}}>rasos</option>
+                        <option value='profundos'{{#ifeq result.profundidade_sulcos2 'profundos'}} selected{{/ifeq}}>profundos</option>
+                        <option value='voçorocas'{{#ifeq result.profundidade_sulcos2 'voçorocas'}} selected{{/ifeq}}>voçorocas</option>
+
+                    </select>
+                </td></tr>
+    <tr align="center"><th colspan="2" bgcolor="#98bb33"></th></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Descrito e coletado por:</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="descrito_coletado_por" name="descrito_coletado_por" placeholder="Responsável pelo coleta dos dados" value="{{result.descrito_coletado_por}}"> 
+    </td></tr>
+    
+    <tr><td colspan="2">
+        <input type="submit" id="enviar" name="enviar" value="Adicionar Nova Observação" class="btn btn-success" style="width:100%;">
+    </td></tr>
+
+    </table>
+    </center>   
+    </form>
+
+</div>
+</div>

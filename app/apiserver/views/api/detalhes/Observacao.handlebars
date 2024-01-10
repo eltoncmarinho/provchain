@@ -1,0 +1,299 @@
+<script>
+        function goBack() {
+                window.history.back()
+        }
+</script>
+
+<center><h2>Detalhes da Observação: {{ result.nome }} </h2><hr>
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+<a href="/listar/Observacao"><button id="retornar" name="retornar" class="btn btn-success">Retornar a lista de Observações</button></a>
+</div>
+<table class="table table-striped">
+<tr>
+<td align="center" colspan="3"><label class="col-form-label-sm">Identificação única <b>{{ resultkey }}</b></label></td>
+</tr>
+
+{{#if projeto.nome}}
+        <tr>
+                <td><label class="col-form-label-sm">Projeto associado:</label></td>
+                <td><label class="col-form-label-sm">{{projeto.nome}}</label></td>
+        </tr>
+{{/if}} 
+
+<tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Identificação e Localização</th></tr>
+
+{{#if result.nome}}
+        <tr>
+                <td><label class="col-form-label-sm">Identificação:</label></td>
+                <td><label class="col-form-label-sm">{{result.nome}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.data_coleta}}
+        <tr>
+                <td><label class="col-form-label-sm">Data da coleta:</label></td>
+                <td><label class="col-form-label-sm">{{result.data_coleta}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.tipo_observacao}}
+        <tr>
+                <td><label class="col-form-label-sm">Tipo de Observação:</label></td>
+                <td><label class="col-form-label-sm">{{result.tipo_observacao}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.estado}}
+        <tr>
+                <td><label class="col-form-label-sm">Localização - Estado:</label></td>
+                <td><label class="col-form-label-sm">{{result.estado}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.municipio}}
+        <tr>
+                <td><label class="col-form-label-sm">Localização - Municipio:</label></td>
+                <td><label class="col-form-label-sm">{{result.municipio}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.latitude}}
+        <tr>
+                <td><label class="col-form-label-sm">Latitude:</label></td>
+                <td><label class="col-form-label-sm">{{result.latitude}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.longitude}}
+        <tr>
+                <td><label class="col-form-label-sm">Longitude:</label></td>
+                <td><label class="col-form-label-sm">{{result.longitude}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.altitude}}
+        <tr>
+                <td><label class="col-form-label-sm">Altitude (m):</label></td>
+                <td><label class="col-form-label-sm">{{result.altitude}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.sibcs_antigo}}
+        <tr>
+                <td><label class="col-form-label-sm">SiBCS antigo:</label></td>
+                <td><label class="col-form-label-sm">{{result.sibcs_antigo}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.wrb}}
+        <tr>
+                <td><label class="col-form-label-sm">WRB:</label></td>
+                <td><label class="col-form-label-sm">{{result.wrb}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.soil_taxonomy}}
+        <tr>
+                <td><label class="col-form-label-sm">Soil Taxonomy:</label></td>
+                <td><label class="col-form-label-sm">{{result.soil_taxonomy}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.datum}}
+        <tr>
+                <td><label class="col-form-label-sm">Datum:</label></td>
+                <td><label class="col-form-label-sm">{{result.datum}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.unidade_mapeamento}}
+        <tr>
+                <td><label class="col-form-label-sm">Unidade de Mapeamento:</label></td>
+                <td><label class="col-form-label-sm">{{result.unidade_mapeamento}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.localizacao}}
+        <tr>
+                <td><label class="col-form-label-sm">Localização:</label></td>
+                <td><label class="col-form-label-sm">{{result.localizacao}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.relacaoBA}}
+        <tr>
+                <td><label class="col-form-label-sm">Relação B/A:</label></td>
+                <td><label class="col-form-label-sm">{{result.relacaoBA}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.gilgai}}
+        <tr>
+                <td><label class="col-form-label-sm">Gilgai:</label></td>
+                <td><label class="col-form-label-sm">{{result.gilgai}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.classificacao_taxonomica}}
+        <tr>
+                <td><label class="col-form-label-sm">Classificação taxonômica:</label></td>
+                <td><label class="col-form-label-sm">{{result.classificacao_taxonomica}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.comentario}}
+        <tr>
+                <td><label class="col-form-label-sm">Comentários:</label></td>
+                <td><label class="col-form-label-sm">{{result.comentario}}</label></td>
+        </tr>
+{{/if}} 
+
+<tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Fatores de Formação</th></tr>
+
+{{#if result.uso_atual}}
+        <tr>
+                <td><label class="col-form-label-sm">Uso Atual:</label></td>
+                <td><label class="col-form-label-sm">{{result.uso_atual}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.formacao_geologica}}
+        <tr>
+                <td><label class="col-form-label-sm">Formação geológica:</label></td>
+                <td><label class="col-form-label-sm">{{result.formacao_geologica}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.litologia}}
+        <tr>
+                <td><label class="col-form-label-sm">Litologia:</label></td>
+                <td><label class="col-form-label-sm">{{result.litologia}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.cronologia}}
+        <tr>
+                <td><label class="col-form-label-sm">Cronologia:</label></td>
+                <td><label class="col-form-label-sm">{{result.cronologia}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.material_originario}}
+        <tr>
+                <td><label class="col-form-label-sm">Material Originário:</label></td>
+                <td><label class="col-form-label-sm">{{result.material_originario}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.koppen}}
+        <tr>
+                <td><label class="col-form-label-sm">Köppen-Geiger:</label></td>
+                <td><label class="col-form-label-sm">{{result.koppen}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.situacao_declive}}
+        <tr>
+                <td><label class="col-form-label-sm">Situação de declive:</label></td>
+                <td><label class="col-form-label-sm">{{result.situacao_declive}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.vegetação_primaria}}
+        <tr>
+                <td><label class="col-form-label-sm">Vegetação Primária:</label></td>
+                <td><label class="col-form-label-sm">{{result.vegetação_primaria}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.pedregosidade}}
+        <tr>
+                <td><label class="col-form-label-sm">Pedregosidade:</label></td>
+                <td><label class="col-form-label-sm">{{result.pedregosidade}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.rochosidade}}
+        <tr>
+                <td><label class="col-form-label-sm">Rochosidade:</label></td>
+                <td><label class="col-form-label-sm">{{result.rochosidade}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.drenagem}}
+        <tr>
+                <td><label class="col-form-label-sm">Drenagem:</label></td>
+                <td><label class="col-form-label-sm">{{result.drenagem}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.relevo_local}}
+        <tr>
+                <td><label class="col-form-label-sm">Relevo local:</label></td>
+                <td><label class="col-form-label-sm">{{result.relevo_local}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.relevo_regional}}
+        <tr>
+                <td><label class="col-form-label-sm">Relevo Regional:</label></td>
+                <td><label class="col-form-label-sm">{{result.relevo_regional}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.movimento_de_massa}}
+        <tr>
+                <td><label class="col-form-label-sm">Movimento de massa:</label></td>
+                <td><label class="col-form-label-sm">{{result.movimento_de_massa}}</label></td>
+        </tr>
+{{/if}} 
+
+<tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Erosão</th></tr>
+
+{{#if result.agente_causador1}}
+        <tr>
+                <td><label class="col-form-label-sm">Erosão - Agente causador:</label></td>
+                <td><label class="col-form-label-sm">{{result.agente_causador1}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.forma1}}
+        <tr>
+                <td><label class="col-form-label-sm">Erosão - Forma:</label></td>
+                <td><label class="col-form-label-sm">{{result.forma1}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.classe1}}
+        <tr>
+                <td><label class="col-form-label-sm">Erosão - Classe:</label></td>
+                <td><label class="col-form-label-sm">{{result.classe1}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.frequencia_sulcos1}}
+        <tr>
+                <td><label class="col-form-label-sm">Frequência dos Sulcos:</label></td>
+                <td><label class="col-form-label-sm">{{result.frequencia_sulcos1}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.profundidade_sulcos1}}
+        <tr>
+                <td><label class="col-form-label-sm">Profundidade dos Sulcos:</label></td>
+                <td><label class="col-form-label-sm">{{result.profundidade_sulcos1}}</label></td>
+        </tr>
+{{/if}} 
+
+<tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Erosão</th></tr>
+
+{{#if result.agente_causador2}}
+        <tr>
+                <td><label class="col-form-label-sm">Erosão - Agente causador:</label></td>
+                <td><label class="col-form-label-sm">{{result.agente_causador2}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.forma2}}
+        <tr>
+                <td><label class="col-form-label-sm">Erosão - Forma:</label></td>
+                <td><label class="col-form-label-sm">{{result.forma2}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.classe2}}
+        <tr>
+                <td><label class="col-form-label-sm">Erosão - Classe:</label></td>
+                <td><label class="col-form-label-sm">{{result.classe2}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.frequencia_sulcos2}}
+        <tr>
+                <td><label class="col-form-label-sm">Frequência dos Sulcos:</label></td>
+                <td><label class="col-form-label-sm">{{result.frequencia_sulcos2}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.profundidade_sulcos2}}
+        <tr>
+                <td><label class="col-form-label-sm">Profundidade dos Sulcos:</label></td>
+                <td><label class="col-form-label-sm">{{result.profundidade_sulcos2}}</label></td>
+        </tr>
+{{/if}} 
+{{#if result.descrito_coletado_por}}
+        <tr>
+                <td><label class="col-form-label-sm">Descrito e coletado por:</label></td>
+                <td><label class="col-form-label-sm">{{result.descrito_coletado_por}}</label></td>
+        </tr>
+{{/if}}
+
+
+</table>
+
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-center" style="width:100%;">
+<a href="/api/consulta/Proveniencia/{{result.key_proveniencia}}"><button class="btn btn-success">Metadados do Registro</button></a>
+</div>

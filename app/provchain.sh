@@ -2,13 +2,12 @@
 
 clear 
 
-cho ">>>>> Início de Serviço - Criar canal e instalar nele o Contrato Inteligente"
+echo ">>>>> Início de Serviço - Criar canal e instalar nele o Contrato Inteligente"
 
 export MSYS_NO_PATHCONV=1
 
 set -e
 starttime=$(date +%s)
-echo ">>>>> Início de Serviço " 
 
 # Remover as identidades das carteiras
 rm -rf apiserver/wallet/*
@@ -18,8 +17,10 @@ if lsof -t -i:8080; then
     kill -9 $(lsof -t -i:8080)
     echo ">> Porta 8080 liberada"    
 else 
-    kill -9 $(lsof -t -i:80)
-    echo ">> Porta 80 liberada"    
+    if lsof -t -i:80; then
+        kill -9 $(lsof -t -i:80)
+        echo ">> Porta 80 liberada"    
+    fi    
 fi  
 
 export RAIZ=/home/provchain/

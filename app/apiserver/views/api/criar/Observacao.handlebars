@@ -1,0 +1,632 @@
+<script style="text/javascript">
+    function cidades(municipio){
+        $('#municipio option').remove();
+        try {
+            var estado = document.getElementById("estado").value;    
+        } catch (error) {  
+            var estado = municipio.estado;
+        }
+        if(estado == "Capital") {
+            {{!-- $('#municipio').append('<option>Selecione um município</option>'); --}}
+            $('#municipio').append('<option value="Capital">Capital</option>');
+        } else {
+            $.getJSON("/json/estados_cidades.json",function(data){
+                $('#municipio').append('<option value="Capital">Selecione um município</option>');
+                $.each(data,function(key,value){
+                    if(value.sigla == estado || value.sigla == municipio.municipio){
+                        $.each(value.cidades,function(chave,dado){
+                            if(dado == municipio.municipio ){
+                                $('#municipio').append('<option selected value="' + dado + '">' + dado + '</option>');
+                            } else {
+                                $('#municipio').append('<option value="' + dado + '">' + dado + '</option>');
+                            }  
+                        });
+                    }
+                });
+            })
+        }
+    }
+
+    function estados(pais){
+        $('#municipio option').remove();
+        $('#estado option').remove();
+        if(pais.pais == "Brasil" || pais.value == "Brasil" || pais == "Brasil"){
+            $.getJSON("/json/estados_cidades.json",function(data){
+                $('#estado').append('<option value="">Selecione um Estado</option>');
+                $.each(data,function(key,value){
+                        if(value.sigla == pais.estado || value.sigla == pais.value ){
+                            $('#estado').append('<option selected value="'+value.sigla+'">'+value.nome+'</option>');
+                        } else {
+                            $('#estado').append('<option value="'+value.sigla+'">'+value.nome+'</option>');
+                        }    
+                    })
+                });
+        } else {
+            $('#estado').append('<option>Selecione um Estado</option>');
+            $('#estado').append('<option value="Capital">Capital</option>');
+        }
+    }
+
+    function paises(pais){
+        $('#municipio option').remove();
+        $('#estado option').remove();
+        $('#pais option').remove();
+        $.getJSON("/json/paises.json",function(data){
+            $('#pais').append('<option>Selecione um País</option>');
+            $.each(data,function(key,value){
+                if(value.nome_pais == pais.pais || value.nome_pais == pais.value ){
+                    $('#pais').append('<option selected value="' + value.nome_pais + '">' + value.nome_pais + '</option>');
+                } else {
+                    $('#pais').append('<option value="' + value.nome_pais + '">' + value.nome_pais + '</option>');
+                }    
+            });
+        })
+    }
+    var p = {"pais":"Brasil","estado":"RJ", "municipio": "Rio de Janeiro"};
+    paises(p);
+    estados(p);
+    cidades(p);
+</script>
+
+<center><h1>Inclusão de Nova Observação</h1></center>
+
+    {{#each erros}}
+        <div class="alert alert-danger">{{ texto }}</div>
+    {{else}}
+
+    {{/each}}
+
+<div class="card">
+    <div class="card-body">
+
+    <form name="criarObservacao" action="/api/criar_Observacao" method="POST">
+
+    <center>
+    <table class="table table-striped">
+<!--
+    <tr class="table-success" align="center"><th colspan="2" bgcolor="bla">Projeto associado</th></tr>
+    <tr><td>
+        <label class="col-form-label-sm">Projeto associado</label> 
+    </td><td>
+        <select  name="keyProjeto" required>
+            <option value="" disabled selected>Selecione ...</option> 
+            {{#each projetos}}
+                <option value="{{Key}}">{{Record.nome}}</option>
+            {{else}}
+
+            {{/each}}
+        </select>
+    </td></tr>
+-->
+    <tr><td>
+        <label class="col-form-label-sm">Projeto associado</label> 
+    </td><td>
+        <input type="hidden" name="key_projeto" id="key_projeto" value="{{projeto.key}}">
+        {{projeto.nome}}
+    </td></tr>
+
+    <tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Identificação e Localização</th></tr>
+
+
+    <tr><td>
+        <label class="col-form-label-sm">Identificação</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="nome" name="nome" placeholder="Identificação da Observacao" required>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Data da coleta</label> 
+    </td><td>
+        <input type="date" id="data_Coleta" name="data_Coleta" placeholder="Data de coleta" value="{{hoje}}"> 
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Tipo de Observação</label> 
+    </td><td>
+        <select id="tipo_observacao" name="tipo_observacao">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Perfil">Perfil/Trincheira</option>
+            <option value="Tradagem">Tradagem</option>            
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Localização - Estado</label> 
+    </td><td>
+        <select class="form-control-sm" id="estado" name="estado" onchange="cidades(this)" required></select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Localização - Municipio</label> 
+    </td><td>
+        <select class="form-control-sm" id="municipio" name="municipio" required></select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Latitude</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="latitude" name="latitude" placeholder="Latitude">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Longitude</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="longitude" name="longitude" placeholder="Longitude">
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Altitude (m)</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="altitude" name="altitude" placeholder="Altitude">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">SiBCS antigo</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="sibcs_antigo" name="sibcs_antigo" placeholder="SiBCS antigo">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">WRB</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="wrb" name="wrb" placeholder="World Reference Base">
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Soil Taxonomy</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="soil_taxonomy" name="soil_taxonomy" placeholder="Soil Taxonomy">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Datum </label> 
+    </td><td>
+        <select  id="datum" name="datum">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="SIRGAS 2000">SIRGAS 2000</option>
+            <option value="Outro">Outro</option>            
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Unidade de Mapeamento</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="unidade_mapeamento" name="unidade_mapeamento" placeholder="Unidade de Mapeamento">
+    </td></tr>
+    
+    <tr><td>
+        <label class="col-form-label-sm">Localização</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="localizacao" name="localizacao" placeholder="Localização">     
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Relação B/A</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="relacaoBA" name="relacaoBA" placeholder="Relação B/A">     
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Gilgai</label> 
+    </td><td>
+        <select id="gilgai" name="gilgai">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>        
+        <label class="col-form-label-sm">Classificação taxonômica</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="classificacao_taxonomica" name="classificacao_taxonomica" placeholder="Classificação Taxonômica">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Comentários</label> 
+    </td><td>
+        <textarea id="comentario" name="comentario" cols="50" rows="5" placeholder="Deixe aqui seus comentários"></textarea>
+    </td></tr>
+
+
+    <tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Fatores de Formação</th></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Uso Atual</label> 
+    </td><td>
+        <select id="uso_atual" name="uso_atual">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Ocupação habitacional">Ocupação habitacional</option>
+            <option value="Área agrícola perene">Área agrícola perene</option>
+            <option value="Área agrícola temporária">Área agrícola temporária</option>
+            <option value="Área de pastagem plantada">Área de pastagem plantada</option>
+            <option value="Área de pastagem degradada">Área de pastagem degradada</option>
+            <option value="Reserva natural">Reserva natural</option>
+            <option value="Campo Antrópico">Campo Antrópico</option>
+            <option value="Solo Exposto">Solo Exposto</option>
+            <option value="Vegetação Nativa">Vegetação Nativa</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Formação geológica</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="formacao_geologica" name="formacao_geologica" placeholder="Formação Geológica">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Litologia</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="litologia" name="litologia" placeholder="Litologia">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Cronologia</label> 
+    </td><td>
+        <select  id="cronologia" name="cronologia">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Holoceno">Holoceno</option>
+            <option value="Pleistoceno">Pleistoceno</option>
+            <option value="Piloceno">Piloceno</option>
+            <option value="Mioceno">Mioceno</option>
+            <option value="Oligoceno">Oligoceno</option>
+            <option value="Eoceno">Eoceno</option>
+            <option value="Paleoceno">Paleoceno</option>
+            <option value="Cretáceo">Cretáceo</option>
+            <option value="Jurássico">Jurásico</option>
+            <option value="Triássico">Triássico</option>
+            <option value="Permiano">Permiano</option>
+            <option value="Carbonífero">Carbonífero</option>
+            <option value="Devoniano">Devoniano</option>
+            <option value="Siluriano">Siluriano</option>
+            <option value="Ordoviciano">Ordoviciano</option>
+            <option value="Cambriano">Cambriano</option>
+            <option value="Proterozóico">Proterozóico</option>
+            <option value="Arqueozóico">Arqueozóico</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Material Originário</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="material_originario" name="material_originario" placeholder="Material Originário">
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Köppen-Geiger</label> 
+    </td><td>
+        <select id="koppen" name="koppen">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Af">Af</option>
+            <option value="Am">Am</option>
+            <option value="Aw">Aw</option>
+            <option value="As">As</option>
+            <option value="BSh">BSh</option>
+            <option value="BSk">BSk</option>
+            <option value="BWh">BWh</option>
+            <option value="BWk">BWk</option>
+            <option value="Cfa">Cfa</option>
+            <option value="Cfb">Cfb</option>
+            <option value="Cfc">Cfc</option>
+            <option value="Cwa">Cwa</option>
+            <option value="Cwb">Cwb</option>
+            <option value="Cwc">Cwc</option>
+            <option value="Csa">Csa</option>
+            <option value="Csb">Csb</option>
+            <option value="Csc">Csc</option>
+            <option value="Dfa">Dfa</option>
+            <option value="Dfb">Dfb</option>
+            <option value="Dfc">Dfc</option>
+            <option value="Dfd">Dfd</option>
+            <option value="Dwa">Dwa</option>
+            <option value="Dwb">Dwb</option>
+            <option value="Dwc">Dwc</option>
+            <option value="Dwd">Dwd</option>
+            <option value="ET">ET</option>
+            <option value="EF">EF</option>
+            <option value="EM">EM</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Situação de declive</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="situacao_declive" name="situacao_declive" placeholder="Situação de declive">
+    </td></tr>    
+
+    <tr><td>
+        <label class="col-form-label-sm">Vegetação Primária</label> 
+    </td><td>
+        <select  id="vegetacao_primaria" name="vegetacao_primaria">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Floresta equatorial">Floresta equatorial</option>
+            <option value="Floresta tropical">Floresta tropical</option>
+            <option value="Floresta subtropical">Floresta subtropical</option>
+            <option value="Vegetação de restinga">Vegetação de restinga</option>
+            <option value="Cerrado equatorial">Cerrado equatorial</option>
+            <option value="Cerrado e cerradão tropcial">Cerrado e cerradão tropcial</option>
+            <option value="Caatinga">Caatinga</option>
+            <option value="Campo">Campo</option>
+            <option value="Outras formações">Outras formações</option>
+        </select>
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Pedregosidade</label> 
+    </td><td>
+        <select  id="pedregosidade" name="pedregosidade">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Não pedregoso">Não pedregoso</option>
+            <option value="Não pedregoso a ligeiramente pedregoso">Não pedregoso a ligeiramente pedregoso</option>
+            <option value="Ligeiramente pedregoso">Ligeiramente pedregoso</option>
+            <option value="Ligeiramente a moderadamente pedregoso">Ligeiramente a moderadamente pedregoso</option>
+            <option value="Moderadamente pedregoso">Moderadamente pedregoso</option>
+            <option value="Moderadamente pedregoso a pedregoso">Moderadamente pedregoso a pedregoso</option>
+            <option value="Pedregoso">Pedregoso</option>
+            <option value="Pedregoso a muito pedregoso">Pedregoso a muito pedregoso</option>
+            <option value="Muito pedregoso">Muito pedregoso</option>
+            <option value="Muito pedregoso a extremamente pedregoso">Muito pedregoso a extremamente pedregoso</option>
+            <option value="Extremamente pedregoso">Extremamente pedregoso</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Rochosidade</label> 
+    </td><td>
+        <select id="rochosidade" name="rochosidade">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Não rochoso">Não rochoso</option>
+            <option value="Não rochoso a ligeiramente rochoso">Não rochoso a ligeiramente rochoso</option>
+            <option value="Ligeiramente rochoso">Ligeiramente rochoso</option>
+            <option value="Ligeiramente a moderadamente rochoso">Ligeiramente a moderadamente rochoso</option>
+            <option value="Moderadamente rochoso">Moderadamente rochoso</option>
+            <option value="Moderadamente rochoso a rochoso">Moderadamente rochoso a rochoso</option>
+            <option value="Rochoso">Rochoso</option>
+            <option value="Rochoso a muito rochoso">Rochoso a muito rochoso</option>
+            <option value="Muito rochoso">Muito rochoso</option>
+            <option value="Muito rochoso a extremamente rochoso">Muito rochoso a extremamente rochoso</option>
+            <option value="Extremamente rochoso">Extremamente rochoso</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Drenagem</label> 
+    </td><td>
+        <select id="drenagem" name="drenagem">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Extremamente drenado">Extremamente drenado</option>
+            <option value="Extremamente a fortemente drenado">Extremamente a fortemente drenado</option>
+            <option value="Fortemente drenado">Fortemente drenado</option>
+            <option value="Fortemente a acentuadamente drenado">Fortemente a acentuadamente drenado</option>
+            <option value="Acentuadamente drenado">Acentuadamente drenado</option>
+            <option value="Bem drenado">Bem drenado</option>
+            <option value="Bem drenado a moderadamente drenado">Bem drenado a moderadamente drenado</option>
+            <option value="Moderadamente drenado">Moderadamente drenado</option>
+            <option value="Moderadamente a imperfeitamente drenado">Moderadamente a imperfeitamente drenado</option>
+            <option value="Imperfeitamente drenado">Imperfeitamente drenado</option>
+            <option value="Imperfeitamente a mal drenado">Imperfeitamente a mal drenado</option>
+            <option value="Mal drenado">Mal drenado</option>
+            <option value="Mal a muito mal drenado">Mal a muito mal drenado</option>
+            <option value="Muito mal drenado">Muito mal drenado</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Relevo local</label> 
+    </td><td>
+        <select id="relevo_local" name="relevo_local">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Plano">Plano</option>
+            <option value="Plano a suave ondulado">Plano a suave ondulado</option>
+            <option value="Suave ondulado">Suave ondulado</option>
+            <option value="Suave ondulado a ondulado">Suave ondulado a ondulado</option>
+            <option value="Ondulado">Ondulado</option>
+            <option value="Ondulado a forte ondulado">Ondulado a forte ondulado</option>
+            <option value="Forte ondulado">Forte ondulado</option>
+            <option value="Forte ondulado a montanhoso">Forte ondulado a montanhoso</option>
+            <option value="Montanhoso a escarpado">Montanhoso a escarpado</option>
+            <option value="Escarpado">Escarpado</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Relevo Regional</label> 
+    </td><td>
+        <select  id="relevo_regional" name="relevo_regional">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Plano">Plano</option>
+            <option value="Plano a suave ondulado">Plano a suave ondulado</option>
+            <option value="Suave ondulado">Suave ondulado</option>
+            <option value="Suave ondulado a ondulado">Suave ondulado a ondulado</option>
+            <option value="Ondulado">Ondulado</option>
+            <option value="Ondulado a forte ondulado">Ondulado a forte ondulado</option>
+            <option value="Forte ondulado">Forte ondulado</option>
+            <option value="Forte ondulado a montanhoso">Forte ondulado a montanhoso</option>
+            <option value="Montanhoso a escarpado">Montanhoso a escarpado</option>
+            <option value="Escarpado">Escarpado</option>
+        </select>    
+    </td></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Movimento de massa</label> 
+    </td><td>
+        <select  id="movimento_de_massa" name="movimento_de_massa">
+            <option value="Não informado"  selected>Selecione ...</option>
+            <option value="Não aparente">Não aparente</option>
+            <option value="Rastejo">Rastejo</option>
+            <option value="Escorregamentos">Escorregamentos</option>
+            <option value="Corrida de massa">Corrida de massa</option>
+            <option value="Queda de blocos">Queda de blocos</option>
+        </select>    
+    </td></tr>
+
+
+                <tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Erosão</th></tr>                
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Agente causador</label> 
+                </td><td>
+                    <select  id="agente_causador1" name="agente_causador1">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="Eólica">Eólica</option>
+                        <option value="Hídrica">Hídrica</option>
+                        <option value="Não aparente">Não aparente</option>
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Forma </label> 
+                </td><td>
+                    <select  id="forma1" name="forma1">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="forma01">Forma 01</option>
+                        <option value="forma02">Forma 02</option>
+                        <option value="forma03">Forma 03</option>
+                        <option value="forma04">Forma 04</option>
+                        <option value="forma05">Forma 05</option>
+                        <option value="forma06">Forma 06</option>
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Classe </label> 
+                </td><td>
+                    <select  id="classe1" name="classe1">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="Não aparente">Não aparente</option>
+                        <option value="Ligeira">Ligeira</option>
+                        <option value="Moderada">Moderada</option>
+                        <option value="Forte">Forte</option>
+                        <option value="Muito forte">Muito forte</option>
+                        <option value="Extremamente forte">Extremamente forte</option>
+                    </select>    
+                </td></tr>
+
+
+                <tr><td>
+                    <label class="col-form-label-sm">Frequência dos Sulcos</label> 
+                </td><td>
+                    <select  id="frequencia_sulcos1" name="frequencia_sulcos1">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="Ocasionais">Ocasionais</option>
+                        <option value="Frequentes">Frequentes</option>
+                        <option value="Muito Frequentes">Muito Frequentes</option>
+                    </select>
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Profundidade dos Sulcos</label> 
+                </td><td>
+                    <select  id="profundidade_sulcos1" name="profundidade_sulcos1">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="superficiais">Superficiais</option>
+                        <option value="rasos">Rasos</option>
+                        <option value="profundos">Profundos</option>
+                        <option value="voçorocas">Voçorocas</option>
+                    </select>
+                </td></tr>
+      
+                <tr class="table-success" align="center"><th colspan="2" bgcolor="#98bb33">Erosão</th></tr>
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Agente causador</label> 
+                </td><td>
+                    <select  id="agente_causador2" name="agente_causador2">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="Eólica">Eólica</option>
+                        <option value="Hídrica">Hídrica</option>
+                        <option value="Não aparente">Não aparente</option>
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Forma </label> 
+                </td><td>
+                    <select  id="forma2" name="forma2">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="forma01">Forma 01</option>
+                        <option value="forma02">Forma 02</option>
+                        <option value="forma03">Forma 03</option>
+                        <option value="forma04">Forma 04</option>
+                        <option value="forma05">Forma 05</option>
+                        <option value="forma06">Forma 06</option>
+                    </select>    
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Erosão - Classe </label> 
+                </td><td>
+                    <select id="classe2" name="classe2">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="Não aparente">Não aparente</option>
+                        <option value="Ligeira">Ligeira</option>
+                        <option value="Moderada">Moderada</option>
+                        <option value="Forte">Forte</option>
+                        <option value="Muito forte">Muito forte</option>
+                        <option value="Extremamente forte">Extremamente forte</option>
+                    </select>    
+                </td></tr>
+
+
+                <tr><td>
+                    <label class="col-form-label-sm">Frequência dos Sulcos</label> 
+                </td><td>
+                    <select id="frequencia_sulcos2" name="frequencia_sulcos2">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="Ocasionais">Ocasionais</option>
+                        <option value="Frequentes">Frequentes</option>
+                        <option value="Muito Frequentes">Muito Frequentes</option>
+                    </select>
+                </td></tr>
+
+                <tr><td>
+                    <label class="col-form-label-sm">Profundidade dos Sulcos</label> 
+                </td><td>
+                    <select id="profundidade_sulcos2" name="profundidade_sulcos2">
+                        <option value="Não informado"  selected>Selecione ...</option>
+                        <option value="superficiais">Superficiais</option>
+                        <option value="rasos">Rasos</option>
+                        <option value="profundos">Profundos</option>
+                        <option value="voçorocas">Voçorocas</option>
+                    </select>
+                </td></tr>
+<!--
+                </table>
+-->                
+        </td>
+    </tr>
+
+    <tr align="center"><th colspan="2" bgcolor="#98bb33"></th></tr>
+
+    <tr><td>
+        <label class="col-form-label-sm">Descrito e coletado por:</label> 
+    </td><td>
+        <input type="text" size="50" maxlength="50" id="descrito_coletado_por" name="descrito_coletado_por" placeholder="Responsável pelo coleta dos dados" value="{{user_name}}"> 
+    </td></tr>
+    
+    <tr><td colspan="2">
+        <input type="submit" id="enviar" name="enviar" value="Adicionar Nova Observação" class="btn btn-success" style="width:100%;">
+    </td></tr>
+
+    </table>
+    </center>   
+    </form>
+
+</div>
+</div>
+<script style="text/javascript">
+function getLocation() {
+    if (navigator.geolocation) {   
+        navigator.geolocation.getCurrentPosition(showPosition, showErrors); 
+    }
+}    
+function showPosition (position) {
+    $("#latitude").val(position.coords.latitude);
+    $("#longitude").val(position.coords.longitude);
+    $("#altitude").val(position.coords.altitude);
+}    
+function showErrors (err) {
+    $("#latitude").val("");
+    $("#longitude").val("");
+    $("#altitude").val("");
+}    
+getLocation();
+</script>
