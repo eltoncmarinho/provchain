@@ -42,14 +42,14 @@ fi
 # Iniciar Rede e Blockchain
 # lançamento da rede; criação de um canal e junção do nó ao canal
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Tira a rede do ar, se estiver no ar..."
-$RAIZ/test-network/network.sh down
+$RAIZ/app/fabric-samples/test-network/network.sh down
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Cria o canal com banco de estado CouchDB"
-$RAIZ/test-network/network.sh up createChannel -ca -s couchdb
+$RAIZ/app/fabric-samples/test-network/network.sh up createChannel -ca -s couchdb
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Instala a chaincode em todos os nós do canal mychannel. Aqui é o foco da PROVChain" 
 CC_SRC_LANGUAGE=${1:-"javascript"}
 CC_SRC_LANGUAGE=`echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:]`
 CC_SRC_PATH="../chaincode/provchain/javascript/"
-$RAIZ/test-network/network.sh deployCC -ccn provchain -ccv 1 -cci inicializarLivroRazao -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
+$RAIZ/app/fabric-samples/test-network/network.sh deployCC -ccn provchain -ccv 1 -cci inicializarLivroRazao -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
 
 # Habilitar usuarios e subir aplicativo
 pushd $RAIZ/app/apiserver
