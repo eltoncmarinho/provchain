@@ -12,7 +12,7 @@ starttime=$(date +%s)
 # Remover as identidades das carteiras
 rm -rf apiserver/wallet/*
 
-echo "Liberando porta"
+#echo "Liberando porta"
 if lsof -t -i:8080; then
     kill -9 $(lsof -t -i:8080)
     echo ">> Porta 8080 liberada"    
@@ -23,16 +23,20 @@ else
     fi    
 fi  
 
-export RAIZ=/home/provchain/
+export RAIZ=/home/provchain
 
 # Remover bloco genesis caso exista
 if $RAIZ/test-network/channel-artifacts/mychannel.block; then 
-    rm -f $RAIZ/test-network/channel-artifacts/mychannel.block
+    pushd $RAIZ/test-network/channel-artifacts/
+        sudo rm mychannel.block
+    popd    
 fi   
 
 # Remover package da chaincode caso exista
-if $RAIZ/test-network/provchain.tar.gz; then 
-    rm -f $RAIZ/test-network/provchain.tar.gz
+if $RAIZ/test-network; then 
+    pushd $RAIZ/test-network/
+        sudo rm provchain.tar.gz
+    popd
 fi
 
 # Iniciar Rede e Blockchain
@@ -51,7 +55,10 @@ $RAIZ/test-network/network.sh deployCC -ccn provchain -ccv 1 -cci inicializarLiv
 pushd $RAIZ/app/apiserver
     node enrollAdmin.js
     node registerUser.js
-    #node apiserver.js &
+popd
+
+pushd $RAIZ/app/apiserver
+    #node apiserver.js 
     nohup node apiserver.js &
 popd     
 

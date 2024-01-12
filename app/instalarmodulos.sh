@@ -2,7 +2,7 @@
 
 clear 
 
-cho ">>>>> Início de Serviço - Instalar Módulos"
+echo ">>>>> Início de Serviço - Instalar Módulos"
 
 pushd /home/provchain/app/apiserver
     npm init 

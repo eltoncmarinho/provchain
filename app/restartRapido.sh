@@ -12,8 +12,11 @@ fi
 echo "Subir aplicativo"
 
 pushd /home/provchain/app/apiserver
-    node apiserver.js &
-    #nohup node apiserver.js &
+    if $1; then 
+        nohup node apiserver.js &
+    else 
+        node apiserver.js
+    fi
 popd     
 #nohup node /home/provchain/app/apiserver/apiserver.js & 
 #node /home/provchain/app/apiserver/apiserver.js &
