@@ -7,7 +7,7 @@
 #Limpar a tela
 clear
 
-cho ">>>>> Início de Serviço - Instalar Pré-requisitos"
+echo ">>>>> Início de Serviço - Instalar Pré-requisitos"
 
 #Instalando curl
 apt install curl
@@ -30,7 +30,9 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg 
 NODE_MAJOR=20
 ARCH=amd64
 echo "deb [arch=$ARCH signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+
 apt update
+
 apt install nodejs -y
 
 # Instalando npm
@@ -39,8 +41,8 @@ npm install -g npm@latest
 echo ">>>>> Atualizando a versão baixada do fabric-samples"
 
 #Instalando docker
-systemctl stop docker
-rm -rf /var/lib/docker  
+# systemctl stop docker
+# rm -rf /var/lib/docker  
 
 apt install docker
 apt install docker-compose
@@ -69,14 +71,14 @@ apt -y install golang-go
 #Instalando jq
 apt install jq
 
-export RAIZ=/home/provchain/
+# export RAIZ=/home/provchain/
 
-echo ">>>>> Ajustando variáveis de ambiente"
-whereis go
-export GOPATH=/usr/bin/go   #Alterar de acordo com a instalação do GO
-export PATH=$PATH:$GOPATH
-export PATH=$RAIZ/bin:$PATH
-export FABRIC_CFG_PATH=$RAIZ/config/
+# echo ">>>>> Ajustando variáveis de ambiente"
+# whereis go
+# export GOPATH=/usr/bin/go   #Alterar de acordo com a instalação do GO
+# export PATH=$PATH:$GOPATH
+# export PATH=$RAIZ/bin:$PATH
+# export FABRIC_CFG_PATH=$RAIZ/config/
 
 #Atualização
 nvm install 20.10.0
@@ -96,4 +98,4 @@ echo ">> docker-compose --version: " && docker-compose --version
 echo ">> go version" && go version
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
-cho ">>>>> Fim de Serviço - Instalar Pré-requisitos"
+echo ">>>>> Fim de Serviço - Instalar Pré-requisitos"

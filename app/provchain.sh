@@ -23,18 +23,26 @@ else
     fi    
 fi  
 
+
+echo ">>>>> Ajustando variáveis de ambiente"
+# whereis go
+export GOPATH=/usr/bin/go   
+export PATH=$PATH:$GOPATH
+export PATH=/home/provchain/bin:$PATH
+export FABRIC_CFG_PATH=/home/provchain/config/
+
 export RAIZ=/home/provchain
 
 # Remover bloco genesis caso exista
-if $RAIZ/test-network/channel-artifacts/mychannel.block; then 
-    pushd $RAIZ/test-network/channel-artifacts/
+if $RAIZ/app/fabric-samples/test-network/mychannel.block; then 
+    pushd $RAIZ/app/fabric-samples/test-network/channel-artifacts/
         sudo rm mychannel.block
     popd    
 fi   
 
 # Remover package da chaincode caso exista
-if $RAIZ/test-network; then 
-    pushd $RAIZ/test-network/
+if $RAIZ/app/fabric-samples/test-network/provchain.tar.gz; then 
+    pushd $RAIZ/app/fabric-samples/test-network/
         sudo rm provchain.tar.gz
     popd
 fi
@@ -48,7 +56,7 @@ $RAIZ/app/fabric-samples/test-network/network.sh up createChannel -ca -s couchdb
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Instala a chaincode em todos os nós do canal mychannel. Aqui é o foco da PROVChain" 
 CC_SRC_LANGUAGE=${1:-"javascript"}
 CC_SRC_LANGUAGE=`echo "$CC_SRC_LANGUAGE" | tr [:upper:] [:lower:]`
-CC_SRC_PATH="../chaincode/provchain/javascript/"
+CC_SRC_PATH="/home/provchain/chaincode/provchain/javascript/lib/"
 $RAIZ/app/fabric-samples/test-network/network.sh deployCC -ccn provchain -ccv 1 -cci inicializarLivroRazao -ccl ${CC_SRC_LANGUAGE} -ccp ${CC_SRC_PATH}
 
 # Habilitar usuarios e subir aplicativo
@@ -69,5 +77,5 @@ Total setup execution time : $(($(date +%s) - starttime)) secs ...
 
 =====================================================================
 
-cho ">>>>> Fim de Serviço - Criar canal e instalar nele o Contrato Inteligente"
+echo ">>>>> Fim de Serviço - Criar canal e instalar nele o Contrato Inteligente"
 EOF
