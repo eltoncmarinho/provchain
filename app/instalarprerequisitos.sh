@@ -9,93 +9,119 @@ clear
 
 echo ">>>>> Início de Serviço - Instalar Pré-requisitos"
 
-#Instalando curl
-apt install curl
+echo ">>>>> Instalando npm"
+if which npm; then
+    which npm 
+else     
+    sudo apt install npm
+    npm install -g npm@latest
+fi    
+echo ">> npm --version" && npm --version
 
-apt update
+echo " "
+echo ">>>>> Instalando curl"
+if which curl; then
+    which curl
+else 
+    sudo apt-get install curl
+fi    
+echo ">> curl --version" && curl --version
 
-#Instalando nvm
-apt install build-essential checkinstall libssl-dev
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
-#As vezes é necessário sair e voltar do terminal para as configurações surtirem efeito
-#Instalando nvm
-#nvm ls-remote
-nvm install 20.10.0
+echo " "
+echo ">>>>> Instalando GO" 
+if which go; then
+    which go
+else    
+    sudo apt -y install golang-go
+fi
+echo ">> go version" && go version
 
-#Instalando nodejs"
-apt update
-apt install -y ca-certificates curl gnupg
-mkdir -p /etc/apt/keyrings
-curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-NODE_MAJOR=20
-ARCH=amd64
-echo "deb [arch=$ARCH signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+echo " "
+echo ">>>>> Instalando nvm"
+if which nvm; then
+    which nvm
+else     
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    #As vezes é necessário sair e voltar do terminal para as configurações surtirem efeito
+    #nvm ls-remote
+    nvm install 20.10.0
+fi    
+echo ">> nvm --version" && nvm --version
 
-apt update
-
-apt install nodejs -y
-
-# Instalando npm
-npm install -g npm@latest
-
-echo ">>>>> Atualizando a versão baixada do fabric-samples"
-
-#Instalando docker
-# systemctl stop docker
-# rm -rf /var/lib/docker  
-
-apt install docker
-apt install docker-compose
-
-#Instalando docker versao 2.1.1 1.4.7
-#mkdir -p /usr/local/lib/docker/cli-plugins
-#curl -SL https://github.com/docker/compose/releases/download/v2.1.1/docker-compose-linux-x86_64 -o /usr/local/lib/docker/cli-plugins/docker-compose
-#chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+# Softwares auxiliares
+echo " "
+echo ">>>>> Instalando nodejs"
+if which nodejs; then 
+    which nodejs
+else     
+    apt install -y ca-certificates curl gnupg
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+    NODE_MAJOR=20
+    ARCH=amd64
+    echo "deb [arch=$ARCH signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
+    apt update
+    sudo apt install nodejs -y
+fi
+echo ">> nodejs --version" && nodejs --version
+echo ">> node --version" && node --version
 
 
-#Instalando fabric-samples & images
-curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.4.0 1.5.2
-#curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.1.1 1.4.7 0.4.20
 
-systemctl start docker
-systemctl enable docker
-usermod -a -G docker root
+echo " "
+echo ">>>>> Instalando jq"
+if which jq; then
+    which jq
+else     
+    sudo apt install jq
+fi    
 
-#Instalando GO 
-#snap install go  --classic
-#rm -rf /usr/local/go 
-#tar -C /usr/local -xzf /home/go1.21.5.linux-amd64.tar.gz
+echo " "
+echo ">>>>> Removendo instalaçãoes docker, caso hajam"
+if which docker; then
+    which docker
+else
+    systemctl stop docker
+    docker rmi -f $(docker images -q)
+    sudo apt remove docker-compose
+    sudo apt update 
+    sudo apt upgrade
+    sudo apt autoremove
+fi
 
-apt -y install golang-go
+echo " "
+echo ">>>>> Instalando docker"
+sudo apt -y install docker
+sudo apt -y install docker-compose
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -a -G docker root
 
-#Instalando jq
-apt install jq
+echo ">>>>> Instalando fabric-samples & images"
+sudo curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.4.0 1.5.2
 
-# export RAIZ=/home/provchain/
+echo " "
+echo ">>>>> Ajustando variáveis de ambiente"
+export RAIZ=/home/provchain/
+export GOPATH=$(which go)   
+export PATH=$PATH:$GOPATH
+export PATH=$RAIZ/bin:$PATH
+export FABRIC_CFG_PATH=$RAIZ/config/
 
-# echo ">>>>> Ajustando variáveis de ambiente"
-# whereis go
-# export GOPATH=/usr/bin/go   #Alterar de acordo com a instalação do GO
-# export PATH=$PATH:$GOPATH
-# export PATH=$RAIZ/bin:$PATH
-# export FABRIC_CFG_PATH=$RAIZ/config/
-
-#Atualização
-nvm install 20.10.0
-
-apt update 
-apt upgrade
+sudo apt update 
+sudo apt upgrade
 
 clear
 echo ">>>>>>>> Verificando pré-requisitos >>>>>>>>>>>>>>>>>>"
 echo ">> curl --version" && curl --version
-echo ">> nvm --version" && nvm --version
 echo ">> nodejs --version" && nodejs --version
 echo ">> node --version" && node --version
 echo ">> npm --version" && npm --version
 echo ">> docker --version: " && docker --version
 echo ">> docker-compose --version: " && docker-compose --version
 echo ">> go version" && go version
+echo ">> nvm --version" && nvm --version
+echo ">> npm --version" && npm --version
 echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
 
 echo ">>>>> Fim de Serviço - Instalar Pré-requisitos"

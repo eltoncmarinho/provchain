@@ -151,11 +151,11 @@ def exibe_proveniencia():
 
     # Gerando grafico de proveniencia  
     img = prov_to_dot(d0)
-    img.write('/home/blockchain/scripts_ProvChain/GrafoDeProveniencia.pdf', format='pdf')
+    img.write('/home/provchain/scripts_ProvChain/imagens/GrafoDeProveniencia.pdf', format='pdf')
 
     # Exibindo grafico
     chrome  = webbrowser.get("google-chrome")
-    chrome.open_new_tab("/home/blockchain/scripts_ProvChain/GrafoDeProveniencia.pdf")
+    chrome.open_new_tab("/home/provchain/scripts_ProvChain/imagens/GrafoDeProveniencia.pdf")
 
 
 exibe_proveniencia()

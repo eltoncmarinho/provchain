@@ -18,7 +18,7 @@ def exibe_proveniencia():
     d0.add_namespace('atividade', 'atividade')
 
     # Adicionando atividade
-    inclusao = d0.activity('atividade: Incluir dados em uma classe', other_attributes= {'atividade:Ambiente':'PROVChain',
+    atividade = d0.activity('atividade: Alterar de dados em uma classe', other_attributes= {'atividade:Ambiente':'PROVChain',
                                                                 'atividade:Nome': 'Registrar dados e metadados',
                                                                 'atividade:Programa': 'PROVChain DApp',
                                                                 'atividade:Versao': '1.00.00',
@@ -27,12 +27,20 @@ def exibe_proveniencia():
                                                                })
 
     # # Adicionando Entidades
-    observacao  = d0.entity('entidade: Observacao', {'entidade:Descricao': 'Registrar metadados de inclusão',
+    entidade  = d0.entity('entidade: Observacao', {'entidade:Descricao': 'Registrar metadados de alteração',
                                                      'entidade:Localizacao':' PROVChain',
                                                      'entidade:Nome':'Observacao',
-                                                     'entidade:Situação': 'Registro incluído',        
-                                                     'entidade:ID': '239a5445-374d-455e-9b88-47c1dcd65b3014Im',
+                                                     'entidade:Situação': 'Registro alterado',        
+                                                     'entidade:ID': '239a5445-374d-455e-9b88-47c1dcd65b854aj4',
                                              })
+    entidade1  = d0.entity('entidade: Horizonte'
+                            # {'entidade:Descricao': 'Registrar metadados de alteração',
+                            #                          'entidade:Localizacao':' PROVChain',
+                            #                          'entidade:Nome':'Horizonte',
+                            #                          'entidade:Situação': 'Registro alterado',        
+                            #                          'entidade:ID': '239a5445-374d-455e-9b88-47c1dcd65b854a99',
+                                            #  }
+                        )
 
     # Adicionando Agentes
     pesquisador = d0.agent('agente: Pesquisador', {'agente:Nome': 'Élton Carneiro Marinho',
@@ -48,32 +56,32 @@ def exibe_proveniencia():
                                                    'agente:GPS (Cidade)': 'Rio de janeiro',
                                                    'agente:GPS (Fuso Horário)': 'America/Sao Paulo',
                                                    'agente:GPS (Área-acurácia)': '1000',
-                                                   'agente:GPS (Cod. da região metropolitana)': '641',
+                                                   'agente:GPS (Cod. da ergião metropolitana)': '641',
                                                    'agente:GPS (Estado membro da UE)': '0',
                                                    })
      
     # # Relação entre Atividades e Entidades
-    d0.used(inclusao, observacao)
+    d0.used(atividade, entidade)
     
     # #Relação entre Atividades
     # d0.wasInformedBy(marcarPontoExato, definirPontos)
 
     # Relacoes atividades com Agentes 
-    d0.wasGeneratedBy(observacao, inclusao)
+    d0.wasGeneratedBy(entidade, atividade)
 
     # # Relacoes atividades com Enidades
     # d0.wasDerivedFrom(amostra, horizonte)
-    # d0.wasDerivedFrom(horizonte, observacao)
+    d0.wasDerivedFrom(entidade1, entidade)
 
     # #relação entre agentes
     # d0.actedOnBehalfOf(laboratorista, pedologo)
     # d0.actedOnBehalfOf(pedologo, agronomo)
 
     # Relação entre Entidades e Agentes
-    d0.wasAttributedTo(observacao, pesquisador,    other_attributes= {'agente: Função':'Proceder o registro das informações'})
+    d0.wasAttributedTo(entidade, pesquisador,    other_attributes= {'agente: Função':'Proceder a alteração das informações'})
     
     # Adicionando as relacoes atividades com Agentes 
-    d0.wasAssociatedWith(inclusao, pesquisador,           other_attributes= {'agente: Função ':'Efetuar registro das informacoes da observação'})
+    d0.wasAssociatedWith(atividade, pesquisador,           other_attributes= {'agente: Função ':'Efetuar registro das informacoes da observação'})
     # d0.wasAssociatedWith(definirPontos, agronomo,               other_attributes= {'agente: Registrar possiveris pontos de coleta':'()'})
     # d0.wasAssociatedWith(efetuarAnalise, laboratorista,         other_attributes= {'agente: Registrar informacoes com o resultado das analises laboratoriais executadas':'()'})
     # d0.wasAssociatedWith(autorizarInicioColeta, agronomo,       other_attributes= {'agente: Registrar autorizacao para inicio da coleta':'()'})
